@@ -10,7 +10,7 @@
 
 	<insert id="insertRawMaterial" parameterType="org.zerock.domain.RawMaterialVO">
 		insert into raw_materials (raw_materials_code, classification, materials_name, renewability, unit, standard_quantity, origin)
-		VALUES(seq_raw_materials_code.nextval, #{classification}, #{material_name}, #{renewability},#{unit}, #{standard_quantity}, #{orgin})
+		VALUES(seq_raw_materials_code.nextval, #{classification}, #{materials_name}, #{renewability},#{unit}, #{standard_quantity}, #{origin})
 	</insert>
 
 </mapper>

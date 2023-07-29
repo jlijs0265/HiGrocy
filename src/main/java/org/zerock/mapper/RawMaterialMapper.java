@@ -7,4 +7,6 @@ import org.zerock.domain.RawMaterialVO;
 public interface RawMaterialMapper {
 	public List<RawMaterialVO> getlist();
 	public boolean insertRawMaterial(RawMaterialVO vo);
+	public boolean updateRawMaterial(RawMaterialVO vo);
+	public boolean deleteRawMaterial(int raw_materials_code);
 }

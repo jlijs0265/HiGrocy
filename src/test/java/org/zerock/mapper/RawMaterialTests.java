@@ -32,12 +32,23 @@ public class RawMaterialTests {
 //	public void inserttest() {
 //		RawMaterialVO vo = new RawMaterialVO();
 //		vo.setClassification("원자재");
-//		vo.setMaterial_name("밀가루");
-//		vo.setOrgin("국내산");
+//		vo.setMaterials_name("인스턴트 드라이 이스트");
+//		vo.setOrigin("프랑스");
 //		vo.setRenewability("재생가능한원부자재");
 //		vo.setStandard_quantity(25);
 //		vo.setUnit("kg");
 //		log.info(mapper.insertRawMaterial(vo));
 //	}
 //	
+//	@Test
+//	public void updatetest() {
+//		RawMaterialVO vo = new RawMaterialVO();
+//		vo.setClassification("원자재");
+//		vo.setMaterials_name("밀가루");
+//		vo.setOrigin("국내산");
+//		vo.setRenewability("재생가능한원부자재");
+//		vo.setStandard_quantity(25);
+//		vo.setUnit("kg");
+//		log.info(mapper.insertRawMaterial(vo));
+//	}
 }

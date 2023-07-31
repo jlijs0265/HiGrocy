@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.RawMaterialMapper">
+
+  <select id="getlist" resultType="org.zerock.domain.RawMaterialVO">
+  	SELECT * FROM raw_materials 
+  </select>
+
+	<insert id="insertRawMaterial" parameterType="org.zerock.domain.RawMaterialVO">
+		insert into raw_materials (raw_materials_code, classification, materials_name, renewability, unit, standard_quantity, origin)
+		VALUES(seq_raw_materials_code.nextval, #{classification}, #{materials_name}, #{renewability},#{unit}, #{standard_quantity}, #{origin})
+	</insert>
+	
+	<update id="updateRawMaterial" parameterType="org.zerock.domain.RawMaterialVO">
+		update raw_materials set
+		(classification = #{classification}, materials_name = #{materials_name}, renewability = #{renewability}, unit = #{unit}, standard_quantity = #{standard_quantity}, origin = #{origin})
+		where raw_materials_code = #{raw_materials_code} 
+	</update>
+	
+	<delete id="deleteRawMaterial" parameterType="int">
+		delete raw_materials
+		where raw_materials_code = #{raw_materials_code}
+	</delete>
+
+</mapper>

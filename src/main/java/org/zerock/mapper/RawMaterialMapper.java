@@ -2,9 +2,12 @@ package org.zerock.mapper;
 
 import java.util.List;
 
+import org.zerock.domain.ItemVO;
 import org.zerock.domain.RawMaterialVO;
 
 public interface RawMaterialMapper {
+	
+	public boolean insertItem(ItemVO item);
 	public List<RawMaterialVO> getlist();
 	public boolean insertRawMaterial(RawMaterialVO vo);
 	public boolean updateRawMaterial(RawMaterialVO vo);

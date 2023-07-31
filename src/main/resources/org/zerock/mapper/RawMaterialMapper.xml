@@ -4,19 +4,24 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.zerock.mapper.RawMaterialMapper">
 
+	<insert id="insertItem" parameterType="org.zerock.domain.ItemVO">
+		INSERT INTO item (item_code, type) VALUES (seq_item.nextval, #{type})
+	</insert>
+
   <select id="getlist" resultType="org.zerock.domain.RawMaterialVO">
   	SELECT * FROM raw_materials 
   </select>
 
 	<insert id="insertRawMaterial" parameterType="org.zerock.domain.RawMaterialVO">
-		insert into raw_materials (raw_materials_code, classification, materials_name, renewability, unit, standard_quantity, origin)
-		VALUES(seq_raw_materials_code.nextval, #{classification}, #{materials_name}, #{renewability},#{unit}, #{standard_quantity}, #{origin})
+		insert into raw_materials (raw_materials_code, type, name, renewability, unit, standard_quantity, item_code, origin)
+		VALUES(seq_raw_material.nextval, #{type}, #{name}, #{renewability},#{unit}, #{standard_quantity}, #{item_code.item_code}, #{origin})
 	</insert>
 	
 	<update id="updateRawMaterial" parameterType="org.zerock.domain.RawMaterialVO">
 		update raw_materials set
-		(classification = #{classification}, materials_name = #{materials_name}, renewability = #{renewability}, unit = #{unit}, standard_quantity = #{standard_quantity}, origin = #{origin})
-		where raw_materials_code = #{raw_materials_code} 
+		type = #{type}, name = #{name}, renewability = #{renewability},
+		unit = #{unit}, standard_quantity = #{standard_quantity}, origin = #{origin}
+		where raw_materials_code = #{raw_materials_code}
 	</update>
 	
 	<delete id="deleteRawMaterial" parameterType="int">

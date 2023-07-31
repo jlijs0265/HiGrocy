@@ -9,5 +9,5 @@ public interface ProductionMachineMapper {
 	public List<ProductionMachineVO> getList();
 	public boolean insertPM(ProductionMachineVO vo);
 	public boolean updatePM(ProductionMachineVO vo);
-	public boolean deletePM(int raw_materials_code);
+	public boolean deletePM(int machine_code);
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.ProductionMachineMapper">
+
+  <select id="getList" resultType="org.zerock.domain.ProductionMachineVO">
+  	SELECT * FROM production_machine 
+  </select>
+
+	<insert id="insertPM" parameterType="org.zerock.domain.ProductionMachineVO">
+		insert into production_machine (machine_code, type, gas_emissions, energy_usage)
+		VALUES(seq_machine_code.nextval, #{type}, #{gas_emissions}, #{energy_usage})
+	</insert>
+	
+	<update id="updatePM" parameterType="org.zerock.domain.ProductionMachineVO">
+		update production_machine set
+		type = #{type}, gas_emissions = #{gas_emissions}, energy_usage = #{energy_usage}
+		where machine_code = #{machine_code} 
+	</update>
+	
+	<delete id="deletePM" parameterType="int">
+		delete production_machine
+		where machine_code = #{machine_code}
+	</delete>
+
+</mapper>

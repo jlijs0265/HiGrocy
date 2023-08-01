@@ -66,6 +66,7 @@
 												<th>창고명</th>
 												<th>창고 위치</th>
 												<th>담당자</th>
+												<th>진행도</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -74,6 +75,7 @@
 												<td>001</td>
 												<td>분당 1창고</td>
 												<td>경기도 성남시 분당구 삼평동 123-45</td>
+												<td>백설</td>
 												<td>
 													<div class="progress">
 														<div class="progress-bar bg-success" role="progressbar"
@@ -94,14 +96,14 @@
 									<h4 class="card-title">창고 입력</h4>
 									<form class="forms-storage" action="insert/storage" method="post">
 										<div class="form-group">
-											<label for="storageCodeLabel">StorageCode</label> <input
-												type="text" class="form-control" id="storageCode"
-												name="storageCode" placeholder="StorageCode">
+											<label for="storageCodeLabel">StorageCode</label> 
+											<input type="text" class="form-control" id="storageCode"
+												name="storageCode" placeholder=no >
 										</div>
 										<div class="form-group">
 											<label for="storageCodeLabel">Storage</label> <input
 												type="text" class="form-control" id="storage" name="storage"
-												placeholder="StorageName">
+												placeholder=storageName>
 										</div>
 										<div class="form-group">
 											<label for="storageLocationLabel">Location</label> <input
@@ -164,6 +166,29 @@
 		console.log("Custom Script Start!!");
 
 		var storageRegBtn = $("#storageReg");
+		var storageList = $("#storageList");
+		
+		/* List Row Click event */
+		$(storageList).on("click","tr",function(e){
+			e.stopPropagation();
+			var tr = $(this);
+			var td = tr.children();
+			
+			var no = td.eq(1).text();
+			var storageName = td.eq(2).text();
+			var address = td.eq(3).text();
+			var adminName = td.eq(4).text();
+			console.log("클릭한 ROW의 모든 데이터 "+no);
+			console.log("클릭한 ROW의 모든 데이터 "+storageName);
+			console.log("클릭한 ROW의 모든 데이터 "+address);
+			console.log("클릭한 ROW의 모든 데이터 "+adminName);
+			
+			document.getElementById("storageCode").value = no;
+			document.getElementById("storage").value = storageName;
+			document.getElementById("storageLocation").value = address;
+			document.getElementById("storageAdmin").value = adminName;
+			
+		})
 			
 		/************Call storageBtn************/
 		$(storageRegBtn).on("click", function() {
@@ -205,8 +230,27 @@
 					location : document.getElementById("storageLocation").value,
 					admin : document.getElementById("storageAdmin").value,
 			}
-			storageBtn.editStorage;
 			
+			$.ajax({
+				//요청 타입
+				type : 'post',
+				//요청 URL
+				url : 'insert/storage',
+				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+				data : JSON.stringify(data),
+				contentType : "application/json; charset=utf-8",
+				success : function(result, status, xhr) {
+					$(".forms-storage")[0].reset();
+					if (callback) {
+						callback(result);
+					}
+				},
+				error : function(xhr, status, er) {
+					if (er) {
+						error(er);
+					}
+				}
+			});
 			console.log(data);
 		})//end storageEditBtn Function
 		

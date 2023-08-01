@@ -40,7 +40,7 @@ public class StorageRestController {
 	 
 	
 	
-	@PutMapping(value="storage/{codeNum}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value="storage", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> updateStorage(@RequestBody StorageVO vo){
 		log.info("Storage update..........");
 		log.info("vo입니다 : "+vo);

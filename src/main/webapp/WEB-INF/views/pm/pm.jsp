@@ -138,7 +138,7 @@
 							<div class="card-body">
 								<h4 class="card-title">기계목록</h4>
 								<div class="table-responsive">
-									<table class="table">
+									<table class="table" id = "M_list_table">
 										<thead>
 											<tr>
 												<th>기계코드</th>
@@ -148,12 +148,14 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td></td>
-												<td>50L반죽기</td>
-												<td>2</td>
-												<td>50</td>
-											</tr>
+											<c:forEach items="${MList}" var="M">
+												<tr>
+													<td><c:out value="${M.machine_code}" /></td>
+													<td><c:out value="${M.type}" /></td>
+													<td><c:out value="${M.gas_emissions}" /></td>
+													<td><c:out value="${M.energy_usage}" /></td>
+												</tr>
+											</c:forEach>
 										</tbody>
 									</table>
 								</div>
@@ -162,7 +164,7 @@
 					</div>
 					<div class="col-md-5 grid-margin stretch-card">
 						<div class="card">
-							<div class="card-body">
+							<div class="card-body" id="m_list_card_body">
 								<h4 class="card-title" id = "M_list_detail_title">등록 페이지</h4>
 								<form class="forms-sample" id="m_list_detail">
 									<div class="form-group row">
@@ -170,7 +172,7 @@
 											class="col-sm-4 col-form-label">기계코드</label>
 										<div class="col-sm-8">
 											<input type="text" class="form-control"
-												id="input_machine_code" placeholder="기계코드">
+												id="input_machine_code" placeholder="기계코드" readonly="readonly">
 										</div>
 									</div>
 									<div class="form-group row">
@@ -196,10 +198,9 @@
 												id="input_energy_usage" placeholder="에너지소모량">
 										</div>
 									</div>
-									<button type="submit" class="btn-sm btn-gradient-primary mr-2">등록</button>
-									<button type="submit" class="btn-sm btn-gradient-primary mr-2">수정</button>
-									<button type="submit" class="btn-sm btn-gradient-primary mr-2">삭제</button>
-									<button class="btn btn-light">Cancel</button>
+									<button type="button" id = "MReg" class="btn-sm btn-gradient-primary mr-2">등록</button>
+									<button type="button" id = "MUp" class="btn-sm btn-gradient-primary mr-2">수정</button>
+									<button type="button" id = "MDel" class="btn-sm btn-gradient-primary mr-2">삭제</button>
 								</form>
 							</div>
 						</div>
@@ -231,8 +232,12 @@
 <script>
   $("#pmListDel").hide();
   $('#pmListUp').hide();
-	let pm_list_code_v = 0;
-
+	let pm_list_code_v = -1;
+  $("#MDel").hide();
+  $('#MUp').hide();
+	let m_code_v = -1;
+	//생산기계목록 등록 버튼 눌렀을때
+	//
 	$("#pmListReg").on("click", function() {
 		var pm_list = {
 			pm_list_code : pm_list_code_v,
@@ -262,7 +267,36 @@
 			}
 		});
 	});
-  
+  //기계목록의 등록버튼을 눌렀을때
+	$("#MReg").on("click", function() {
+		var m_list = {
+			machine_code : m_code_v,
+			type : document.getElementById("input_type").value,
+			gas_emissions : document.getElementById("input_gas_emissions").value,
+			energy_usage : document.getElementById("input_energy_usage").value
+		}
+
+		$.ajax({
+			//요청 타입
+			type : 'post',
+			//요청 URL
+			url : 'pmlist/register',
+			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+			data : JSON.stringify(pm_list),
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr) {
+				$("#pm_list_detail")[0].reset();
+        $(location).attr('href','/pm');
+
+      },
+			error : function(xhr, status, er) {
+				if (er) {
+					error(er);
+				}
+			}
+		});
+	});
+	
   //빈 table 공간선택시 등록페이지로 변경되게 수정
   $("#pm_list_card_body").on("click", function(e){
     e.stopPropagation();
@@ -272,6 +306,16 @@
     $("#PM_list_detail_title").text("등록페이지");
   })
 
+    //빈 table 공간선택시 등록페이지로 변경되게 수정
+  $("#m_list_card_body").on("click", function(e){
+    e.stopPropagation();
+    $("#MReg").show();
+    $("#MDel").hide();
+    $('#MUp').hide();
+    $("#M_list_detail_title").text("등록페이지");
+  })
+
+  
   //table 한 행 클릭시 상세페이지에 값 반영되게 수정
   $("#PM_list_table tr").on("click", function(e){
     e.stopPropagation();
@@ -296,6 +340,31 @@
     $("#PM_list_detail_title").text("상세페이지");
   })
 
+    //table 한 행 클릭시 상세페이지에 값 반영되게 수정
+  $("#M_list_table tr").on("click", function(e){
+    e.stopPropagation();
+    var tr = $(this);
+	var td = tr.children();
+	
+	m_code_v = td.eq(0).text();
+	var type = td.eq(1).text();
+	var gas_emissions = td.eq(2).text();
+	var energy_usage = td.eq(3).text();
+	
+	var mac_code = document.querySelectorAll("#input_machine_code");
+	mac_code[0].value = m_code_v;
+	mac_code[1].value = m_code_v;
+	document.getElementById("input_type").value = type;
+	document.getElementById("input_gas_emissions").value = gas_emissions;
+	document.getElementById("input_energy_usage").value = energy_usage;
+
+  $("#MReg").hide();
+    $("#MDel").show();
+    $('#MUp').show();
+    $("#M_list_detail_title").text("상세페이지");
+  })
+  
+  
   $("#pmListUp").on("click", function() {
 		var pm_list = {
 			pm_list_code : pm_list_code_v,
@@ -316,7 +385,35 @@
 			success : function(result, status, xhr) {
 				$("#pm_list_detail")[0].reset();
         $(location).attr('href','/pm');
-        //TODO: 생산기계목록에 수정해줘야함.
+			},
+			error : function(xhr, status, er) {
+				if (er) {
+					error(er);
+				}
+			}
+		});
+	});
+  
+  $("#MUp").on("click", function() {
+	  var m_list = {
+				machine_code : m_code_v,
+				type : document.getElementById("input_type").value,
+				gas_emissions : document.getElementById("input_gas_emissions").value,
+				energy_usage : document.getElementById("input_energy_usage").value
+			}
+
+		$.ajax({
+			//요청 타입
+			type : 'put',
+			//요청 URL
+			url : 'pm/update',
+			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+			data : JSON.stringify(m_list),
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr) {
+				$("#m_list_detail")[0].reset();
+      $(location).attr('href','/pm');
+      //TODO: 생산기계목록에 수정해줘야함.
 			},
 			error : function(xhr, status, er) {
 				if (er) {
@@ -339,6 +436,28 @@
 			success : function(result, status, xhr) {
 				$("#pm_list_detail")[0].reset();
         $(location).attr('href','/pm');
+			},
+			error : function(xhr, status, er) {
+				if (er) {
+					error(er);
+				}
+			}
+		});
+	});
+  
+  $("#MDel").on("click", function() {
+
+		$.ajax({
+			//요청 타입
+			type : 'delete',
+			//요청 URL
+			url : 'pm/delete',
+			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+			data : m_code_v,
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr) {
+				$("#m_list_detail")[0].reset();
+      $(location).attr('href','/pm');
 			},
 			error : function(xhr, status, er) {
 				if (er) {

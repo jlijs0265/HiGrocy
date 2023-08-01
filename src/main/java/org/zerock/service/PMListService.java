@@ -26,6 +26,11 @@ public class PMListService {
 		return pm_mapper.getList(); 
 	}
 	
+	//생산기계목록 한건 조회
+	public PMListVO getPMListOnce(int pm_list_code) {
+		return pm_mapper.getListOnce(pm_list_code);
+	}
+	
 	//생산기계 등록 - 기계코드가 기존 기계코드테이블에 존재하지 않으면 자동으로 false
 	public boolean insertPMList(PMListVO vo) {
 		try {

@@ -29,6 +29,11 @@ public class PMListTests {
 		log.info(service.getPMList());
 	}
 	
+	@Test
+	public void getOncetest() {
+		log.info(service.getPMListOnce(1));
+	}
+	
 	//되야하는게 맞음
 //	@Test
 //	public void inserttruetest() {
@@ -51,16 +56,16 @@ public class PMListTests {
 //		log.info(service.insertPMList(vo));
 //	}
 	
-	@Test
-	public void updatetest() {
-		PMListVO vo = new PMListVO();
-		vo.setMachine_code(3);
-		vo.setPm_list_code(5);
-		vo.setFactory_name("마라공장지점");
-		vo.setLocation("A-5");
-		vo.setName("숙성기");
-		log.info(service.updatePMList(vo));
-	}
+//	@Test
+//	public void updatetest() {
+//		PMListVO vo = new PMListVO();
+//		vo.setMachine_code(3);
+//		vo.setPm_list_code(5);
+//		vo.setFactory_name("마라공장지점");
+//		vo.setLocation("A-5");
+//		vo.setName("숙성기");
+//		log.info(service.updatePMList(vo));
+//	}
 	
 	
 

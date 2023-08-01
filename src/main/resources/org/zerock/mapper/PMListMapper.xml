@@ -7,6 +7,10 @@
   <select id="getList" resultType="org.zerock.domain.PMListVO">
   	SELECT * FROM pm_list 
   </select>
+  
+    <select id="getListOnce" resultType="org.zerock.domain.PMListVO">
+  	SELECT * FROM pm_list where pm_list_code = #{pm_list_code}
+  </select>
 
 	<insert id="insertPM" parameterType="org.zerock.domain.PMListVO">
 		insert into pm_list (pm_list_code, machine_code, name, factory_name, location)

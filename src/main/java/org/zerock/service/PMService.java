@@ -13,6 +13,11 @@ public class PMService {
 	@Autowired
 	private ProductionMachineMapper mapper;
 	
+	//기계 단일항목 조회
+	public ProductionMachineVO getPMonce(int machine_code) {
+		return mapper.getPM(machine_code);
+	}
+	
 	//기계 목록 조회
 	public List<ProductionMachineVO> getPM() {
 		return mapper.getList();

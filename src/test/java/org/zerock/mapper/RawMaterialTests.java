@@ -3,6 +3,7 @@ package org.zerock.mapper;
 import static org.junit.Assert.*;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 
 import javax.sql.DataSource;
 
@@ -63,5 +64,10 @@ public class RawMaterialTests {
 //		vo.setUnit("kg");
 //		log.info(mapper.updateRawMaterial(vo));
 //	}
+	
+	@Test
+	public void getRawMaterialList() {
+		log.info(Arrays.toString(mapper.getlist().toArray()));
+	}
 	
 }

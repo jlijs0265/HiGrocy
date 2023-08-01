@@ -1,10 +1,14 @@
 package org.zerock.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.zerock.domain.ItemVO;
 import org.zerock.domain.RawMaterialVO;
-import org.zerock.service.RawMaterialService;
+import org.zerock.service.RawMaterialServiceImpl;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -14,29 +18,20 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class RawMatetialRestController {
 	
-	private RawMaterialService service;
+	private RawMaterialServiceImpl service;
 	
-	// 원재료 등록
-	@PostMapping("/raw_material")
-	public void insertRawMatetial() {
-		log.info("POST 컨트롤러 탐");
-		
-		ItemVO item = new ItemVO();
-		item.setType("원자재");
-		boolean insertItem = service.insertItem(item);
-		System.out.println(insertItem);
-		System.out.println(item.getItem_code());
-		
-		if(insertItem) {
-			RawMaterialVO vo = new RawMaterialVO();
-			vo.setType("원자재");
-			vo.setName("인스턴트 드라이 이스트22");
-			vo.setOrigin("프랑스");
-			vo.setRenewability("재생가능한원부자재");
-			vo.setStandard_quantity(50);
-			vo.setUnit("kg");
-			log.info(service.insertRawMaterial(vo));
-		}		
+	// 원재료 수정
+	@PutMapping("/raw_material")
+	public ResponseEntity<RawMaterialVO> updateRawMaterial(@RequestBody RawMaterialVO vo) {
+		log.info(vo);
+		boolean result = service.updateRawMaterial(vo);
+		return new ResponseEntity<RawMaterialVO>(vo, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/raw_material/{code}")
+	public ResponseEntity<String> deleteRawMaterial(@PathVariable int code) {
+		boolean result = service.deleteRawMaterial(code);
+		return result == true ? new ResponseEntity<String>("success", HttpStatus.OK) : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 }

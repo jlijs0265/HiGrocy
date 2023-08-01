@@ -13,7 +13,7 @@ public class RawMaterialVO {
 	String origin;
 	
 	// item_code
-	private ItemVO item_code;
+	private int item_code;
 
 	
 }

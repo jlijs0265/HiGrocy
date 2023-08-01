@@ -14,7 +14,7 @@
 
 	<insert id="insertRawMaterial" parameterType="org.zerock.domain.RawMaterialVO">
 		insert into raw_materials (raw_materials_code, type, name, renewability, unit, standard_quantity, item_code, origin)
-		VALUES(seq_raw_material.nextval, #{type}, #{name}, #{renewability},#{unit}, #{standard_quantity}, #{item_code.item_code}, #{origin})
+		VALUES( (SELECT max(item_code) FROM item) , #{type}, #{name}, #{renewability},#{unit}, #{standard_quantity}, (SELECT max(item_code) FROM item) , #{origin})
 	</insert>
 	
 	<update id="updateRawMaterial" parameterType="org.zerock.domain.RawMaterialVO">

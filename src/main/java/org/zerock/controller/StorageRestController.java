@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,25 +28,32 @@ public class StorageRestController {
 	
 	
 	  @PostMapping(value="insert/storage", consumes = MediaType.APPLICATION_JSON_VALUE) 
-	  public ResponseEntity<String> register(@RequestBody StorageVO vo){ log.info("Storage register..........");
-	  log.info("vo입니다 : "+vo);
-	  return service.register(vo) ==1 
-			  ? new ResponseEntity<>("success", HttpStatus.OK) 
-			  : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); }
+	  public ResponseEntity<String> registerStorage(@RequestBody StorageVO vo){
+		  log.info("Storage register..........");
+		  log.info("vo입니다 : "+vo);
+	  
+	  	return new ResponseEntity<>("success",HttpStatus.OK);
+		/*
+		 * return service.register(vo) ==1 ? new ResponseEntity<>("success",
+		 * HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		 */ }
 	 
 	
 	
-	@PutMapping(value="storage", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> update(){
+	@PutMapping(value="storage/{codeNum}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> updateStorage(@RequestBody StorageVO vo){
 		log.info("Storage update..........");
+		log.info("vo입니다 : "+vo);
 		
-		return service.update(null) ==1
-				? new ResponseEntity<>("success", HttpStatus.OK)
-				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>("success",HttpStatus.OK);
+		/*
+		 * return service.update(null) ==1 ? new ResponseEntity<>("success",
+		 * HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		 */
 	}
 	
 	@DeleteMapping(value="storage/{code}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> delete(@PathVariable Long code) {
+	public ResponseEntity<String> deleteStorage(@PathVariable Long code) {
 		log.info("Storage delete........code:"+code);
 		
 		return service.delete(code) == 1

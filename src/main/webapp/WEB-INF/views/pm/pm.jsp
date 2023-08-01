@@ -19,9 +19,7 @@
     <link rel="stylesheet" href="/resources/assets/css/style.css">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="/resources/assets/images/favicon.ico" />
-  </head>
-  <body>
-    <div class="container-scroller">
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>    <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <%@ include file="/WEB-INF/views/partials/_navbar.html" %>
       <!-- partial -->
@@ -79,30 +77,31 @@
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">상세 페이지</h4>
-                    <form class="forms-sample">
+                    <form class="forms" id = "pm_list_detail">
                       <div class="form-group row">
-                        <label for="exampleInputUsername2" class="col-sm-4 col-form-label">기계코드</label>
+                        <label for="input_machine_code" class="col-sm-4 col-form-label">기계코드</label>
                         <div class="col-sm-8">
-                          <input type="text" class="form-control" id="exampleInputUsername2" placeholder="기계코드">
+                          <input type="text" class="form-control" id="input_machine_code" placeholder="기계코드">
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="exampleInputEmail2" class="col-sm-4 col-form-label">기계명</label>
+                        <label for="input_machine_name" class="col-sm-4 col-form-label">기계명</label>
                         <div class="col-sm-8">
-                          <input type="email" class="form-control" id="exampleInputEmail2" placeholder="기계명">
+                          <input type="text" class="form-control" id="input_machine_name" placeholder="기계명">
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="exampleInputMobile" class="col-sm-4 col-form-label">공장명</label>
+                        <label for="input_factory_name" class="col-sm-4 col-form-label">공장명</label>
                         <div class="col-sm-8">
-                          <input type="text" class="form-control" id="exampleInputMobile" placeholder="공장명">
+                          <input type="text" class="form-control" id="input_factory_name" placeholder="공장명">
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="exampleInputPassword2" class="col-sm-4 col-form-label">위치</label>
+                        <label for="input_location" class="col-sm-4 col-form-label">위치</label>
                         <div class="col-sm-8">
-                          <input type="password" class="form-control" id="exampleInputPassword2" placeholder="위치">
+                          <input type="text" class="form-control" id="input_location" placeholder="위치">
                         </div>
+
                       </div>
                       <button type="submit" class="btn-sm btn-gradient-primary mr-2">등록</button>
                       <button type="submit" class="btn-sm btn-gradient-primary mr-2">수정</button>
@@ -147,32 +146,32 @@
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">상세 페이지</h4>
-                    <form class="forms-sample">
+                    <form class="forms-sample" id = "m_list_detail">
                       <div class="form-group row">
-                        <label for="exampleInputUsername2" class="col-sm-4 col-form-label">기계코드</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="exampleInputUsername2" placeholder="Username">
+                        <label for="input_machine_code" class="col-sm-4 col-form-label">기계코드</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="input_machine_code" placeholder="기계코드">
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="exampleInputEmail2" class="col-sm-4 col-form-label">기계종류</label>
-                        <div class="col-sm-9">
-                          <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email">
+                        <label for="input_type" class="col-sm-4 col-form-label">기계종류</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="input_type" placeholder="기계종류">
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="exampleInputMobile" class="col-sm-4 col-form-label">온실가스배출량</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="exampleInputMobile" placeholder="Mobile number">
+                        <label for="input_gas_emissions" class="col-sm-4 col-form-label">온실가스배출량</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="input_gas_emissions" placeholder="온실가스배출량">
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="exampleInputPassword2" class="col-sm-4 col-form-label">에너지소모량</label>
-                        <div class="col-sm-9">
-                          <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+                        <label for="input_energy_usage" class="col-sm-4 col-form-label">에너지소모량</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="input_energy_usage" placeholder="에너지소모량">
                         </div>
                       </div>
-<button type="submit" class="btn-sm btn-gradient-primary mr-2">등록</button>
+                      <button type="submit" class="btn-sm btn-gradient-primary mr-2">등록</button>
                       <button type="submit" class="btn-sm btn-gradient-primary mr-2">수정</button>
                       <button type="submit" class="btn-sm btn-gradient-primary mr-2">삭제</button>                      <button class="btn btn-light">Cancel</button>
                     </form>
@@ -192,7 +191,6 @@
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
-    <script src="/resources/assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
     <script src="/resources/assets/vendors/chart.js/Chart.min.js"></script>
@@ -203,9 +201,21 @@
     <script src="/resources/assets/js/hoverable-collapse.js"></script>
     <script src="/resources/assets/js/misc.js"></script>
     <!-- endinject -->
-    <!-- Custom js for this page -->
-    <script src="/resources/assets/js/dashboard.js"></script>
-    <script src="/resources/assets/js/todolist.js"></script>
+    <script>
+
+      // $("#m_list_detail button").on('click',function(event){
+      //   console.log(event.target.value);
+      //   alert("test");
+
+      // })
+      $("#pm_list_detail button").on('click',function(event){
+        event.preventDefault();
+        console.log(event.target.value);
+        console.log("생산기계 목록");
+        alert("test");
+
+      })
+    </script>
     <!-- End custom js for this page -->
   </body>
 </html>

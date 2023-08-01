@@ -307,6 +307,7 @@
   })
 
     //빈 table 공간선택시 등록페이지로 변경되게 수정
+	//TODO:이거안됨 수정필요
   $("#m_list_card_body").on("click", function(e){
     e.stopPropagation();
     $("#MReg").show();

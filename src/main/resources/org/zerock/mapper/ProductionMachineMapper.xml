@@ -7,6 +7,11 @@
   <select id="getList" resultType="org.zerock.domain.ProductionMachineVO">
   	SELECT * FROM production_machine 
   </select>
+  
+  <select id="getPM" resultType="org.zerock.domain.ProductionMachineVO" parameterType="int">
+  	SELECT * FROM production_machine
+  	where machine_code = #{machine_code}
+  </select>
 
 	<insert id="insertPM" parameterType="org.zerock.domain.ProductionMachineVO">
 		insert into production_machine (machine_code, type, gas_emissions, energy_usage)

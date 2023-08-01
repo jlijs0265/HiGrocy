@@ -8,6 +8,6 @@ public interface StorageService {
 	List<StorageVO> getList();
 	int register(StorageVO vo);
 	int update(Long code);
-	int delete(Long code);
+	int delete(int code);
 	StorageVO get();
 }

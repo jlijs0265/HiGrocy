@@ -32,7 +32,7 @@ public class StorageServiceImpl implements StorageService {
 	}
 
 	@Override
-	public int delete(Long code) {
+	public int delete(int code) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

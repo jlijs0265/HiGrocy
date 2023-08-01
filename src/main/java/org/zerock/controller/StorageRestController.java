@@ -40,7 +40,7 @@ public class StorageRestController {
 	 
 	
 	
-	@PutMapping(value="storage", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value="/storage", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> updateStorage(@RequestBody StorageVO vo){
 		log.info("Storage update..........");
 		log.info("vo입니다 : "+vo);
@@ -52,12 +52,15 @@ public class StorageRestController {
 		 */
 	}
 	
-	@DeleteMapping(value="storage/{code}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> deleteStorage(@PathVariable Long code) {
+	@DeleteMapping(value="/storage", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> deleteStorage(@RequestBody int code) {
 		log.info("Storage delete........code:"+code);
 		
-		return service.delete(code) == 1
-				? new ResponseEntity<>("success",HttpStatus.OK)
-				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>("success",HttpStatus.OK);
+		/*
+		 * return service.delete(code) == 1 ? new
+		 * ResponseEntity<>("success",HttpStatus.OK) : new
+		 * ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		 */
 	}
 }

@@ -23,15 +23,6 @@
 <!-- End layout styles -->
 <link rel="shortcut icon" href="/resources/assets/images/favicon.ico" />
 
-<style type="text/css">
-.content {
-	display: flex;
-}
-
-.item {
-	margin: 10px;
-}
-</style>
 </head>
 <body>
 	<div class="container-scroller">
@@ -42,9 +33,9 @@
 			<!-- partial:partials/_sidebar.html -->
 			<%@ include file="../partials/_sidebar.html"%>
 			<!-- partial -->
-			<div class="main-panel" style="background-color: #DDE4F6;">
+			<div class="main-panel">
 				<!-- -------------------------------Container Start---------------------------------------------- -->
-				<div class="content-wrapper">
+				<div class="content-wrapper" style="background-color: #DDE4F6;">
 					<div class="row">
 						<div class="col-lg-6 grid-margin stretch-card">
 							<div class="card">
@@ -166,6 +157,8 @@
 		console.log("Custom Script Start!!");
 
 		var storageRegBtn = $("#storageReg");
+		var storageEditBtn = $("#storageEdit");
+		var storageDelBtn = $("#storageDel");
 		var storageList = $("#storageList");
 		
 		/* List Row Click event */
@@ -223,7 +216,7 @@
 			console.log(data);
 		})//end storageRegBtn Function
 		
-		$("#storageEditBtn").on("click",function(){
+		$(storageEditBtn).on("click",function(){
 			var data = {
 					storageCode : document.getElementById("storageCode").value,
 					storage : document.getElementById("storage").value,
@@ -233,9 +226,9 @@
 			
 			$.ajax({
 				//요청 타입
-				type : 'post',
+				type : 'put',
 				//요청 URL
-				url : 'insert/storage',
+				url : 'storage',
 				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
 				data : JSON.stringify(data),
 				contentType : "application/json; charset=utf-8",
@@ -253,6 +246,57 @@
 			});
 			console.log(data);
 		})//end storageEditBtn Function
+		
+		$(storageDelBtn).on("click", function() {
+		    var storageCode = document.getElementById("storageCode").value;
+
+		    $.ajax({
+		        // 요청 타입
+		        type: 'DELETE',
+		        // 요청 URL에 storageCode 포함
+		        url: 'storage/',
+		        data : storageCode,
+		        // 요청의 Content-Type 무시
+		        contentType: "application/json; charset=utf-8",
+		        success: function(result, status, xhr) {
+		            $(".forms-storage")[0].reset();
+		            if (callback) {
+		                callback(result);
+		            }
+		        },
+		        error: function(xhr, status, er) {
+		            if (er) {
+		                error(er);
+		            }
+		        }
+		    });
+		});
+
+		
+		/* $(storageDelBtn).on("click",function(){
+			var storageCode = document.getElementById("storageCode").value;
+			
+			$.ajax({
+				//요청 타입
+				type : 'DELETE',
+				//요청 URL
+				url : 'storage',
+				data : storageCode,
+				success : function(result, status, xhr) {
+					$(".forms-storage")[0].reset();
+					if (callback) {
+						callback(result);
+					}
+				},
+				error : function(xhr, status, er) {
+					if (er) {
+						error(er);
+					}
+				}
+			});
+			console.log(data);
+		}) */
+		
 		
 	})//end window
 </script>

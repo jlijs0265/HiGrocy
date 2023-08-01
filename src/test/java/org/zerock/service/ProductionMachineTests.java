@@ -1,4 +1,4 @@
-package org.zerock.mapper;
+package org.zerock.service;
 
 import static org.junit.Assert.*;
 
@@ -21,34 +21,31 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class ProductionMachineTests {
 	@Autowired
-	private ProductionMachineMapper mapper;
+	private PMService service;
 	
 	
 	@Test
 	public void test() {
-		log.info(mapper.getList());
+		log.info(service.getPM());
 	}
-	@Test
-	public void gettest() {
-		log.info(mapper.getPM(2));
-	}
+	
 
 //	@Test
 //	public void inserttest() {
 //		ProductionMachineVO vo = new ProductionMachineVO();
-//		vo.setEnergy_usage(50);
+//		vo.setEnergy_usage(30);
 //		vo.setGas_emissions(2);
-//		vo.setType("50L반죽기");
-//		log.info(mapper.insertPM(vo));
+//		vo.setType("20L숙성기");
+//		log.info(service.insertPM(vo));
 //	}
 	
 //	@Test
 //	public void updatetest() {
 //		ProductionMachineVO vo = new ProductionMachineVO();
 //		vo.setMachine_code(2);
-//		vo.setEnergy_usage(50);
-//		vo.setGas_emissions(2);
-//		vo.setType("50L반죽기");
-//		log.info(mapper.updatePM(vo));
+//		vo.setEnergy_usage(1500);
+//		vo.setGas_emissions(50);
+//		vo.setType("대형오븐기");
+//		log.info(service.updatePM(vo));
 //	}
 }

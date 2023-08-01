@@ -51,7 +51,8 @@
 							                </div>
 							              </div>
 							            </form>
-					                    	<table class="table table-bordered">
+							            <div class="table-responsive">
+							            	<table class="table table-bordered">
 						                      <thead> 
 						                        <tr>
 						                          <th class="">코드</th>
@@ -79,6 +80,8 @@
 						                        
 						                      </tbody>
 						                    </table>
+							            </div>
+					                    	
 					                  </div>
 			       				</div>
 			       			</div>

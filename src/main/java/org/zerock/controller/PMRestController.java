@@ -2,8 +2,10 @@ package org.zerock.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.zerock.domain.PMListVO;
@@ -38,14 +40,14 @@ public class PMRestController {
 	}
 
 	// 기계목록 수정하기
-	@PostMapping("/pm/update")
+	@PutMapping("/pm/update")
 	public ResponseEntity<Object> updatePM(@RequestBody ProductionMachineVO vo) {
 		log.info("pm ajax 통신...");
 		return ResponseEntity.ok(m_service.updatePM(vo));
 	}
 
 	// 기계목록 삭제하기
-	@PostMapping("/pm/delete")
+	@DeleteMapping("/pm/delete")
 	public ResponseEntity<Object> deletePM(@RequestBody int machine_code) {
 		log.info("pm ajax 통신...");
 		return ResponseEntity.ok(m_service.deletePM(machine_code));
@@ -66,14 +68,14 @@ public class PMRestController {
 	}
 
 	// 생산기계목록 수정하기
-	@PostMapping("/pmlist/update")
+	@PutMapping("/pmlist/update")
 	public ResponseEntity<Object> updatePMlist(@RequestBody PMListVO vo) {
 		log.info("pm ajax 통신...");
 		return ResponseEntity.ok(pm_service.updatePMList(vo));
 	}
 
 	// 생산기계목록 삭제하기
-	@PostMapping("/pmlist/delete")
+	@DeleteMapping("/pmlist/delete")
 	public ResponseEntity<Object> deletePMlist(@RequestBody int pm_list_code) {
 		log.info("pm ajax 통신...");
 		return ResponseEntity.ok(pm_service.deletePMList(pm_list_code));

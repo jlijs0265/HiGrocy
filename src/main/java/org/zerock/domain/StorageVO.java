@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class StorageVO {
-	private int storageCode;
-	private String storage;
+	private int storage_code;
+	private String name;
 	private String location;
-	private String admin;
+	private String manager;
 	
 }

@@ -17,28 +17,28 @@
     <!-- inject:css -->
     <!-- endinject -->
     <!-- Layout styles -->
-    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/resources/assets/css/style.css">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="/resources/assets/images/favicon.ico" />
+    
     <!-- jquery -->
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
   </head>
   <body>
   <div>
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
+	  <div class="modal-dialog modal-dialog-scrollable">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
-	       	<div class="modal-dialog modal-dialog-scrollable">
 				<!-- 원자재 품목 가져오기 -->
 				<div class="table-responsive">
-            	<table class="table table-bordered border-secondary">
+            	<table class="table table-bordered border-secondary rawTable">
                      <thead> 
                        <tr>
                          <th>코드</th>
@@ -51,16 +51,15 @@
                      <tbody class="rawbody">
 						<c:forEach items="${rawList}" var="rawMaterial">
 		              		<tr class="rawitem">
-			                   <td id="rcode"> <c:out value="${rawMaterial.raw_materials_code}" /></td>
-			                   <td id="rtype"> <c:out value="${rawMaterial.type}" /></td>
-			                   <td id="rname"><c:out value="${rawMaterial.name}" /></td>
-			                   <td id="runit"> <c:out value="${rawMaterial.unit}" /></td>
-			                   <td id="rorigin"><c:out value="${rawMaterial.origin}" /></td>
+			                   <td class="rcode"> <c:out value="${rawMaterial.raw_materials_code}" /></td>
+			                   <td class="rtype"> <c:out value="${rawMaterial.type}" /></td>
+			                   <td class="rname"><c:out value="${rawMaterial.name}" /></td>
+			                   <td class="runit"> <c:out value="${rawMaterial.unit}" /></td>
+			                   <td class="rorigin"><c:out value="${rawMaterial.origin}" /></td>
 		                 </tr>
 		              	</c:forEach>
               	</tbody>
                   </table>
-           </div>
 			</div>
 	      </div>
 	      <div class="modal-footer">
@@ -111,8 +110,8 @@
 						                      
 						                      <c:forEach items="${productList}" var="product">
 						                      	<tr class="rawProduct">
-								                      	<td id="pcode"><c:out value="${product.product_code}" /></td>
-								                      	<td id="pname"><c:out value="${product.name}"></c:out></td>
+								                      	<td class="pcode"><c:out value="${product.product_code}" /></td>
+								                      	<td class="pname"><c:out value="${product.name}"></c:out></td>
 							                      </tr>
 						                      </c:forEach>
 						                      
@@ -195,18 +194,19 @@
 	<script src="/resources/assets/js/hoverable-collapse.js"></script>
 	<script src="/resources/assets/js/misc.js"></script>
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    
     <script type="text/javascript">
     	document.getElementById('updateBtn').style.display = 'none';
     	document.getElementById('deleteBtn').style.display = 'none';
     	var raw_code_input = 0;
+    	var raw_product = 0;
     	
     	$('#registerBtn').on('click', function() {
     		$('#rawForm').submit();
     	});
     	
-    	$("#bomForm").on('click', $(".raw_code") ,  function(e) {
-    		raw_code_input = $(this).find('input').eq(0);
+    	$("#bomForm").on('click', ".raw_code" ,  function(e) {
+    		raw_code_input = $(this);
     	})
     	
     	$('.inputPlusBtn').on('click', function() {
@@ -223,24 +223,25 @@
     	
     	$('.rawProduct').on('click', function(e) {
     		e.stopPropagation();
+    		raw_product = $(this);
     		/* 버튼 가리기 */
     		document.getElementById('registerBtn').style.display = 'none';
     		document.getElementById('updateBtn').style.display = '';
     		document.getElementById('deleteBtn').style.display = '';
     		
     		/* 테이블의 내용을 옆의 Form 에 반영하기 */
-    		$('#product_code').val($('#pcode').text());
-    		$('#product_name').val($('#pname').text());
+    		$('#product_code').val($(this).find('.pcode').text());
+    		$('#product_name').val($(this).find('.pname').text());
     		$('#bomForm').empty();
     		
-    		code = $('#pcode').text();
+    		code = $(this).find('.pcode').text();
     		$.ajax({
     			type : 'GET',
     			url : '/bom/' + code,
     			contentType : "application/json; charset-utf-8",
     			success : function(result, status, xhr) {
     				for(var i = 0; i < result.length; i++) {
-    					$('#bomForm').append('<div class="form-group row"><label class="col-sm-3 col-form-label">원자재코드</label><div class="col-sm-9"><input type="text" class="form-control raw_code" readonly="readonly" placeholder="원자재 코드" name="raw_material_code" data-bs-toggle="modal" data-bs-target="#exampleModal"></div></div><div class="form-group row"><label class="col-sm-3 col-form-label">수량</label><div class="col-sm-9"><input type="text" class="form-control" name="amount" placeholder="수량"></div></div>');
+    					$('#bomForm').append('<div class="form-group row"><label class="col-sm-3 col-form-label">원자재코드</label><div class="col-sm-9"><input type="text" class="form-control raw_code" readonly="readonly" value="'+ result[i].raw_materials_code + '" name="raw_material_code" data-bs-toggle="modal" data-bs-target="#exampleModal"></div></div><div class="form-group row"><label class="col-sm-3 col-form-label">수량</label><div class="col-sm-9"><input type="text" class="form-control" name="amount" value="'+ result[i].amount +'" placeholder="수량"></div></div>');
     				}
     				
     			},
@@ -251,9 +252,71 @@
     		
     	});
     	
-    
-    	$('.modal-body').find('tbody').on('click', function() {
-    		console.log('aaa');
+    	$('#exampleModal').on('shown.bs.modal', function () {
+    		  // Bind click event to elements inside the modal
+    		  $('.rawbody').on('click',  '.rawitem', function () {
+    			  raw_code_input.val($(this).find('.rcode').text());
+    			  $('#exampleModal').modal('hide');
+    		      
+    		  });
+    		});
+    	
+    	$('#updateBtn').on('click', function() {
+    		product = {
+    			product_code : $('#product_code').val(),
+    			name : $('#product_name').val(),
+    			item_code : $('#product_code').val(),
+    		}
+    		
+    		$.ajax({
+    			type : 'PUT',
+    			url : '/product',
+    			data : product,
+    			contentType : "application/json; charset-utf-8",
+    			success : function(result, status, xhr) {
+    				raw_product.find('.pcode').val(product.product_code);
+    				raw_product.find('.pname').val(product.name);
+    			},
+    			error : function(xhr, status, er) {
+    				console.log(er);
+    			}
+    		});
+    		
+    		// 같은 name을 가진 태그들 선택
+    		const codeElements = document.querySelectorAll('input[name="raw_material_code"]');
+    		// value 값을 담을 배열 초기화
+    		const codeArray = [];
+    		// 각 태그의 value 값을 배열에 저장
+    		codeElements.forEach((input) => {
+    		  codeArray.push(input.value);
+    		});
+    		console.log(codeArray);
+    		const amountElements = document.querySelectorAll('input[name="amount"]');
+    		const amountArray = [];
+    		amountElements.forEach((input) => {
+    			amountArray.push(input.value);
+      		});
+    		console.log(amountArray); // ["Value 1", "Value 2", "Value 3"]
+    		
+    		bom = {
+    			raw_material_code : codeArray,
+    			amount : amountArray
+    		};
+    		
+    		$.ajax({
+    			type : 'PUT',
+    			url : '/bom/'+ product.product_code,
+    			data : {bom : bom},
+    			dataType : 'json',
+    			traditional: true,
+    			success : function(result, status, xhr) {
+    				console.log(result);
+    			},
+    			error : function(xhr, status, er) {
+    				console.log(er);
+    			}
+    		});
+    		
     	});
     </script>
   </body>

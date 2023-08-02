@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.zerock.domain.BetweenDateVO;
 import org.zerock.domain.PMListVO;
 import org.zerock.domain.ProductionListVO;
 import org.zerock.domain.ProductionMachineVO;
@@ -26,14 +27,14 @@ public class ProductionRestController {
 	private ProductionRequsetListService service;
 
 	//조회 버튼
-//	@GetMapping("/pm/get")
-//	public ResponseEntity<Object> getPM(@RequestBody int machine_code) {
-//		log.info("pm ajax 통신..."+machine_code);
-//		return ResponseEntity.ok(m_service.getPMonce(machine_code));
-//	}
+	@PostMapping("production/requestList/get")
+	public ResponseEntity<Object> getPM(@RequestBody BetweenDateVO vo) {
+		log.info("productionList ajax 통신..."+vo);
+		return ResponseEntity.ok(service.getProductionList(vo));
+	}
 
 	// 생산 버튼
-	@PostMapping("/prdocution/requestList/register")
+	@PostMapping("production/requestList/register")
 	public ResponseEntity<Object> registerProduction(@RequestBody ProductionRecordVO vo) {
 		log.info("product ajax 통신..."+vo);
 		return ResponseEntity.ok(service.product(vo));

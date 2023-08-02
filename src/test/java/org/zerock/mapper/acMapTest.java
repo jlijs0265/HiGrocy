@@ -16,7 +16,7 @@ import lombok.extern.log4j.Log4j;
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
 
-public class accountTest {
+public class acMapTest {
 
 	@Autowired
 	private accountMapper mapper;
@@ -24,13 +24,13 @@ public class accountTest {
 //	@Test
 //	public void insertTest() {
 //		accountVO vo = new accountVO();
-//		vo.setAccount_code(2);
-//		vo.setName("ªÁ¿⁄«•");
-//		vo.setPhone_number("010-1234-5678");
+//		vo.setAccount_code(1);
+//		vo.setName("∞ı«•");
+//		vo.setPhone_number("010-1432-5678");
 //		
 //		mapper.insert(vo);
 //	}
-	
+//	
 	
 //	@Test
 //	public void readTest() {

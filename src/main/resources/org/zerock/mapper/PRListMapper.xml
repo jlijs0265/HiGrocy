@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.PRListMapper">
+
+  <select id="getlist" resultType="org.zerock.domain.PRListVO">
+  	SELECT * FROM pr_list 
+  </select>
+
+<!--TODO:pr_record_code 나중에 맞게 수정해야됨  -->
+	<insert id="insert" parameterType="org.zerock.domain.PRListVO">
+		insert into pr_list (pr_code, item_code, amount )
+		VALUES(#{pr_code}, #{item_code}, #{amount})
+	</insert>
+	
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.PRRecordMapper">
+
+  <select id="getlist" resultType="org.zerock.domain.PRRecordVO">
+  	SELECT * FROM pr_record 
+  </select>
+
+<!--TODO:pr_record_code 나중에 맞게 수정해야됨  -->
+	<insert id="insert" parameterType="org.zerock.domain.PRRecordVO">
+		insert into pr_record (pr_record_code ,request_date ,request_manager)
+		VALUES(#{pr_record_code}, sysdate, #{request_manager})
+	</insert>
+	
+  <select id="getdiff" parameterType="org.zerock.domain.BetweenDateVO" resultType="org.zerock.domain.ProductionListVO">
+  	(SELECT pr_record_code AS "PR_code", item_code 
+  	FROM (select pr_record_code from pr_record 
+  	<![CDATA[
+  	where request_date >= #{start}
+  	AND request_date <= #{end}
+  	]]>) 
+  	LEFT JOIN
+  	PR_list
+	ON pr_record_code = PR_code)
+	
+	MINUS
+	  	
+	(SELECT PR_code, item_code 
+  	FROM production_list
+  	<![CDATA[
+  	where sdate >= #{start}
+  	AND sdate <= #{end}
+  	]]>) 
+  	
+  </select>
+	
+</mapper>

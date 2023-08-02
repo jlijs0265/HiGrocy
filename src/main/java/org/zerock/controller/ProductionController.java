@@ -17,7 +17,7 @@ public class ProductionController {
 	private ProductionRequsetListService service;
 		
 	@GetMapping("/production/requestList")
-	public void viewList(Model model) {
+	public void viewList() {
 		log.info("requestList....page....");
 	}
 }

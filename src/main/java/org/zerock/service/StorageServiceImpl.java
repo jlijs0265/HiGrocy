@@ -2,45 +2,51 @@ package org.zerock.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.StorageVO;
+import org.zerock.mapper.StorageMapper;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
+@AllArgsConstructor
 @Service
 @Log4j
 public class StorageServiceImpl implements StorageService {
 
+	
+	private StorageMapper mapper;
+	
 	@Override
 	public List<StorageVO> getList() {
-		// TODO Auto-generated method stub
-		return null;
+		log.info("getList service execute...");
+		return mapper.getList();
 	}
 
 	@Override
 	public int register(StorageVO vo) {
-		// TODO Auto-generated method stub
-		log.info("vo............."+vo);
+		log.info("register service execute..."+vo);
 		
-		return 0;
+		return mapper.register(vo);
 	}
 
 	@Override
-	public int update(Long code) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int update(StorageVO vo) {
+		log.info("update service execute..."+vo);
+		return mapper.update(vo);
 	}
 
 	@Override
 	public int delete(int code) {
-		// TODO Auto-generated method stub
-		return 0;
+		log.info("delete service execute..."+code);
+		return mapper.delete(code);
 	}
 
 	@Override
-	public StorageVO get() {
-		// TODO Auto-generated method stub
-		return null;
+	public StorageVO get(int code) {
+		log.info("get service execute..."+code);
+		return mapper.get(code);
 	}
 
 }

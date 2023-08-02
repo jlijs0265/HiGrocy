@@ -26,7 +26,7 @@
 	
 	<update id="update">
 		update account set
-		name = #{name}
+		name = #{name},
 		phone_number = #{phone_number}
 		where account_code = #{account_code}
 	</update>

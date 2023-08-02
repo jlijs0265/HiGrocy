@@ -52,29 +52,21 @@
 									<table id="storageList" class="table table-bordered">
 										<thead style="background-color: #A3B5E6;">
 											<tr>
-												<th>#</th>
 												<th>창고 코드</th>
 												<th>창고명</th>
 												<th>창고 위치</th>
 												<th>담당자</th>
-												<th>진행도</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>1</td>
-												<td>001</td>
-												<td>분당 1창고</td>
-												<td>경기도 성남시 분당구 삼평동 123-45</td>
-												<td>백설</td>
-												<td>
-													<div class="progress">
-														<div class="progress-bar bg-success" role="progressbar"
-															style="width: 25%" aria-valuenow="25" aria-valuemin="0"
-															aria-valuemax="100"></div>
-													</div>
-												</td>
-											</tr>
+											<c:forEach items="${storageList}" var="storageList">
+                                                      <tr class="" id="storageItem">
+                                                      <td id="rcode"><c:out value="${storageList.storage_code}" /></td>
+                                                      <td id="rname"><c:out value="${storageList.name}" /></td>
+                                                      <td id="rlocation"><c:out value="${storageList.location}" /></td>
+                                                      <td id="rmanager"><c:out value="${storageList.manager}" /> </td>
+                                                    </tr>
+                                                  </c:forEach>
 										</tbody>
 									</table>
 								</div>
@@ -85,11 +77,11 @@
 							<div class="card">
 								<div class="card-body">
 									<h4 class="card-title">창고 입력</h4>
-									<form class="forms-storage" action="insert/storage" method="post">
-										<div class="form-group">
+									<form class="forms-storage">
+									<div class="form-group editForm" style="display: none;">
 											<label for="storageCodeLabel">StorageCode</label> 
 											<input type="text" class="form-control" id="storageCode"
-												name="storageCode" placeholder=no >
+												name="storageCode" placeholder=no readonly="readonly" >
 										</div>
 										<div class="form-group">
 											<label for="storageCodeLabel">Storage</label> <input
@@ -102,15 +94,16 @@
 												name="storageLocation" placeholder="Location">
 										</div>
 										<div class="form-group">
-											<label for="storageAdmin">Admin</label> <input type="text"
-												class="form-control" id="storageAdmin" name="storageAdmin"
-												placeholder="storageAdmin">
+											<label for="storageManager">Admin</label> <input type="text"
+												class="form-control" id="storageManager" name="storageManager"
+												placeholder="storageManager">
 										</div>
-										<button type="button" id="storageReg"
-											class="btn btn-gradient-info btn-rounded btn-fw">Submit</button>
-										<button type="button" id="storageEdit" class="btn btn-gradient-info btn-rounded btn-fw">Edit</button> 
-										<button type="button" id="storageDel" class="btn btn-light">Cancel</button>
+											<button type="button" id="storageReg"
+											class="btn btn-gradient-info btn-rounded btn-fw regForm" style="display: block">Submit</button>
+											<button type="button" id="storageEdit" class="btn btn-gradient-info btn-rounded btn-fw editForm" style="display: none;">Edit</button> 
+											<button type="button" id="storageDel" class="btn btn-light btn-rounded btn-fw editForm" style="display: none;">Delete</button>									
 									</form>
+									
 								</div>
 								<!-- cardbody end -->
 							</div>
@@ -160,36 +153,43 @@
 		var storageEditBtn = $("#storageEdit");
 		var storageDelBtn = $("#storageDel");
 		var storageList = $("#storageList");
-		
+		var memory = 0;
 		/* List Row Click event */
 		$(storageList).on("click","tr",function(e){
 			e.stopPropagation();
 			var tr = $(this);
 			var td = tr.children();
-			
-			var no = td.eq(1).text();
-			var storageName = td.eq(2).text();
-			var address = td.eq(3).text();
-			var adminName = td.eq(4).text();
+			memory = tr;
+			var no = td.eq(0).text();
+			var storageName = td.eq(1).text();
+			var address = td.eq(2).text();
+			var adminName = td.eq(3).text();
 			console.log("클릭한 ROW의 모든 데이터 "+no);
 			console.log("클릭한 ROW의 모든 데이터 "+storageName);
 			console.log("클릭한 ROW의 모든 데이터 "+address);
 			console.log("클릭한 ROW의 모든 데이터 "+adminName);
 			
+		
 			document.getElementById("storageCode").value = no;
 			document.getElementById("storage").value = storageName;
 			document.getElementById("storageLocation").value = address;
-			document.getElementById("storageAdmin").value = adminName;
+			document.getElementById("storageManager").value = adminName;
 			
+			var regform = $(".regForm");
+			var editform = $(".editForm");
+			regform.css("display", "none");
+			/* Table Row Background-Color Change */
+			tr.css("background-color","#E5E5E5");
+			editform.css("display", "inline-block");
 		})
 			
 		/************Call storageBtn************/
 		$(storageRegBtn).on("click", function() {
 			var data = {
-				storageCode : document.getElementById("storageCode").value,
-				storage : document.getElementById("storage").value,
+				storage_code : document.getElementById("storageCode").value,
+				name : document.getElementById("storage").value,
 				location : document.getElementById("storageLocation").value,
-				admin : document.getElementById("storageAdmin").value,
+				manager : document.getElementById("storageManager").value,
 			}
 			
 			$.ajax({
@@ -216,12 +216,16 @@
 			console.log(data);
 		})//end storageRegBtn Function
 		
+		function callback(result) {
+			  console.log(result);
+			}
+		
 		$(storageEditBtn).on("click",function(){
 			var data = {
-					storageCode : document.getElementById("storageCode").value,
-					storage : document.getElementById("storage").value,
+					storage_code : document.getElementById("storageCode").value,
+					name : document.getElementById("storage").value,
 					location : document.getElementById("storageLocation").value,
-					admin : document.getElementById("storageAdmin").value,
+					manager : document.getElementById("storageManager").value
 			}
 			
 			$.ajax({
@@ -234,9 +238,13 @@
 				contentType : "application/json; charset=utf-8",
 				success : function(result, status, xhr) {
 					$(".forms-storage")[0].reset();
-					if (callback) {
-						callback(result);
-					}
+					var regform = $(".regForm");
+					var editform = $(".editForm");
+					/* Table Row Background-Color Reset */
+					memory.css("background-color", "white");
+					 regform.css("display", "block");
+					 editform.css("display", "none");
+					
 				},
 				error : function(xhr, status, er) {
 					if (er) {
@@ -247,22 +255,26 @@
 			console.log(data);
 		})//end storageEditBtn Function
 		
+		
 		$(storageDelBtn).on("click", function() {
-		    var storageCode = document.getElementById("storageCode").value;
+		    var storage_code = document.getElementById("storageCode").value;
 
 		    $.ajax({
 		        // 요청 타입
 		        type: 'DELETE',
 		        // 요청 URL에 storageCode 포함
 		        url: 'storage/',
-		        data : storageCode,
+		        data : storage_code,
 		        // 요청의 Content-Type 무시
 		        contentType: "application/json; charset=utf-8",
 		        success: function(result, status, xhr) {
 		            $(".forms-storage")[0].reset();
-		            if (callback) {
-		                callback(result);
-		            }
+		            var regform = $(".regForm");
+					var editform = $(".editForm");
+					/* Table Row Background-Color Reset */
+					memory.css("background-color", "white");
+					 regform.css("display", "block");
+					 editform.css("display", "none");
 		        },
 		        error: function(xhr, status, er) {
 		            if (er) {
@@ -272,32 +284,6 @@
 		    });
 		});
 
-		
-		/* $(storageDelBtn).on("click",function(){
-			var storageCode = document.getElementById("storageCode").value;
-			
-			$.ajax({
-				//요청 타입
-				type : 'DELETE',
-				//요청 URL
-				url : 'storage',
-				data : storageCode,
-				success : function(result, status, xhr) {
-					$(".forms-storage")[0].reset();
-					if (callback) {
-						callback(result);
-					}
-				},
-				error : function(xhr, status, er) {
-					if (er) {
-						error(er);
-					}
-				}
-			});
-			console.log(data);
-		}) */
-		
-		
 	})//end window
 </script>
 </html>

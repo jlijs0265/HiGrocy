@@ -12,5 +12,7 @@ public interface ProductService {
 	boolean registerItem(ItemVO vo);
 	boolean registerProduct(ProductVO vo, ArrayList<BomVO> bomList);
 	ArrayList<BomVO> getBomList(int product_code);
+	boolean updateProduct(ProductVO vo);
+	boolean updateBom(BomVO vo);
 	
 }

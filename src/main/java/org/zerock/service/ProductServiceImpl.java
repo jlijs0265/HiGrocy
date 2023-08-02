@@ -1,17 +1,16 @@
 package org.zerock.service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.domain.BomVO;
 import org.zerock.domain.ItemVO;
 import org.zerock.domain.ProductVO;
 import org.zerock.mapper.ProductMapper;
 
-import lombok.extern.log4j.Log4j;
-
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
 @Service
 @AllArgsConstructor
@@ -30,6 +29,7 @@ public class ProductServiceImpl implements ProductService{
 		return false;
 	}
 
+	@Transactional
 	@Override
 	public boolean registerProduct(ProductVO vo, ArrayList<BomVO> bomList) {
 		// 품목 등록
@@ -40,6 +40,7 @@ public class ProductServiceImpl implements ProductService{
 		if(itemResult) {
 			int item_code = mapper.getMaxItemCode();
 			vo.setItem_code(item_code);
+			vo.setProduct_code(item_code);
 			boolean result = mapper.registerProduct(vo);
 			// bom 등록
 			for(BomVO bom : bomList) {
@@ -58,5 +59,14 @@ public class ProductServiceImpl implements ProductService{
 		return mapper.getBomList(product_code);
 	}
 	
+	@Override
+	public boolean updateProduct(ProductVO vo) {
+		return false;
+	}
+	
+	@Override
+	public boolean updateBom(BomVO vo) {
+		return false;
+	}
 
 }

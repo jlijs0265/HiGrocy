@@ -31,12 +31,10 @@ public class StorageRestController {
 	  public ResponseEntity<String> registerStorage(@RequestBody StorageVO vo){
 		  log.info("Storage register..........");
 		  log.info("vo입니다 : "+vo);
-	  
-	  	return new ResponseEntity<>("success",HttpStatus.OK);
-		/*
-		 * return service.register(vo) ==1 ? new ResponseEntity<>("success",
-		 * HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		 */ }
+			/* return new ResponseEntity<>("success",HttpStatus.OK); */
+		  return service.register(vo) ==1 ? new ResponseEntity<>("success",
+		  HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		  }
 	 
 	
 	
@@ -44,23 +42,18 @@ public class StorageRestController {
 	public ResponseEntity<String> updateStorage(@RequestBody StorageVO vo){
 		log.info("Storage update..........");
 		log.info("vo입니다 : "+vo);
-		
-		return new ResponseEntity<>("success",HttpStatus.OK);
-		/*
-		 * return service.update(null) ==1 ? new ResponseEntity<>("success",
-		 * HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		 */
+		  return service.update(vo) ==1 ? new ResponseEntity<>("success",
+		  HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		 
 	}
 	
 	@DeleteMapping(value="/storage", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> deleteStorage(@RequestBody int code) {
 		log.info("Storage delete........code:"+code);
-		
-		return new ResponseEntity<>("success",HttpStatus.OK);
-		/*
-		 * return service.delete(code) == 1 ? new
-		 * ResponseEntity<>("success",HttpStatus.OK) : new
-		 * ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		 */
+
+		  return service.delete(code) == 1 ? new
+		  ResponseEntity<>("success",HttpStatus.OK) : new
+		  ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		 
 	}
 }

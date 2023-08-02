@@ -29,5 +29,13 @@
 	<select id="getBomList" resultType="org.zerock.domain.BomVO" parameterType="int">
 		SELECT * FROM bom where product_code = #{product_code}
 	</select>
+	
+	<update id="updateProduct" parameterType="org.zerock.domain.ProductVO">
+		UPDATE product SET name=#{name} where product_code=#{product_code}
+	</update>
+	
+	<delete id="deleteBom" parameterType="org.zerock.domain.BomVO">
+		DELETE FROM bom WHERE product_code = #{product_code} AND raw_materials_code = #{raw_materials_code}
+	</delete>
 
 </mapper>

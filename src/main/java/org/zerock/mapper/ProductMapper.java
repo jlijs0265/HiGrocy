@@ -14,6 +14,7 @@ public interface ProductMapper {
 	boolean registerProduct(ProductVO vo);
 	boolean registerBom(BomVO vo);
 	ArrayList<BomVO> getBomList(int product_code);
-	
+	boolean updateProduct(ProductVO vo);
+	boolean deleteBom(BomVO vo);
 
 }

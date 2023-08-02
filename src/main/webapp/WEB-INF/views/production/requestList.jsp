@@ -43,13 +43,13 @@
 				<div class="row">
 				<div class = "col-md-7 row">
 					<div class= "col-sm-5">
-						<input type = "date">
+						<input type = "date" id = "start">
 					</div>
 					<div class = "col-sm-2">
 					<span> ~ </span>
 					</div>
 					<div class = "col-sm-5">
-						<input type = "date">
+						<input type = "date" id = "end">
 					</div>
 					</div>
 					<div class = "col-md-2">
@@ -138,36 +138,29 @@
 <script src="/resources/assets/js/hoverable-collapse.js"></script>
 <script src="/resources/assets/js/misc.js"></script>
 <!-- endinject -->
-<!-- <script>
-  $("#pmListDel").hide();
-  $('#pmListUp').hide();
-	let pm_list_code_v = -1;
-  $("#MDel").hide();
-  $('#MUp').hide();
-	let m_code_v = -1;
-	//생산기계목록 등록 버튼 눌렀을때
+<script>
+
+	//조회 버튼 눌렀을때
 	//
-	$("#pmListReg").on("click", function() {
-		var pm_list = {
-			pm_list_code : pm_list_code_v,
-			machine_code : document.getElementById("input_machine_code").value,
-			name : document.getElementById("input_machine_name").value,
-			factory_name : document.getElementById("input_factory_name").value,
-			location : document.getElementById("input_location").value
+	$("#select").on("click", function() {
+		var BetweenDateVO = {
+			start : $("#start").val(),
+			end : $("#end").val()
 		}
+		console.log(BetweenDateVO);
+
 
 		$.ajax({
 			//요청 타입
-			type : 'post',
+			type : 'POST',
 			//요청 URL
-			url : 'pmlist/register',
+			url : '/production/requestList/get',
 			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
-			data : JSON.stringify(pm_list),
+			data : JSON.stringify(BetweenDateVO),
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
-				$("#pm_list_detail")[0].reset();
-        $(location).attr('href','/pm');
-
+				$("tbody").empty();
+				//TODO:희진이꺼보고 배낄것
       },
 			error : function(xhr, status, er) {
 				if (er) {
@@ -176,6 +169,8 @@
 			}
 		});
 	});
+	</script>
+	<!--
   //기계목록의 등록버튼을 눌렀을때
 	$("#MReg").on("click", function() {
 		var m_list = {

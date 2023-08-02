@@ -1,4 +1,4 @@
-package org.zerock.mapper;
+package org.zerock.service;
 
 import static org.junit.Assert.*;
 
@@ -14,24 +14,25 @@ import lombok.extern.log4j.Log4j;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
-public class StorageMapperTests {
-
-	@Autowired
-	private StorageMapper mapper;
+public class StorageServiceTests {
 	
-	/*TEST Complete*/
+	@Autowired
+	private StorageService service;
+	
+	
+/********TEST COMPLETE*************/	
 	
 //	//창고 등록
 //	@Test
 //	public void registerTest() {
-//		log.info("register mapperTest...");
+//		log.info("register serviceTest...");
 //		StorageVO vo = new StorageVO();
-//		vo.setStorage_code(2);
+//		vo.setStorage_code(5);
 //		vo.setName("홍익동 123번지 111창고");
 //		vo.setLocation("서울특별시 성동구 홍익동 123번지");
 //		vo.setManager("홍길동");
 //		
-//		mapper.register(vo);
+//		service.register(vo);
 //	}
 //	//창고 수정
 //	@Test
@@ -41,33 +42,34 @@ public class StorageMapperTests {
 //		vo.setName("홍익동 123번지 111창고");
 //		vo.setLocation("서울특별시 성동구 홍익동 123번지");
 //		vo.setManager("박길동");
-//		log.info("update mapperTest...");
+//		log.info("update serviceTest...");
 //		
-//		mapper.update(vo);
+//		service.update(vo);
 //		
 //	}
 //	//창고 삭제
 //	@Test
 //	public void deleteTest() {
-//		log.info("delete mapperTest...");
+//		log.info("delete serviceTest...");
 //		StorageVO vo = new StorageVO();
-//		vo.setStorage_code(3);
-//		mapper.delete(vo.getStorage_code());
+//		vo.setStorage_code(5);
+//		service.delete(vo.getStorage_code());
 //	}
 //	//창고 단일 조회
 //	@Test
 //	public void getTest() {
-//		StorageVO vo = mapper.get(1);
+//		StorageVO vo = service.get(1);
 //		
-//		log.info("get mapperTest..."+ vo);
+//		log.info("get serviceTest..."+ vo);
 //		
 //	}
 //	//창고 전체 조회
 //	@Test
 //	public void getListTest() {
 //		
-//		log.info("getList mapperTest..." + mapper.getList());
+//		log.info("getList serviceTest..." + service.getList());
 //		
 //	}
 	
+
 }

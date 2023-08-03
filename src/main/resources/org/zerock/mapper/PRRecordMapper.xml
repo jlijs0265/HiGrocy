@@ -14,26 +14,31 @@
 		VALUES(#{pr_record_code}, sysdate, #{request_manager})
 	</insert>
 	
-  <select id="getdiff" parameterType="org.zerock.domain.BetweenDateVO" resultType="org.zerock.domain.ProductionListVO">
-  	(SELECT pr_record_code AS "PR_code", item_code 
+  <select id="getdiff" parameterType="org.zerock.domain.BetweenDateVO" resultType="org.zerock.domain.ProductionRequestListVO">
+	<![CDATA[SELECT A.PR_CODE, A.item_CODE, B.request_date, b.request_manager, c.amount
+FROM
+(SELECT pr_record_code AS "PR_CODE", item_code 
   	FROM (select pr_record_code from pr_record 
-  	<![CDATA[
   	where request_date >= #{start}
-  	AND request_date <= #{end}
-  	]]>) 
+  	AND request_date <= #{end})
   	LEFT JOIN
   	PR_list
-	ON pr_record_code = PR_code)
-	
-	MINUS
+	ON pr_record_code = PR_code
+    MINUS
 	  	
-	(SELECT PR_code, item_code 
+	SELECT PR_code, item_code 
   	FROM production_list
-  	<![CDATA[
   	where sdate >= #{start}
   	AND sdate <= #{end}
-  	]]>) 
-  	
+    )A
+    LEFT JOIN
+    pr_record B
+    ON a.pr_code = b.pr_record_code
+    LEFT JOIN
+    pr_list C
+    on a.pr_code = c.pr_code
+    AND a.item_code = c.item_code
+  ]]>
   </select>
 	
 </mapper>

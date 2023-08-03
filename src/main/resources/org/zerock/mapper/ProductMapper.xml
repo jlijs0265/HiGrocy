@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.ProductMapper">
+	
+	<select id="getProductList" resultType="org.zerock.domain.ProductVO">
+		select * from product
+	</select>
+	
+	<insert id="registerItem" parameterType="org.zerock.domain.ItemVO">
+		INSERT INTO item (item_code, type) VALUES (seq_item.nextval, #{type})
+	</insert>
+	
+	<select id="getMaxItemCode" resultType="int">
+		SELECT max(item_code) FROM item
+	</select>
+	
+	<insert id="registerProduct" parameterType="org.zerock.domain.ProductVO">
+		INSERT INTO product (product_code, item_code, name) 
+			VALUES ( #{product_code}, #{item_code}, #{name})
+	</insert>
+	
+	<insert id="registerBom" parameterType="org.zerock.domain.BomVO">
+		INSERT INTO bom (raw_materials_code, product_code, amount) 
+			VALUES (#{raw_materials_code}, #{product_code}, #{amount})
+	</insert>
+	
+	<select id="getBomList" resultType="org.zerock.domain.BomVO" parameterType="int">
+		SELECT * FROM bom where product_code = #{product_code}
+	</select>
+	
+	<update id="updateProduct" parameterType="org.zerock.domain.ProductVO">
+		UPDATE product SET name=#{name} where product_code=#{product_code}
+	</update>
+	
+	<delete id="deleteBom" parameterType="int">
+		DELETE FROM bom WHERE product_code = #{product_code}
+	</delete>
+	
+	<delete id="deleteProduct" parameterType="int">
+		DELETE FROM product WHERE product_code = #{product_code}
+	</delete>
+
+</mapper>

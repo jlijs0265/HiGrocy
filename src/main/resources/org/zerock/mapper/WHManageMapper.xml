@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.WHManageMapper">
+
+	<select id="get" resultType="org.zerock.domain.WHListVO">
+		<![CDATA[
+  		select * from warehousing_record where warehousing_record_code=#{warehousing_record_code}
+  		]]>
+	</select>
+	
+	<select id="getList" resultType="org.zerock.domain.WHListVO">
+		<![CDATA[
+  		select * from warehousing_record where warehousing_record_code>0
+  		]]>
+	</select>
+	
+<!-- seq_storage_code.nextval or #{storage_code}-->
+	<insert id="register" >
+		insert into warehousing_record(
+		warehousing_record_code,
+		item_code,
+		storage_code,
+		warehousing_type,
+		wr_date,
+		amount,
+		warehousing_type_code,
+		keeping_date
+		)
+		values (
+		#{warehousing_record_code},
+		#{item_code},
+		#{storage_code},
+		#{warehousing_type},
+		#{wr_date},
+		#{amount},
+		#{warehousing_type_code},
+		#{keeping_date}
+		)
+	</insert>
+	
+	<update id="update">
+		update warehousing_record set
+			warehousing_record_code=#{warehousing_record_code},
+			item_code=#{item_code},
+			storage_code=#{storage_code},
+			warehousing_type=#{warehousing_type},
+			wr_date=#{wr_date},
+			amount=#{amount},
+			warehousing_type_code=#{warehousing_type_code},
+			keeping_date=#{keeping_date}
+		where
+			warehousing_record_code=#{warehousing_record_code}
+	</update>
+	
+	<delete id="delete">
+		delete from warehousing_record where warehousing_record_code=#{code}
+	</delete>
+	
+	
+	
+	
+</mapper>

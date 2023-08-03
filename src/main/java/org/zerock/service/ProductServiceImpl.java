@@ -59,14 +59,27 @@ public class ProductServiceImpl implements ProductService{
 		return mapper.getBomList(product_code);
 	}
 	
+	// 생산품 수정
 	@Override
 	public boolean updateProduct(ProductVO vo) {
-		return false;
+		return mapper.updateProduct(vo);
+	}
+	
+	// bom 수정
+	// bom 삭제 후, 다시 생성할 것
+@Override
+	public boolean deleteBom(int product_code) {
+		return mapper.deleteBom(product_code);
 	}
 	
 	@Override
 	public boolean updateBom(BomVO vo) {
-		return false;
+		return mapper.registerBom(vo);
+	}
+	
+	@Override
+	public boolean deleteProduct(int product_code) {
+		return mapper.deleteProduct(product_code);
 	}
 
 }

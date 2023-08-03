@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.PRRecordMapper">
+
+  <select id="getlist" resultType="org.zerock.domain.PRRecordVO">
+  	SELECT * FROM pr_record 
+  </select>
+
+<!--TODO:pr_record_code 나중에 맞게 수정해야됨  -->
+	<insert id="insert" parameterType="org.zerock.domain.PRRecordVO">
+		insert into pr_record (pr_record_code ,request_date ,request_manager)
+		VALUES(#{pr_record_code}, sysdate, #{request_manager})
+	</insert>
+	
+  <select id="getdiff" parameterType="org.zerock.domain.BetweenDateVO" resultType="org.zerock.domain.ProductionRequestListVO">
+	<![CDATA[SELECT A.PR_CODE, A.item_CODE, B.request_date, b.request_manager, c.amount
+		FROM
+		(SELECT pr_record_code AS "PR_CODE", item_code 
+		  	FROM (select pr_record_code from pr_record 
+		  	where request_date >= #{start}
+		  	AND request_date <= #{end})
+		  	LEFT JOIN
+		  	PR_list
+			ON pr_record_code = PR_code
+		    MINUS
+			  	
+			SELECT PR_code, item_code 
+		  	FROM production_list
+		  	where sdate >= #{start}
+		  	AND sdate <= #{end}
+		    )A
+		    LEFT JOIN
+		    pr_record B
+		    ON a.pr_code = b.pr_record_code
+		    LEFT JOIN
+		    pr_list C
+		    on a.pr_code = c.pr_code
+		    AND a.item_code = c.item_code
+		  ]]>
+  </select>
+  
+  <select id="getProductList" resultType="org.zerock.domain.ProductVO">
+  		SELECT * FROM product
+  </select>
+  
+  <select id="">
+  	select * from order_list
+    where order_list.item_code IN(select raw_materials_code from bom where bom.product_code = 19)
+  </select>
+	
+</mapper>

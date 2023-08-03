@@ -161,8 +161,7 @@
 			success : function(result, status, xhr) {
 				$("tbody").empty();
 				for(var i = 0; i < result.length; i++) {
-					//TODO: 생산요청날짜 data formating 변환 찾아보기
-					$('tbody').append('<tr><td>'+result[i].pr_code+'</td><td>'+result[i].request_date+'</td><td>'+result[i].request_manager+'</td><td>'+result[i].item_code+'</td><td>'+result[i].amount+'</td><td><input type = "number" id = "product_amount" min = "1" max = "10000"></td><td><input type = "number" id = "defective_amount" min = "1" max = "10000"></td><td><button type="button" id="select" class="btn-sm btn-gradient-primary mr-2">생산</button></td></tr>');
+					$('tbody').append('<tr><td>'+result[i].pr_code+'</td><td>'+displayTime(result[i].request_date)+'</td><td>'+result[i].request_manager+'</td><td>'+result[i].item_code+'</td><td>'+result[i].amount+'</td><td><input type = "number" id = "product_amount" min = "1" max = "10000"></td><td><input type = "number" id = "defective_amount" min = "1" max = "10000"></td><td><button type="button" id="select" class="btn-sm btn-gradient-primary mr-2">생산</button></td></tr>');
 					}
 				},
 			error : function(xhr, status, er) {
@@ -183,8 +182,16 @@
 				usage_time : $(input_elements[0]).val(),
 				defective_amount : $(input_elements[1]).val()
 		}
-		console.log(product_recode);
+		console.log(JSON.stringify(product_recode));
 	})
+	//날짜 변경 함수
+	const displayTime = function(timeValue){
+		var dateObj = new Date(timeValue);
+		var yy = dateObj.getFullYear();
+		var mm = dateObj.getMonth() +1;
+		var dd = dateObj.getDate();
+		return [yy, '-', (mm > 9 ? '': '0')+mm, '-',(dd>9 ? '': '0')+dd].join('');
+	}
 	
 	</script>
 	<!--

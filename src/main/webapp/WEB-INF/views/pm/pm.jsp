@@ -280,9 +280,9 @@
 			//요청 타입
 			type : 'post',
 			//요청 URL
-			url : 'pmlist/register',
+			url : 'pm/register',
 			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
-			data : JSON.stringify(pm_list),
+			data : JSON.stringify(m_list),
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
 				$("#pm_list_detail")[0].reset();

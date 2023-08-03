@@ -160,8 +160,11 @@
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
 				$("tbody").empty();
-				//TODO:희진이꺼보고 배낄것
-      },
+				for(var i = 0; i < result.length; i++) {
+					//TODO: 생산요청날짜 data formating 변환 찾아보기
+					$('tbody').append('<tr><td>'+result[i].pr_code+'</td><td>'+result[i].request_date+'</td><td>'+result[i].request_manager+'</td><td>'+result[i].item_code+'</td><td>'+result[i].amount+'</td><td><input type = "number" id = "product_amount" min = "1" max = "10000"></td><td><input type = "number" id = "defective_amount" min = "1" max = "10000"></td><td><button type="button" id="select" class="btn-sm btn-gradient-primary mr-2">생산</button></td></tr>');
+					}
+				},
 			error : function(xhr, status, er) {
 				if (er) {
 					error(er);
@@ -169,6 +172,20 @@
 			}
 		});
 	});
+	//생산 버튼 눌렀을때
+	$("tbody").on("click", "button", function(){
+		var pks = this.parentElement.parentElement.querySelectorAll('td');
+		var input_elements = this.parentElement.parentElement.querySelectorAll('input');
+		console.log(pks[0]);
+		var product_recode = {
+				item_code : parseInt(pks[3].textContent),
+				PR_code : parseInt(pks[0].textContent),
+				usage_time : $(input_elements[0]).val(),
+				defective_amount : $(input_elements[1]).val()
+		}
+		console.log(product_recode);
+	})
+	
 	</script>
 	<!--
   //기계목록의 등록버튼을 눌렀을때

@@ -82,7 +82,7 @@
 		       		<div class="content-wrapper">
 		       			<div class="row h-100">
 		       				<!-- 원부자재 목록 조회 부분 -->
-		       				<div class="col-md-6 grid-margin stretch-card">
+		       				<div class="col-md-4 grid-margin stretch-card">
 			       				<div class="card">
 			       					<div class="card-body list-body">
 					                    <h4 class="card-title">생산품 목록</h4>
@@ -122,7 +122,7 @@
 			       			</div>
 			       			<!-- 원부자재 목록 조회 부분 끝-->
 			       			<!-- 원부자재 등록 부분 -->
-			       			<div class="col-md-6 grid-margin stretch-card">
+			       			<div class="col-md-8 grid-margin stretch-card">
 			       				<div class="card">
 			       					<div class="card-body">
 			       						<h4 class="card-title" id="raw-title">생산품 등록</h4>

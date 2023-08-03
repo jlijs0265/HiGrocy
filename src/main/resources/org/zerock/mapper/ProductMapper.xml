@@ -34,8 +34,12 @@
 		UPDATE product SET name=#{name} where product_code=#{product_code}
 	</update>
 	
-	<delete id="deleteBom" parameterType="org.zerock.domain.BomVO">
-		DELETE FROM bom WHERE product_code = #{product_code} AND raw_materials_code = #{raw_materials_code}
+	<delete id="deleteBom" parameterType="int">
+		DELETE FROM bom WHERE product_code = #{product_code}
+	</delete>
+	
+	<delete id="deleteProduct" parameterType="int">
+		DELETE FROM product WHERE product_code = #{product_code}
 	</delete>
 
 </mapper>

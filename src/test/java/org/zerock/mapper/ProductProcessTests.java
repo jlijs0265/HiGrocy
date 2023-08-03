@@ -26,7 +26,7 @@ public class ProductProcessTests {
 	
 	@Test
 	public void test() {
-		log.info(mapper.getlist());
+		log.info(mapper.getlist(19));
 	}
 
 //	@Test
@@ -69,14 +69,14 @@ public class ProductProcessTests {
 //		vo.setProduct_code(19);
 //		log.info(mapper.update(vo));
 //	}
-	@Test
-	public void inserttest1() {
-		ProductProcessVO vo = new ProductProcessVO();
-		vo.setMachine_code(4);
-		vo.setProcess_order(5);
-		vo.setProcess_time(2);
-		vo.setProduct_code(19);
-		log.info(mapper.insert(vo));
-	}
+//	@Test
+//	public void inserttest1() {
+//		ProductProcessVO vo = new ProductProcessVO();
+//		vo.setMachine_code(4);
+//		vo.setProcess_order(5);
+//		vo.setProcess_time(2);
+//		vo.setProduct_code(19);
+//		log.info(mapper.insert(vo));
+//	}
 	
 }

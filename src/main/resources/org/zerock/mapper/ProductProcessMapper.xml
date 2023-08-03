@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.ProductProcessMapper">
+
+  <select id="getlist" resultType="org.zerock.domain.ProductProcessVO">
+  	SELECT * FROM product_process 
+  </select>
+
+	<insert id="insert" parameterType="org.zerock.domain.ProductProcessVO">
+		insert into product_process (product_process_code ,product_code ,process_time ,process_order ,machine_code)
+		VALUES(seq_product_process_code.nextval, #{product_code}, #{process_time}, #{process_order},#{machine_code})
+	</insert>
+	
+	<update id="update" parameterType="org.zerock.domain.ProductProcessVO">
+		update product_process set
+		product_code = #{product_code}, process_time = #{process_time}, process_order = #{process_order}, machine_code = #{machine_code}
+		where product_process_code = #{product_process_code} 
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete product_process
+		where product_process_code = #{product_process_code}
+	</delete>
+
+</mapper>

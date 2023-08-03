@@ -11,6 +11,7 @@ import org.zerock.domain.PRListVO;
 import org.zerock.domain.PRRecordVO;
 import org.zerock.domain.ProductionListVO;
 import org.zerock.domain.ProductionRecordVO;
+import org.zerock.domain.ProductionRequestListVO;
 import org.zerock.mapper.PRListMapper;
 import org.zerock.mapper.PRRecordMapper;
 import org.zerock.mapper.ProductionListMapper;
@@ -33,7 +34,7 @@ public class ProductionRequsetListService {
 	
 	//생산요청 현황 조회
 	//조회버튼 눌렀을때 서비스 생산요청 목록 - 생산 목록 해서 (날짜별로)가져와야함
-	public List<PRRecordVO> getProductionList(BetweenDateVO vo){
+	public List<ProductionRequestListVO> getProductionList(BetweenDateVO vo){
 		return pr_record_mapper.getdiff(vo);
 	}
 	

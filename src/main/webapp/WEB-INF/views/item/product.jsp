@@ -22,7 +22,6 @@
     <link rel="shortcut icon" href="/resources/assets/images/favicon.ico" />
     
     <!-- jquery -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
   </head>
   <body>
@@ -194,7 +193,7 @@
 	<script src="/resources/assets/js/hoverable-collapse.js"></script>
 	<script src="/resources/assets/js/misc.js"></script>
     
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script type="text/javascript">
     	document.getElementById('updateBtn').style.display = 'none';
     	document.getElementById('deleteBtn').style.display = 'none';
@@ -271,11 +270,12 @@
     		$.ajax({
     			type : 'PUT',
     			url : '/product',
-    			data : product,
+    			data : JSON.stringify(product),
+    			async : false,
     			contentType : "application/json; charset-utf-8",
     			success : function(result, status, xhr) {
-    				raw_product.find('.pcode').val(product.product_code);
-    				raw_product.find('.pname').val(product.name);
+    				console.log(raw_product);
+    				raw_product.find('.pname').text(product.name);
     			},
     			error : function(xhr, status, er) {
     				console.log(er);
@@ -284,33 +284,63 @@
     		
     		// 같은 name을 가진 태그들 선택
     		const codeElements = document.querySelectorAll('input[name="raw_material_code"]');
-    		// value 값을 담을 배열 초기화
-    		const codeArray = [];
-    		// 각 태그의 value 값을 배열에 저장
-    		codeElements.forEach((input) => {
-    		  codeArray.push(input.value);
-    		});
-    		console.log(codeArray);
     		const amountElements = document.querySelectorAll('input[name="amount"]');
-    		const amountArray = [];
-    		amountElements.forEach((input) => {
-    			amountArray.push(input.value);
-      		});
-    		console.log(amountArray); // ["Value 1", "Value 2", "Value 3"]
     		
-    		bom = {
-    			raw_material_code : codeArray,
-    			amount : amountArray
-    		};
+  			bomList = [];
+    		
+    		for(var i = 0; i < codeElements.length; i++) {
+    			bom = {
+    					raw_materials_code : codeElements[i].value,
+    					amount : amountElements[i].value
+    			}
+    			bomList.push(bom);
+    		}
+    		console.log(bomList);
+    		
+    		/* bom 삭제 */
     		
     		$.ajax({
-    			type : 'PUT',
-    			url : '/bom/'+ product.product_code,
-    			data : {bom : bom},
-    			dataType : 'json',
-    			traditional: true,
+    			type : 'DELETE',
+    			url : '/bom/' + product.product_code,
+    			contentType : "application/json; charset-utf-8",
+    			async : false,
     			success : function(result, status, xhr) {
     				console.log(result);
+    			},
+    			error : function(xhr, status, er) {
+    				console.log(er);
+    			}
+    		});
+    		
+    		var bomJson = JSON.stringify(bomList);
+    		
+    		$.ajax({
+    			type : 'post',
+    			url : '/bom/'+ product.product_code,
+    			data : {bomList : bomJson},
+    			dataType : 'json',
+    			async : false,
+    			success : function(result, status, xhr) {
+    				console.log(result);
+    			},
+    			error : function(xhr, status, er) {
+    				console.log(er);
+    			}
+    		});
+    		
+    	});
+    	
+    	
+    	
+    	$('#deleteBtn').on('click', function() {
+    		
+    		$.ajax({
+    			type : 'DELETE',
+    			url : '/product/' + $('#product_code').val(),
+    			contentType : "application/json; charset-utf-8",
+    			success : function(result, status, xhr) {
+    				raw_product.remove();
+    				$("#rawForm")[0].reset();
     			},
     			error : function(xhr, status, er) {
     				console.log(er);

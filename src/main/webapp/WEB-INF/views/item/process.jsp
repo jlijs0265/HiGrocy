@@ -25,8 +25,7 @@
     <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
   </head>
   <body>
-  <div>
-	<!-- Modal -->
+  <!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-scrollable">
 	    <div class="modal-content">
@@ -181,65 +180,125 @@
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script type="text/javascript">
+
     	document.getElementById('updateBtn').style.display = 'none';
     	document.getElementById('deleteBtn').style.display = 'none';
     	var raw_code_input = 0;
     	var raw_product = 0;
     	var order = 1;
     	
+		//등록 버튼 눌렀을때
     	$('#registerBtn').on('click', function() {
+			var product_code = $('#product_code').val();
+			console.log(product_code);
 			var pm_list = [];
 			const codeElements = document.querySelectorAll('input[name="machine_code"]');
 			const orderElements = document.querySelectorAll('input[name="process_order"]');
 			const timeElements = document.querySelectorAll('input[name="process_time"]');
+			const ppcElements = document.querySelectorAll('input[name="product_process_code"]');
 
   			bomList = [];
     		
     		for(var i = 0; i < codeElements.length; i++) {
     			bom = {
+					product_code : product_code,
 					machine_code : codeElements[i].value,
 					process_order : orderElements[i].value,
-					process_time : timeElements[i].value
+					process_time : timeElements[i].value,
+					product_process_code : ppcElements[i].value
     			}
     			bomList.push(bom);
     		}
 			console.log(bomList);
-			// 	{
-			// 	pm_list_code : pm_list_code_v,
-			// 	machine_code : document.getElementById("input_machine_code").value,
-			// 	name : document.getElementById("input_machine_name").value,
-			// 	factory_name : document.getElementById("input_factory_name").value,
-			// 	location : document.getElementById("input_location").value
-			// }
+			$.ajax({
+				//요청 타입
+				type : 'post',
+				//요청 URL
+				url : 'process/register',
+				async : false,
 
-			// $.ajax({
-			// 	//요청 타입
-			// 	type : 'post',
-			// 	//요청 URL
-			// 	url : 'pmlist/register',
-			// 	//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
-			// 	data : JSON.stringify(pm_list),
-			// 	contentType : "application/json; charset=utf-8",
-			// 	success : function(result, status, xhr) {
-			// 		$("#pm_list_detail")[0].reset();
-			// 		}
-			// 	});
-			// $(location).attr('href','/pm');
+				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+				data : JSON.stringify(bomList),
+				contentType : "application/json; charset=utf-8",
+				success : function(result, status, xhr) {
+					$(location).attr('href','/process');
+				}
 			});
+		});
+
+
+		//업데이트 버튼 눌렀을때
+    	$('#updateBtn').on('click', function() {
+			var product_code = $('#product_code').val();
+			console.log(product_code);
+			var pm_list = [];
+			const codeElements = document.querySelectorAll('input[name="machine_code"]');
+			const orderElements = document.querySelectorAll('input[name="process_order"]');
+			const timeElements = document.querySelectorAll('input[name="process_time"]');
+			const ppcElements = document.querySelectorAll('input[name="product_process_code"]');
+
+  			bomList = [];
+    		
+    		for(var i = 0; i < codeElements.length; i++) {
+    			bom = {
+					product_code : product_code,
+					machine_code : codeElements[i].value,
+					process_order : orderElements[i].value,
+					process_time : timeElements[i].value,
+					product_process_code : ppcElements[i].value
+    			}
+    			bomList.push(bom);
+    		}
+			console.log(bomList);
+
+			$.ajax({
+				//요청 타입
+				type : 'delete',
+				//요청 URL
+				url : 'process/delete',
+				async : false,
+
+				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+				data : JSON.stringify(bomList),
+				contentType : "application/json; charset=utf-8",
+				success : function(result, status, xhr) {
+					$(location).attr('href','/process');
+				}
+			});
+	
+
+			$.ajax({
+				//요청 타입
+				type : 'post',
+				//요청 URL
+				url : 'process/register',
+				async : false,
+
+				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+				data : JSON.stringify(bomList),
+				contentType : "application/json; charset=utf-8",
+				success : function(result, status, xhr) {
+					$(location).attr('href','/process');
+				}
+			});
+		});
     	
+		//동적으로 생산프로세스 생성된것을 클릭했을때
     	$("#bomForm").on('click', ".raw_code" ,  function(e) {
     		raw_code_input = $(this);
     	})
     	
+		//+버튼을 눌렀을때 동적으로 생산프로세스를 추가
     	$('.inputPlusBtn').on('click', function() {
-    		$('#bomForm').append('<div class="form-group row"><label class="col-sm-3 col-form-label">기계코드</label><div class="col-sm-9"><input type="text" class="form-control raw_code" readonly="readonly" value="" name="machine_code" data-bs-toggle="modal" data-bs-target="#exampleModal"></div></div>'+
-    				 				'<div class="form-group row"><label class="col-sm-3 col-form-label">순서</label><div class="col-sm-9"><input type="text" class="form-control" name="process_order" value="'+order+'" placeholder="순서"></div></div>'+
-    				 				'<div class="form-group row"><label class="col-sm-3 col-form-label">시간</label><div class="col-sm-9"><input type="text" class="form-control" name="process_time" value="" placeholder="시간">');    	
+    		$('#bomForm').append('<div class="form-group row"><label class="col-sm-4 col-form-label">기계코드</label><div class="col-sm-8"><input type="text" class="form-control raw_code" readonly="readonly" value="" name="machine_code" data-bs-toggle="modal" data-bs-target="#exampleModal"></div></div>'+
+    				 				'<div class="form-group row"><label class="col-sm-4 col-form-label">순서</label><div class="col-sm-8"><input type="text" class="form-control" name="process_order" value="'+order+'" placeholder="순서"></div></div>'+
+    				 				'<div class="form-group row"><label class="col-sm-4 col-form-label">시간</label><div class="col-sm-8"><input type="text" class="form-control" name="process_time" value="" placeholder="시간">'+
+									'<input type="text" class="form-control" name="product_process_code"  style="display:none;" value=" ">');
+									    	
     		order++;
-			document.getElementById("registerBtn").style.display = "";
     	});
     	
-    	
+    	//테이블 바깥을 눌렀을때 버튼활성화
     	$('.tableWarp').on('click', function() {
     		document.getElementById("updateBtn").style.display = "none";
         	document.getElementById("deleteBtn").style.display = "none";
@@ -262,129 +321,77 @@
     		$('#product_code').val(product_code);
     		$('#product_name').val($(this).find('.pname').text());
     		$('#bomForm').empty();
-			
-			//TODO: ajax 통신으로 Product_code에 해당하는 Processs_list 가져오기
-			//TODO: order 마지막 order로 초기화 해 놓기.
-		});
+		
+			$.ajax({
+			//요청 타입
+			type : 'GET',
+    		url : '/process/getList/' + product_code,
+    		contentType : "application/json; charset-utf-8",
+			success : function(result, status, xhr) {
+				for(var i = 0; i < result.length; i++) {
+					$('#bomForm').append('<div class="form-group row"><label class="col-sm-4 col-form-label">기계코드</label><div class="col-sm-8"><input type="text" class="form-control raw_code" readonly="readonly" value="'+result[i].machine_code+'" name="machine_code" data-bs-toggle="modal" data-bs-target="#exampleModal"></div></div>'+
+    				 				'<div class="form-group row"><label class="col-sm-4 col-form-label">순서</label><div class="col-sm-8"><input type="text" class="form-control" name="process_order" value="'+result[i].process_order+'" placeholder="순서"></div></div>'+
+    				 				'<div class="form-group row"><label class="col-sm-4 col-form-label">시간</label><div class="col-sm-8"><input type="text" class="form-control" name="process_time" value="'+result[i].process_time+'" placeholder="시간">'+
+    				 				'<input type="text" class="form-control" name="product_process_code"  style="display:none;" value="'+result[i].product_process_code+'">');
+					order = result[i].process_order
+    				}
+				order++;
+			}
+			});
 
-    	// 	$.ajax({
-    	// 		type : 'GET',
-    	// 		url : 'process/getList',
-		// 		data: 19,
-    	// 		contentType : "application/json; charset-utf-8",
-    	// 		success : function(result, status, xhr) {
-    	// 			for(var i = 0; i < result.length; i++) {
-    	// 				$('#bomForm').append('<div class="form-group row"><label class="col-sm-3 col-form-label">기계코드</label><div class="col-sm-9"><input type="text" class="form-control raw_code" readonly="readonly" value="'+ result[i].machine_code + '" name="machine_code" data-bs-toggle="modal" data-bs-target="#exampleModal"></div></div>'+
-		// 				'<div class="form-group row"><label class="col-sm-3 col-form-label">순서</label><div class="col-sm-9"><input type="text" class="form-control" name="process_order" value="'+ result[i].process_order +'" placeholder="수량"></div></div>'+
-		// 				'<div class="form-group row"><label class="col-sm-3 col-form-label">순서</label><div class="col-sm-9"><input type="text" class="form-control" name="process_order" value="'+ result[i].process_order +'" placeholder="수량"></div></div>'+
-		// 				'<div class="form-group row"><label class="col-sm-3 col-form-label">시간</label><div class="col-sm-9"><input type="text" class="form-control" name="process_time" value="'+ result[i].process_time +'" placeholder="수량">');
-    	// 			}
-    				
-    	// 		},
-    	// 		error : function(xhr, status, er) {
-    	// 			console.log(er);
-    	// 		}
-    	// 	});
-    		
-    	// });
-    	
+		});
+   	
     	$('#exampleModal').on('shown.bs.modal', function () {
     		  // Bind click event to elements inside the modal
-    		  $('.rawbody').on('click',  '.m_row', function () {
+			$('.rawbody').on('click',  '.m_row', function () {
     			  raw_code_input.val($(this).find('.machine_code').text());
     			  $('#exampleModal').modal('hide');
     		      
-    		  });
-    		});
+			});
+		});
+
+    	$('#deleteBtn').on('click', function() {
+			var product_code = $('#product_code').val();
+			console.log(product_code);
+			var pm_list = [];
+			const codeElements = document.querySelectorAll('input[name="machine_code"]');
+			const orderElements = document.querySelectorAll('input[name="process_order"]');
+			const timeElements = document.querySelectorAll('input[name="process_time"]');
+			const ppcElements = document.querySelectorAll('input[name="product_process_code"]');
+
+  			bomList = [];
+    		
+    		for(var i = 0; i < codeElements.length; i++) {
+    			bom = {
+					product_code : product_code,
+					machine_code : codeElements[i].value,
+					process_order : orderElements[i].value,
+					process_time : timeElements[i].value,
+					product_process_code : ppcElements[i].value
+    			}
+    			bomList.push(bom);
+    		}
+			console.log(bomList);
+
+			$.ajax({
+				//요청 타입
+				type : 'delete',
+				//요청 URL
+				url : 'process/delete',
+				async : false,
+
+				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+				data : JSON.stringify(bomList),
+				contentType : "application/json; charset=utf-8",
+				success : function(result, status, xhr) {
+					$(location).attr('href','/process');
+				}
+			});
+
+		});
+
+				
     	
-    	// $('#updateBtn').on('click', function() {
-    	// 	product = {
-    	// 		product_code : $('#product_code').val(),
-    	// 		name : $('#product_name').val(),
-    	// 		item_code : $('#product_code').val(),
-    	// 	}
-    		
-    	// 	$.ajax({
-    	// 		type : 'PUT',
-    	// 		url : '/product',
-    	// 		data : JSON.stringify(product),
-    	// 		async : false,
-    	// 		contentType : "application/json; charset-utf-8",
-    	// 		success : function(result, status, xhr) {
-    	// 			console.log(raw_product);
-    	// 			raw_product.find('.pname').text(product.name);
-    	// 		},
-    	// 		error : function(xhr, status, er) {
-    	// 			console.log(er);
-    	// 		}
-    	// 	});
-    		
-    	// 	// 같은 name을 가진 태그들 선택
-    	// 	const codeElements = document.querySelectorAll('input[name="raw_material_code"]');
-    	// 	const amountElements = document.querySelectorAll('input[name="amount"]');
-    		
-  		// 	bomList = [];
-    		
-    	// 	for(var i = 0; i < codeElements.length; i++) {
-    	// 		bom = {
-    	// 				raw_materials_code : codeElements[i].value,
-    	// 				amount : amountElements[i].value
-    	// 		}
-    	// 		bomList.push(bom);
-    	// 	}
-    	// 	console.log(bomList);
-    		
-    	// 	/* bom 삭제 */
-    		
-    	// 	$.ajax({
-    	// 		type : 'DELETE',
-    	// 		url : '/bom/' + product.product_code,
-    	// 		contentType : "application/json; charset-utf-8",
-    	// 		async : false,
-    	// 		success : function(result, status, xhr) {
-    	// 			console.log(result);
-    	// 		},
-    	// 		error : function(xhr, status, er) {
-    	// 			console.log(er);
-    	// 		}
-    	// 	});
-    		
-    	// 	var bomJson = JSON.stringify(bomList);
-    		
-    	// 	$.ajax({
-    	// 		type : 'post',
-    	// 		url : '/bom/'+ product.product_code,
-    	// 		data : {bomList : bomJson},
-    	// 		dataType : 'json',
-    	// 		async : false,
-    	// 		success : function(result, status, xhr) {
-    	// 			console.log(result);
-    	// 		},
-    	// 		error : function(xhr, status, er) {
-    	// 			console.log(er);
-    	// 		}
-    	// 	});
-    		
-    	// });
-    	
-    	
-    	
-    	// $('#deleteBtn').on('click', function() {
-    		
-    	// 	$.ajax({
-    	// 		type : 'DELETE',
-    	// 		url : '/product/' + $('#product_code').val(),
-    	// 		contentType : "application/json; charset-utf-8",
-    	// 		success : function(result, status, xhr) {
-    	// 			raw_product.remove();
-    	// 			$("#rawForm")[0].reset();
-    	// 		},
-    	// 		error : function(xhr, status, er) {
-    	// 			console.log(er);
-    	// 		}
-    	// 	});
-    		
-    	// });
     </script>
   </body>
 </html>

@@ -26,12 +26,12 @@
 	integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
 	crossorigin="anonymous"></script>
 <div class="container-scroller">
-	<!-- partial:partials/_navbar.html -->
-	<%@ include file="/WEB-INF/views/partials/_navbar.html"%>
+	<!-- partial:partials/_navbar.jsp -->
+	<%@ include file="/WEB-INF/views/partials/_navbar.jsp"%>
 	<!-- partial -->
 	<div class="container-fluid page-body-wrapper">
-		<!-- partial:partials/_sidebar.html -->
-		<%@ include file="/WEB-INF/views/partials/_sidebar.html"%>
+		<!-- partial:partials/_sidebar.jsp -->
+		<%@ include file="/WEB-INF/views/partials/_sidebar.jsp"%>
 		<!-- partial -->
 		<div class="main-panel">
 			<div class="content-wrapper">
@@ -208,8 +208,8 @@
 				</div>
 			</div>
 			<!-- content-wrapper ends -->
-			<!-- partial:partials/_footer.html -->
-			<%@ include file="/WEB-INF/views/partials/_footer.html"%>
+			<!-- partial:partials/_footer.jsp -->
+			<%@ include file="/WEB-INF/views/partials/_footer.jsp"%>
 			<!-- partial -->
 		</div>
 		<!-- main-panel ends -->

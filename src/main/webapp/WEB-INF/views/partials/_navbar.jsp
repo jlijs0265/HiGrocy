@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
   <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
     <a class="navbar-brand brand-logo" href="index.html"><img src="/resources/assets/images/logo.svg" alt="logo" /></a>
@@ -21,7 +23,7 @@
       <li class="nav-item nav-profile dropdown">
         <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
           <div class="nav-profile-img">
-            <img src="/resources/assets/images/faces/face1.jpg" alt="image">
+            <i class="mdi mdi-account"></i>
             <span class="availability-status online"></span>
           </div>
           <div class="nav-profile-text">

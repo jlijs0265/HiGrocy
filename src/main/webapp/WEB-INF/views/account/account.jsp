@@ -159,6 +159,36 @@
 	<script src="/resources/assets/vendors/js/vendor.bundle.base.js"></script>
 
 	<!-- endinject -->
+	
+	$("#accListReg").on("click", function() {
+		var account = {
+			account_code : account_code_v,
+			name : document.getElementById("input_account_name").value,
+			phone_number : document.getElementById("input_phone_number").value
+		}
+
+		$.ajax({
+			//요청 타입
+			type : 'post',
+			//요청 URL
+			url : 'account/register',
+			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+			data : JSON.stringify(account),
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr) {
+				$("#pm_list_detail")[0].reset();
+        $(location).attr('href','/pm');
+
+      },
+			error : function(xhr, status, er) {
+				if (er) {
+					error(er);
+				}
+			}
+		});
+	});
+	
+	
 	<!-- Plugin js for this page -->
 	<script src="/resources/assets/vendors/chart.js/Chart.min.js"></script>
 	<script src="/resources/assets/js/jquery.cookie.js"
@@ -171,139 +201,7 @@
 	<!-- endinject -->
 	<!-- Custom js for this page -->
 
-	<script>
-	
-	$("#accListDel").hide();
-	$("#accListUp").hide();
-	 		let pm_list_code_v  = -1;
-	 		
-	 		$("#accListReg").on("click",fuction(){
-	 				var acc_list = {
-	 						
-	 						machine_code : m_code_v,
-	 						type : document.getElementById("input_type").value,
-	 						gas_emissions : document.getElementById("input_gas_emissions").value,
-	 						energy_usage : document.getElementById("input_energy_usage").value
-	 				
-	 				}
-	 				
-	 				$.ajax({
-	 					
-	 					
-	 					//요청 타입
-	 					type : 'post',
-	 					//요청 URL
-	 					url : 'pmlist/register',
-	 					//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
-	 					data : JSON.stringify(pm_list),
-	 					contentType : "application/json; charset=utf-8",
-	 					success : function(result, status, xhr) {
-	 						$("#pm_list_detail")[0].reset();
-	 		        $(location).attr('href','/pm');
 
-	 		      },
-	 					error : function(xhr, status, er) {
-	 						if (er) {
-	 							error(er);
-	 						}
-	 					}
-	 			
-	 					 	
-	 		      
-	 				});
-	 				
-	 		});
-	
-	 		
-	 	    //빈 table 공간선택시 등록페이지로 변경되게 수정
-	 		//TODO:이거안됨 수정필요
-	 		
-	 		  $("#m_list_card_body").on("click", function(e){
-	 			    e.stopPropagation();
-	 			    $("#MReg").show();
-	 			    $("#MDel").hide();
-	 			    $('#MUp').hide();
-	 			    $("#M_list_detail_title").text("등록페이지");
-	 			  })
-	 		
-	 		
-	 			      //table 한 행 클릭시 상세페이지에 값 반영되게 수정
-  $("#M_list_table tr").on("click", function(e){
-    e.stopPropagation();
-    var tr = $(this);
-	var td = tr.children();
-	
-	m_code_v = td.eq(0).text();
-	var type = td.eq(1).text();
-	var gas_emissions = td.eq(2).text();
-	var energy_usage = td.eq(3).text();
-	
-	var mac_code = document.querySelectorAll("#input_machine_code");
-	mac_code[0].value = m_code_v;
-	mac_code[1].value = m_code_v;
-	document.getElementById("input_type").value = type;
-	document.getElementById("input_gas_emissions").value = gas_emissions;
-	document.getElementById("input_energy_usage").value = energy_usage;
-
-  $("#MReg").hide();
-    $("#MDel").show();
-    $('#MUp').show();
-    $("#M_list_detail_title").text("상세페이지");
-  })
-  
-  
-  $("#MUp").on("click", function() {
-	  var m_list = {
-				machine_code : m_code_v,
-				type : document.getElementById("input_type").value,
-				gas_emissions : document.getElementById("input_gas_emissions").value,
-				energy_usage : document.getElementById("input_energy_usage").value
-			}
-
-		$.ajax({
-			//요청 타입
-			type : 'put',
-			//요청 URL
-			url : 'pm/update',
-			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
-			data : JSON.stringify(m_list),
-			contentType : "application/json; charset=utf-8",
-			success : function(result, status, xhr) {
-				$("#m_list_detail")[0].reset();
-      $(location).attr('href','/pm');
-      //TODO: 생산기계목록에 수정해줘야함.
-			},
-			error : function(xhr, status, er) {
-				if (er) {
-					error(er);
-				}
-			}
-		});
-	});
-	 		
-	 		 $("#MDel").on("click", function() {
-
-	 			$.ajax({
-	 				//요청 타입
-	 				type : 'delete',
-	 				//요청 URL
-	 				url : 'pm/delete',
-	 				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
-	 				data : m_code_v,
-	 				contentType : "application/json; charset=utf-8",
-	 				success : function(result, status, xhr) {
-	 					$("#m_list_detail")[0].reset();
-	 	      $(location).attr('href','/pm');
-	 				},
-	 				error : function(xhr, status, er) {
-	 					if (er) {
-	 						error(er);
-	 					}
-	 				}
-	 			});
-	 		});
-	 			  
-	</script>
 
 
 

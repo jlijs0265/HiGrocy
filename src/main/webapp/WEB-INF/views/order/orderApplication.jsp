@@ -82,7 +82,8 @@
 									<h4 class="card-title pb-3">품목 선택</h4>
 									<form class="forms-sample">
 										<div class="form-group">
-											<label for="exampleInputUsername1">품목코드</label> <input
+											<label for="exampleInputUsername1">품목코드</label> 
+											<input
 												type="text" class="form-control" id="itemCode"
 												placeholder="품목코드" readonly="readonly"
 												data-bs-toggle="modal" data-bs-target="#itemModal"
@@ -148,8 +149,8 @@
 
 												<tr>
 													<td class="table-active">거래처</td>
-													<td data-bs-toggle="modal" data-bs-target="#accountModal"
-														data-bs-whatever="@account" id="accountCode"></td>
+													<td><input data-bs-toggle="modal" data-bs-target="#itemModal"
+												data-bs-whatever="@item" id="accountCode"></input></td>
 												</tr>
 												<tr>
 													<td class="table-active">사원</td>

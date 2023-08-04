@@ -26,11 +26,11 @@
   <body>
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
-      <%@ include file="../partials/_navbar.html" %>
+      <%@ include file="/WEB-INF/views/partials/_navbar.jsp" %>
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_sidebar.html -->
-        <%@ include file="../partials/_sidebar.html" %>          <!-- partial:partials/_footer.html -->
+        <%@ include file="/WEB-INF/views/partials/_sidebar.jsp" %>          <!-- partial:partials/_footer.html -->
 				<!-- main-panel  -->
 		       <div class="main-panel">
 		       		
@@ -141,7 +141,7 @@
 		       		</div>
 		       
 		       
-          <%@ include file="../partials/_footer.html" %>
+          <%@ include file="/WEB-INF/views/partials/_footer.jsp" %>
           
         </div>
         <!-- main-panel ends -->

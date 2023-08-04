@@ -37,8 +37,6 @@ public class ProductionRestController {
 	@PostMapping("production/requestList/register")
 	public ResponseEntity<Object> registerProduction(@RequestBody ProductionRecordVO vo) {
 		log.info("product ajax 통신..."+vo);
-		service.product(vo);
-		log.info("controller test");
 		return ResponseEntity.ok(service.product(vo));
 	}
 }

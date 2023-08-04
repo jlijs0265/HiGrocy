@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"  prefix="sec"%>
 <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
   <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
     <a class="navbar-brand brand-logo" href="index.html"><img src="/resources/assets/images/logo.svg" alt="logo" /></a>
@@ -27,15 +28,19 @@
             <span class="availability-status online"></span>
           </div>
           <div class="nav-profile-text">
-            <p class="mb-1 text-black">David Greymaax</p>
+            <p class="mb-1 text-black"><sec:authentication property="principal.employee.empname"/></p>
           </div>
         </a>
         <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
           <a class="dropdown-item" href="#">
             <i class="mdi mdi-cached me-2 text-success"></i> Activity Log </a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">
-            <i class="mdi mdi-logout me-2 text-primary"></i> Signout </a>
+          <form action="/logout" method="post">
+          	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+	          <button class="dropdown-item" type="submit">
+	            <i class="mdi mdi-logout me-2 text-primary"></i> Signout </button>
+          </form>
+          
         </div>
       </li>
       <li class="nav-item d-none d-lg-block full-screen-link">
@@ -63,7 +68,8 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item preview-item">
             <div class="preview-thumbnail">
-              <img src="/resources/assets/images/faces/face2.jpg" alt="image" class="profile-pic">
+              <img src="/resources/assets/images/faces/fa
+              ce2.jpg" alt="image" class="profile-pic">
             </div>
             <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
               <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Cregh send you a message</h6>

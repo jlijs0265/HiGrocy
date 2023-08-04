@@ -36,8 +36,12 @@ public class ProductProcessService {
 	}
 	
 	//생산공정 삭제
-	public boolean delete(int product_process_code) {
-		return mapper.delete(product_process_code);
+	@Transactional
+	public boolean delete(List<ProductProcessVO> vo) {
+		for(ProductProcessVO v : vo) {
+			mapper.delete(v.getProduct_process_code());
+		}
+		return true;
 	}
 		
 }

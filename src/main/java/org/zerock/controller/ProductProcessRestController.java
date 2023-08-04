@@ -29,8 +29,8 @@ public class ProductProcessRestController {
 	private ProductProcessService service;
 	
 	// 생산 프로세스 조회
-	@PostMapping("/process/getList")
-	public ResponseEntity<List<ProductProcessVO>> getlist(@RequestBody int product_code) {
+	@GetMapping("/process/getList/{product_code}")
+	public ResponseEntity<List<ProductProcessVO>> getlist(@PathVariable int product_code) {
 		log.info("controller 타는중.."+product_code);
 		return ResponseEntity.ok(service.getlist(product_code));
 	}
@@ -40,18 +40,12 @@ public class ProductProcessRestController {
 		log.info(vo);
 		return ResponseEntity.ok(service.insert(vo));
 	}
-//	// 원재료 수정
-//	@PutMapping("/process/update")
-//	public ResponseEntity<RawMaterialVO> updateRawMaterial(@RequestBody RawMaterialVO vo) {
-//		log.info(vo);
-//		boolean result = service.updateRawMaterial(vo);
-//		return new ResponseEntity<RawMaterialVO>(vo, HttpStatus.OK);
-//	}
-//	
-//	@DeleteMapping("/process/delete")
-//	public ResponseEntity<String> deleteRawMaterial(@PathVariable int code) {
-//		boolean result = service.deleteRawMaterial(code);
-//		return result == true ? new ResponseEntity<String>("success", HttpStatus.OK) : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
-//	}
+
+	// 생산 프로세스 삭제
+	@DeleteMapping("/process/delete")
+	public ResponseEntity<Object> deleteRawMaterial(@RequestBody List<ProductProcessVO> vo) {
+		log.info(vo);
+		return ResponseEntity.ok(service.delete(vo));
+	}
 
 }

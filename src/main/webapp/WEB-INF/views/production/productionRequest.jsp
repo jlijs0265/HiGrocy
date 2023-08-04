@@ -72,7 +72,7 @@
 							<div class="card">
 								<div class="card-body list-body">
 									<h4 class="card-title pb-3">품목 선택</h4>
-										<form class="forms-sample">
+										<form class="forms-sample" id="itemForm">
 					                      <div class="form-group">
 					                        <label for="exampleInputUsername1">품목코드</label>
 					                        <input type="text" class="form-control" id="itemCode" placeholder="품목코드" readonly="readonly" data-bs-toggle="modal" data-bs-target="#itemModal" data-bs-whatever="@item">
@@ -91,18 +91,18 @@
 					                      </div>
 					                      <div class="form-group">
 					                        <label for="exampleInputUsername1">공급가액</label>
-					                        <input type="text" class="form-control" id="" placeholder="공급가액" readonly="readonly">
+					                        <input type="text" class="form-control" id="supplyValue" placeholder="공급가액" readonly="readonly">
 					                      </div>
 					                      <div class="form-group">
 					                        <label for="exampleInputUsername1">부가세</label>
-					                        <input type="text" class="form-control" id="" placeholder="부가세" readonly="readonly">
+					                        <input type="text" class="form-control" id="vat" placeholder="부가세" readonly="readonly">
 					                      </div>
 					                      <div class="form-group">
 					                        <label for="exampleInputUsername1">합계금액</label>
-					                        <input type="text" class="form-control" id="" placeholder="합계금액" readonly="readonly">
+					                        <input type="text" class="form-control" id="total" placeholder="합계금액" readonly="readonly">
 					                      </div>
 					                      <div class="position-relative">
-					                      	<button type="submit" class="btn btn-gradient-primary mr-2 position-absolute end-0">추가</button>
+					                      	<button type="button" class="btn btn-gradient-primary mr-2 position-absolute end-0 addBtn">추가</button>
 					                      </div>
 					                    </form>
 									
@@ -127,7 +127,7 @@
 					                      
 					                        <tr>
 					                          <td class="table-active">생산요청일</td>
-					                          <td>자동 반영</td>
+					                          <td id="today"></td>
 					                        </tr>
 					                        <tr>
 					                          <td class="table-active">창고</td>
@@ -135,11 +135,11 @@
 					                        </tr>
 					                        <tr>
 					                          <td class="table-active">사원</td>
-					                          <td>자동반영</td>
+					                          <td><c:out value="${user}"></c:out></td>
 					                        </tr>
 					                        <tr>
 					                          <td class="table-active">총 합계금액</td>
-					                          <td>자동반영 0</td>
+					                          <td id="totalPlus">0</td>
 					                        </tr>
 					                      </tbody>
 					                    </table>
@@ -160,23 +160,15 @@
 						                          <th> 합계금액</th>
 						                        </tr>
 						                      </thead>
-						                      <tbody>
-						                        <tr>
-						                          <td> 1 </td>
-						                          <td> Herman Beck </td>
-						                          <td>ㅁㅁ</td>
-						                          <td>ㅁㅁ</td>
-						                          <td>ㅁㅁ</td>
-						                          <td>ㅁㅁ</td>
-						                          <td>ㅁㅁ</td>
-						                        </tr>
+						                      <tbody id="itemDataTbody">
+						                        
 						                      </tbody>
 						                    </table>
 					                      </div>
 									</div>
 									
 									<div class="position-relative pt-5">
-					                      	<button type="submit" class="btn btn-gradient-primary mr-2 position-absolute end-0">추가</button>
+					                      	<button type="submit" class="btn btn-gradient-primary mr-2 position-absolute end-0">등록</button>
 				                      </div>
 								</div>
 
@@ -199,6 +191,17 @@
 	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 	<script type="text/javascript">
+	
+		var today = new Date();
+		var year = today.getFullYear();
+		var month = ('0' + (today.getMonth() + 1)).slice(-2);
+		var day = ('0' + today.getDate()).slice(-2);
+		
+		var dateString = year + '-' + month  + '-' + day;
+		$('#today').text(dateString);
+
+		console.log(dateString);
+	
 		const itemModal = document.getElementById('itemModal');
 		itemModal.addEventListener('show.bs.modal', event => {
 		  // Button that triggered the modal
@@ -278,10 +281,12 @@
 			$('#itemCode').val(code);
 			$('#itemName').val($(this).find('.type').text());
 			
+			console.log(code);
 			$.ajax({
-				type : 'get',
+				type : 'post',
 				url : '/itemAmount',
-				data : JSON.stringify({"item_code" : code}),
+				data : code,
+				dataType : 'text',
 				contentType : "application/json; charset-utf-8",
 				success : function(result, status, xhr) {
 					console.log(result);
@@ -292,13 +297,45 @@
 			});
 			
 			$('#itemModal').modal('hide');
-		})
+		});
 		
 		$('#modalWarp').on('click', '#storageRaw' ,function() {
 			console.log(this);
 			$('#storageCode').text($(this).find('.scode').text());
 			$('#itemModal').modal('hide');
-		})
+		});
+		
+		$('.addBtn').on('click', function() {
+			// 추가 버튼 누르면 테이블에 데이터 추가됨
+			let trData = '<tr><td class="itemRawCode">'
+			+ $('#itemCode').val()
+			+'</td><td class="itemRawName">'
+			+ $('#itemName').val()
+			+ '</td><td class="itemRawAmount">'
+			+ $('#amount').val()
+			+ '</td><td class="itemRawPrice">'
+			+ $('#price').val()
+			+ '</td><td class="itemRawSValue">' 
+			+ $('#supplyValue').val()
+			+ '</td><td class="itemRawVat">'
+			+ $('#vat').val()
+			+ '</td><td class="itemRawTotal">' 
+			/* + $('#total').val() */
+			+ $('#itemCode').val()
+			+ '</td></tr>';
+			
+			$('#itemDataTbody').append(trData);
+			
+			// 총 합계 금액 추가하기
+			var num1 = Number($('#totalPlus').text());
+			console.log(num1);
+			var num2 = Number($('#itemCode').val());
+			console.log(num2);
+			console.log(num1 + num2);
+			$('#totalPlus').text(num1 + num2);
+			
+			$('#itemForm')[0].reset();
+		});
 		
 	</script>
 	

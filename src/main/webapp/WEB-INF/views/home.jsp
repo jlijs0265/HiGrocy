@@ -35,8 +35,8 @@ to {
 }
 
 .bg-gradient-custom1 {
-  background: -webkit-gradient(linear, left top, right top, from(#F0B661), to(#E4A25B)) important;
-  background: linear-gradient(to right, #F0B661, #E4A25B) important; 
+  background: -webkit-gradient(linear, left top, right top, from(#F0B661), to(#E4A25B)) !important;
+  background: linear-gradient(to right, #F0B661, #E4A25B	) !important; 
   }
   
 .chartjs-render-monitor {
@@ -89,7 +89,7 @@ to {
 			<%@ include file="partials/_sidebar.jsp"%>
 			<!-- partial -->
 			<div class="main-panel">
-				<div class="content-wrapper">
+				<div class="content-wrapper" style="background-color: #DDE4F6;">
 					<div class="page-header"></div>
 
 					<!-- Card Layout No Chart -->
@@ -100,7 +100,7 @@ to {
 								<div
 									class="card bg-gradient-custom1 card-img-holder text-white h-100">
 									<div class="card-body">
-									<img src="/resources/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image">
+									<img src="../../resources/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image">
 										<h4 class="font-weight-normal mb-3">
 											Weekly Sales <i
 												class="mdi mdi-chart-line mdi-24px float-right"></i>
@@ -117,9 +117,9 @@ to {
 							<div class="row d-flex justify-content-center"">
 								<div class="custom-card p-4">
 									<!-- Element_1 -->
-									<div class="card bg-gradient-info card-img-holder text-white">
+									<div class="card bg-gradient-custom2 card-img-holder text-white">
 										<div class="card-body">
-										<img src="/resources/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image">
+										<img src="../../resources/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image">
 											<h4 class="font-weight-normal mb-3">
 												Weekly Orders <i
 													class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
@@ -132,9 +132,9 @@ to {
 								<div class="custom-card p-4">
 									<!-- Element_2 -->
 									<div
-										class="card bg-gradient-success card-img-holder text-white">
+										class="card bg-gradient-custom3 card-img-holder text-white">
 										<div class="card-body">
-										<img src="/resources/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image">
+										<img src="../../resources/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image">
 											<h4 class="font-weight-normal mb-3">
 												Visitors Online <i
 													class="mdi mdi-diamond mdi-24px float-right"></i>
@@ -189,6 +189,7 @@ to {
 						<div class="col-md-5 grid-margin stretch-card">
 							<div class="card">
 								<div class="card-body">
+								
 									<div class="chartjs-size-monitor">
 										<div class="chartjs-size-monitor-expand">
 											<div class=""></div>

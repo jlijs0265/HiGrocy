@@ -11516,8 +11516,16 @@ code {
   background: linear-gradient(to right, #f6e384, #ffd500) !important; }
   
 .bg-gradient-custom1 {
-  background: -webkit-gradient(linear, left top, right top, from(#F0B661), to(#E4A25B)) !important;
-  background: linear-gradient(to right, #F0B661, #E4A25B) !important; 
+  background: -webkit-gradient(linear, left top, right top, from(#00CED1), to(#20B2AA)) !important;
+  background: linear-gradient(to right, #00CED1, #20B2AA) !important; 
+  }
+ .bg-gradient-custom2 {
+  background: -webkit-gradient(linear, left top, right top, from(#1E90FF), to(#87CEFA)) !important;
+  background: linear-gradient(to right, #1E90FF, #87CEFA) !important; 
+  }
+ .bg-gradient-custom3 {
+  background: -webkit-gradient(linear, left top, right top, from(#4682B4), to(#87CEEB)) !important;
+  background: linear-gradient(to right, #4682B4, #87CEEB) !important; 
   }
   
 .bg-gradient-danger {

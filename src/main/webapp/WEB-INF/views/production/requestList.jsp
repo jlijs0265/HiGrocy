@@ -26,12 +26,12 @@
 	integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
 	crossorigin="anonymous"></script>
 <div class="container-scroller">
-	<!-- partial:partials/_navbar.html -->
-	<%@ include file="/WEB-INF/views/partials/_navbar.html"%>
+	<!-- partial:partials/_navbar.jsp -->
+	<%@ include file="/WEB-INF/views/partials/_navbar.jsp"%>
 	<!-- partial -->
 	<div class="container-fluid page-body-wrapper">
-		<!-- partial:partials/_sidebar.html -->
-		<%@ include file="/WEB-INF/views/partials/_sidebar.html"%>
+		<!-- partial:partials/_sidebar.jsp -->
+		<%@ include file="/WEB-INF/views/partials/_sidebar.jsp"%>
 		<!-- partial -->
 		<div class="main-panel">
 			<div class="content-wrapper">
@@ -76,36 +76,6 @@
 											</tr>
 										</thead>
 										<tbody>
-											<%-- <c:forEach items="${PMList}" var="PM">
-												<tr>
-													<td><c:out value="${PM.pm_list_code}" /></td>
-													<td><c:out value="${PM.name}" /></td>
-													<td><c:out value="${PM.factory_name}" /></td>
-													<td><c:out value="${PM.location}" /></td>
-													<td><c:out value="${PM.machine_code}" /></td>
-												</tr>
-											</c:forEach> --%>
-											<tr>
-												<td>생산요청코드</td>
-												<td>요청날짜</td>
-												<td>담당자</td>
-												<td>품목코드</td>
-												<td>생산요청수량</td>
-												<td>생산수량</td>
-												<td>불량품</td>
-												<td><button type="button" id="select" class="btn-sm btn-gradient-primary mr-2">생산</button>
-</td>
-											</tr>
-											<tr>
-												<td>생산요청코드</td>
-												<td>요청날짜</td>
-												<td>담당자</td>
-												<td>품목코드</td>
-												<td>생산요청수량</td>
-												<td><input type = "number" id = "product_amount" min = "1" max = "10000"></td>
-												<td><input type = "number" id = "defective_amount" min = "1" max = "10000"></td>
-												<td><button type="button" id="select" class="btn-sm btn-gradient-primary mr-2">생산</button></td>
-											</tr>
 											
 										</tbody>
 									</table>
@@ -117,8 +87,8 @@
 				
 			</div>
 			<!-- content-wrapper ends -->
-			<!-- partial:partials/_footer.html -->
-			<%@ include file="/WEB-INF/views/partials/_footer.html"%>
+			<!-- partial:partials/_footer.jsp -->
+			<%@ include file="/WEB-INF/views/partials/_footer.jsp"%>
 			<!-- partial -->
 		</div>
 		<!-- main-panel ends -->
@@ -178,11 +148,24 @@
 		console.log(pks[0]);
 		var product_recode = {
 				item_code : parseInt(pks[3].textContent),
-				PR_code : parseInt(pks[0].textContent),
+				pr_code : parseInt(pks[0].textContent),
 				usage_time : $(input_elements[0]).val(),
 				defective_amount : $(input_elements[1]).val()
 		}
 		console.log(JSON.stringify(product_recode));
+		$.ajax({
+    			type : 'post',
+    			url : '/production/requestList/register',
+    			data : JSON.stringify(product_recode),
+				contentType : "application/json; charset=utf-8",
+    			success : function(result, status, xhr) {
+    				console.log(result);
+    			},
+    			error : function(xhr, status, er) {
+    				console.log(er);
+    			}
+		});
+		console.log(this.parentElement.innerHTML = '<td>생산됨</td>');
 	})
 	//날짜 변경 함수
 	const displayTime = function(timeValue){

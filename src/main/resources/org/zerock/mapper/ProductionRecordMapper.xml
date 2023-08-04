@@ -13,8 +13,8 @@
   </select>
 
 	<insert id="insertPR" parameterType="org.zerock.domain.ProductionRecordVO">
-		insert into pm_list (machine_code ,item_code ,usage_time ,production_record_code ,pr_code ,defective_amount)
-		VALUES(machine_code, #{item_code},  #{usage_time}, seq_production_record_code.nextval, #{pr_code}, #{defective_amount})
+		insert into production_record (machine_code ,item_code ,usage_time ,production_record_code ,pr_code ,defective_amount)
+		VALUES(#{machine_code}, #{item_code},  #{usage_time}, seq_production_record_code.nextval, #{pr_code}, #{defective_amount})
 	</insert>
 	
 

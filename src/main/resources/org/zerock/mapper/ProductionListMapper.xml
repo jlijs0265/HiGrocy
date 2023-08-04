@@ -10,7 +10,7 @@
   
   	<insert id="insertPL" parameterType="org.zerock.domain.ProductionListVO">
 		insert into production_list (item_code ,pr_code ,sdate)
-		VALUES(#{item_code}, #{pr_code},  #{sdate})
+		VALUES(#{item_code}, #{pr_code},  sysdate)
 	</insert>
 	
 	

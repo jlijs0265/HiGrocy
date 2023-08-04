@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.ProductionRecordMapper">
+
+  <select id="getList" resultType="org.zerock.domain.ProductionRecordVO">
+  	SELECT * FROM production_record 
+  </select>
+  
+    <select id="getListOnce" resultType="org.zerock.domain.ProductionRecordVO">
+  	SELECT * FROM production_record where production_record_code = #{production_record_code}
+  </select>
+
+	<insert id="insertPR" parameterType="org.zerock.domain.ProductionRecordVO">
+		insert into pm_list (machine_code ,item_code ,usage_time ,production_record_code ,pr_code ,defective_amount)
+		VALUES(machine_code, #{item_code},  #{usage_time}, seq_production_record_code.nextval, #{pr_code}, #{defective_amount})
+	</insert>
+	
+
+</mapper>

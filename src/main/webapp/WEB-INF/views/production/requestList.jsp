@@ -25,122 +25,39 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"
 	integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
 	crossorigin="anonymous"></script>
-<div>
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-xl modal-dialog-scrollable">
-		  <div class="modal-content">
-			<div class="modal-header">
-			  <h1 class="modal-title fs-5" id="exampleModalLabel">기계목록 페이지</h1>
-			  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<div class="row">
-					<div class="col-md-7 grid-margin stretch-card">
-						<div class="card">
-							<div class="card-body" id="M_list_card_body">
-								<h4 class="card-title">기계목록</h4>
-								<div class="table-responsive">
-									<table class="table" id = "M_list_table">
-										<thead>
-											<tr>
-												<th>기계코드</th>
-												<th>기계종류</th>
-												<th>온실가스 배출량(kcal/h)</th>
-												<th>에너지소모량(kj/h)</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:forEach items="${MList}" var="M">
-												<tr>
-													<td><c:out value="${M.machine_code}" /></td>
-													<td><c:out value="${M.type}" /></td>
-													<td><c:out value="${M.gas_emissions}" /></td>
-													<td><c:out value="${M.energy_usage}" /></td>
-												</tr>
-											</c:forEach>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-5 grid-margin stretch-card">
-						<div class="card">
-							<div class="card-body" id="m_list_card_body">
-								<h4 class="card-title" id = "M_list_detail_title">등록 페이지</h4>
-								<form class="forms-sample" id="m_list_detail">
-									<div class="form-group row">
-										<label for="input_machine_code"
-											class="col-sm-4 col-form-label">기계코드</label>
-										<div class="col-sm-8">
-											<input type="text" class="form-control"
-												id="input_machine_code" placeholder="기계코드" readonly="readonly" >
-										</div>
-									</div>
-									<div class="form-group row">
-										<label for="input_type" class="col-sm-4 col-form-label">기계종류</label>
-										<div class="col-sm-8">
-											<input type="text" class="form-control" id="input_type"
-												placeholder="기계종류">
-										</div>
-									</div>
-									<div class="form-group row">
-										<label for="input_gas_emissions"
-											class="col-sm-4 col-form-label">온실가스배출량</label>
-										<div class="col-sm-8">
-											<input type="text" class="form-control"
-												id="input_gas_emissions" placeholder="온실가스배출량">
-										</div>
-									</div>
-									<div class="form-group row">
-										<label for="input_energy_usage"
-											class="col-sm-4 col-form-label">에너지소모량</label>
-										<div class="col-sm-8">
-											<input type="text" class="form-control"
-												id="input_energy_usage" placeholder="에너지소모량">
-										</div>
-									</div>
-									<button type="button" id = "MReg" class="btn-sm btn-gradient-primary mr-2">등록</button>
-									<button type="button" id = "MUp" class="btn-sm btn-gradient-primary mr-2">수정</button>
-									<button type="button" id = "MDel" class="btn-sm btn-gradient-primary mr-2">삭제</button>
-									<button type="button" id = "MSel" class="btn-sm btn-gradient-primary mr-2">선택</button>
-
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
 <div class="container-scroller">
-	<!-- partial:partials/_navbar.jsp -->
-	<%@ include file="/WEB-INF/views/partials/_navbar.jsp"%>
+	<!-- partial:partials/_navbar.html -->
+	<%@ include file="/WEB-INF/views/partials/_navbar.html"%>
 	<!-- partial -->
 	<div class="container-fluid page-body-wrapper">
-		<!-- partial:partials/_sidebar.jsp -->
-		<%@ include file="/WEB-INF/views/partials/_sidebar.jsp"%>
+		<!-- partial:partials/_sidebar.html -->
+		<%@ include file="/WEB-INF/views/partials/_sidebar.html"%>
 		<!-- partial -->
 		<div class="main-panel">
 			<div class="content-wrapper">
 				<div class="page-header">
 					<h3 class="page-title">
-						<span class="page-title-icon bg-gradient-primary text-white me-2">
-							<i class="mdi mdi-home"></i>
-						</span> Dashboard
+						 생산요청현황
 					</h3>
-					<nav aria-label="breadcrumb">
-						<ul class="breadcrumb">
-							<li class="breadcrumb-item active" aria-current="page"><span></span>Overview
-								<i
-								class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
-							</li>
-						</ul>
-					</nav>
 				</div>
 				<div class="row">
-					<div class="col-md-7 grid-margin stretch-card">
+				<div class = "col-md-7 row">
+					<div class= "col-sm-5">
+						<input type = "date" id = "start">
+					</div>
+					<div class = "col-sm-2">
+					<span> ~ </span>
+					</div>
+					<div class = "col-sm-5">
+						<input type = "date" id = "end">
+					</div>
+					</div>
+					<div class = "col-md-2">
+					<button type="button" id="select" class="btn-sm btn-gradient-primary mr-2">조회</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 grid-margin stretch-card">
 						<div class="card">
 							<div class="card-body" id = "pm_list_card_body">
 								<h4 class="card-title">생산기계목록</h4>
@@ -148,15 +65,18 @@
 									<table class="table" id = "PM_list_table">
 										<thead>
 											<tr>
-												<th>생산기계코드</th>
-												<th>기계명</th>
-												<th>공장명</th>
-												<th>위치</th>
-												<th>기계코드</th>
+												<th>생산요청코드</th>
+												<th>요청날짜</th>
+												<th>담당자</th>
+												<th>품목코드</th>
+												<th>생산요청수량</th>
+												<th>생산수량</th>
+												<th>불량품수량</th>
+												<th>생산여부</th>
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach items="${PMList}" var="PM">
+											<%-- <c:forEach items="${PMList}" var="PM">
 												<tr>
 													<td><c:out value="${PM.pm_list_code}" /></td>
 													<td><c:out value="${PM.name}" /></td>
@@ -164,66 +84,41 @@
 													<td><c:out value="${PM.location}" /></td>
 													<td><c:out value="${PM.machine_code}" /></td>
 												</tr>
-											</c:forEach>
+											</c:forEach> --%>
+											<tr>
+												<td>생산요청코드</td>
+												<td>요청날짜</td>
+												<td>담당자</td>
+												<td>품목코드</td>
+												<td>생산요청수량</td>
+												<td>생산수량</td>
+												<td>불량품</td>
+												<td><button type="button" id="select" class="btn-sm btn-gradient-primary mr-2">생산</button>
+</td>
+											</tr>
+											<tr>
+												<td>생산요청코드</td>
+												<td>요청날짜</td>
+												<td>담당자</td>
+												<td>품목코드</td>
+												<td>생산요청수량</td>
+												<td><input type = "number" id = "product_amount" min = "1" max = "10000"></td>
+												<td><input type = "number" id = "defective_amount" min = "1" max = "10000"></td>
+												<td><button type="button" id="select" class="btn-sm btn-gradient-primary mr-2">생산</button></td>
+											</tr>
+											
 										</tbody>
 									</table>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-5 grid-margin stretch-card">
-						<div class="card">
-							<div class="card-body">
-								<h4 class="card-title" id = "PM_list_detail_title">등록 페이지</h4>
-								<form class="forms" id="pm_list_detail">
-									<div class="form-group row">
-										<label for="input_machine_code"
-											class="col-sm-4 col-form-label">기계코드</label>
-										<div class="col-sm-8">
-											<input type="text" class="form-control"
-												id="input_machine_code" placeholder="기계코드" data-bs-toggle="modal" data-bs-target="#exampleModal" readonly = "readonly">
-										</div>
-									</div>
-									<div class="form-group row">
-										<label for="input_machine_name"
-											class="col-sm-4 col-form-label">기계명</label>
-										<div class="col-sm-8">
-											<input type="text" class="form-control"
-												id="input_machine_name" placeholder="기계명">
-										</div>
-									</div>
-									<div class="form-group row">
-										<label for="input_factory_name"
-											class="col-sm-4 col-form-label">공장명</label>
-										<div class="col-sm-8">
-											<input type="text" class="form-control"
-												id="input_factory_name" placeholder="공장명">
-										</div>
-									</div>
-									<div class="form-group row">
-										<label for="input_location" class="col-sm-4 col-form-label">위치</label>
-										<div class="col-sm-8">
-											<input type="text" class="form-control" id="input_location"
-												placeholder="위치">
-										</div>
-
-									</div>
-									<button type="button" id="pmListReg"
-										class="btn-sm btn-gradient-primary mr-2">등록</button>
-									<button type="button" id="pmListUp"
-										class="btn-sm btn-gradient-primary mr-2">수정</button>
-									<button type="button" id="pmListDel"
-										class="btn-sm btn-gradient-primary mr-2">삭제</button>
-
-								</form>
-							</div>
-						</div>
-					</div>
 				</div>
+				
 			</div>
 			<!-- content-wrapper ends -->
-			<!-- partial:partials/_footer.jsp -->
-			<%@ include file="/WEB-INF/views/partials/_footer.jsp"%>
+			<!-- partial:partials/_footer.html -->
+			<%@ include file="/WEB-INF/views/partials/_footer.html"%>
 			<!-- partial -->
 		</div>
 		<!-- main-panel ends -->
@@ -243,25 +138,70 @@
 <script src="/resources/assets/js/hoverable-collapse.js"></script>
 <script src="/resources/assets/js/misc.js"></script>
 <!-- endinject -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-
 <script>
-  $("#pmListDel").hide();
-  $('#pmListUp').hide();
-	let pm_list_code_v = -1;
-  $("#MDel").hide();
-  $('#MUp').hide();
-  $('#MSel').hide();
-	let m_code_v = -1;
-	//생산기계목록 등록 버튼 눌렀을때
+
+	//조회 버튼 눌렀을때
 	//
-	$("#pmListReg").on("click", function() {
-		var pm_list = {
-			pm_list_code : pm_list_code_v,
-			machine_code : document.getElementById("input_machine_code").value,
-			name : document.getElementById("input_machine_name").value,
-			factory_name : document.getElementById("input_factory_name").value,
-			location : document.getElementById("input_location").value
+	$("#select").on("click", function() {
+		var BetweenDateVO = {
+			start : $("#start").val(),
+			end : $("#end").val()
+		}
+		console.log(BetweenDateVO);
+
+
+		$.ajax({
+			//요청 타입
+			type : 'POST',
+			//요청 URL
+			url : '/production/requestList/get',
+			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+			data : JSON.stringify(BetweenDateVO),
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr) {
+				$("tbody").empty();
+				for(var i = 0; i < result.length; i++) {
+					$('tbody').append('<tr><td>'+result[i].pr_code+'</td><td>'+displayTime(result[i].request_date)+'</td><td>'+result[i].request_manager+'</td><td>'+result[i].item_code+'</td><td>'+result[i].amount+'</td><td><input type = "number" id = "product_amount" min = "1" max = "10000"></td><td><input type = "number" id = "defective_amount" min = "1" max = "10000"></td><td><button type="button" id="select" class="btn-sm btn-gradient-primary mr-2">생산</button></td></tr>');
+					}
+				},
+			error : function(xhr, status, er) {
+				if (er) {
+					error(er);
+				}
+			}
+		});
+	});
+	//생산 버튼 눌렀을때
+	$("tbody").on("click", "button", function(){
+		var pks = this.parentElement.parentElement.querySelectorAll('td');
+		var input_elements = this.parentElement.parentElement.querySelectorAll('input');
+		console.log(pks[0]);
+		var product_recode = {
+				item_code : parseInt(pks[3].textContent),
+				PR_code : parseInt(pks[0].textContent),
+				usage_time : $(input_elements[0]).val(),
+				defective_amount : $(input_elements[1]).val()
+		}
+		console.log(JSON.stringify(product_recode));
+	})
+	//날짜 변경 함수
+	const displayTime = function(timeValue){
+		var dateObj = new Date(timeValue);
+		var yy = dateObj.getFullYear();
+		var mm = dateObj.getMonth() +1;
+		var dd = dateObj.getDate();
+		return [yy, '-', (mm > 9 ? '': '0')+mm, '-',(dd>9 ? '': '0')+dd].join('');
+	}
+	
+	</script>
+	<!--
+  //기계목록의 등록버튼을 눌렀을때
+	$("#MReg").on("click", function() {
+		var m_list = {
+			machine_code : m_code_v,
+			type : document.getElementById("input_type").value,
+			gas_emissions : document.getElementById("input_gas_emissions").value,
+			energy_usage : document.getElementById("input_energy_usage").value
 		}
 
 		$.ajax({
@@ -284,34 +224,6 @@
 			}
 		});
 	});
-  //기계목록의 등록버튼을 눌렀을때
-	$("#MReg").on("click", function() {
-		var m_list = {
-			machine_code : m_code_v,
-			type : document.getElementById("input_type").value,
-			gas_emissions : document.getElementById("input_gas_emissions").value,
-			energy_usage : document.getElementById("input_energy_usage").value
-		}
-
-		$.ajax({
-			//요청 타입
-			type : 'post',
-			//요청 URL
-			url : 'pm/register',
-			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
-			data : JSON.stringify(m_list),
-			contentType : "application/json; charset=utf-8",
-			success : function(result, status, xhr) {
-				$("#pm_list_detail")[0].reset();
-				$('#exampleModal').modal('hide');
-      },
-			error : function(xhr, status, er) {
-				if (er) {
-					error(er);
-				}
-			}
-		});
-	});
 	
   //빈 table 공간선택시 등록페이지로 변경되게 수정
   $("#pm_list_card_body").on("click", function(e){
@@ -319,19 +231,18 @@
     $("#pmListReg").show();
     $("#pmListDel").hide();
     $('#pmListUp').hide();
-    $("#PM_list_detail_title").text("등록 페이지");
-  });
+    $("#PM_list_detail_title").text("등록페이지");
+  })
 
     //빈 table 공간선택시 등록페이지로 변경되게 수정
-  $("#M_list_card_body").on("click", function(e){
-	console.log('기계목록 table 선택됨');
+	//TODO:이거안됨 수정필요
+  $("#m_list_card_body").on("click", function(e){
     e.stopPropagation();
     $("#MReg").show();
     $("#MDel").hide();
     $('#MUp').hide();
-	$('#MSel').hide();
-	$("#M_list_detail_title").text("등록 페이지");
-  });
+    $("#M_list_detail_title").text("등록페이지");
+  })
 
   
   //table 한 행 클릭시 상세페이지에 값 반영되게 수정
@@ -379,13 +290,8 @@
   $("#MReg").hide();
     $("#MDel").show();
     $('#MUp').show();
-	$('#MSel').show();
     $("#M_list_detail_title").text("상세페이지");
   })
-  $('#MSel').on('click', function(){
-	$('#exampleModal').modal('hide');
-  });
-  
   
   
   $("#pmListUp").on("click", function() {
@@ -488,9 +394,9 @@
 				}
 			}
 		});
-	});
+	}); 
 
-</script>
+</script>  -->
 <!-- End custom js for this page -->
 </body>
 </html>

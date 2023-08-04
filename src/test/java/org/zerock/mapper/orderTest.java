@@ -28,6 +28,5 @@ public class orderTest {
 	@Test
 	public void insertTest() {
 		orderVO vo = new orderVO();
-		vo.setItem_code(1);
 	}
 }

@@ -14,10 +14,13 @@
 		VALUES(#{order_code}, #{account_code}, sysdate, #{order_manager}, sysdate)
 	</insert>
 
-
 	<select id="getProductList"
 		resultType="org.zerock.domain.ProductVO">
 		SELECT * FROM product
+	</select>
+	
+	<select id="getName" resultType="org.zerock.domain.accountVO">
+		SELECT name FROM account
 	</select>
 
 

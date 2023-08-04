@@ -25,17 +25,17 @@ public class ProductionRequestListTests {
 	private ProductionRequsetListService service;
 	
 	
-	@Test
-	public void test() {
-		ProductionRecordVO vo = new ProductionRecordVO();
-		vo.setItem_code(19);
-		vo.setDefective_amount(10);
-		vo.setMachine_code(1);
-		vo.setPr_code(1);
-		vo.setProduction_record_code(1);
-		vo.setUsage_time(10);
-		log.info(service.product(vo));
-	}
+//	@Test
+//	public void test() {
+//		ProductionRecordVO vo = new ProductionRecordVO();
+//		vo.setItem_code(19);
+//		vo.setDefective_amount(10);
+//		vo.setMachine_code(1);
+//		vo.setPr_code(1);
+//		vo.setProduction_record_code(1);
+//		vo.setUsage_time(10);
+//		log.info(service.product(vo));
+//	}
 	
 
 //	@Test

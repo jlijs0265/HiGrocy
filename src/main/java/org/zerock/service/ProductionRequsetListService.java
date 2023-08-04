@@ -45,14 +45,21 @@ public class ProductionRequsetListService {
 	
 	
 	//생산 버튼 눌렀을시 작동할 서비스(트랜잭션화 필요)
+	@Transactional
 	public boolean product(ProductionRecordVO vo) {
-		//TODO:서비스 안넘어옴 수정필요
-		log.info("service....");
 		List<ProductProcessVO> PRlist = pp_mapper.getlist(vo.getItem_code());
 		ProductionListVO list = new ProductionListVO(); 
 		list.setItem_code(vo.getItem_code());
-		list.setPR_code(vo.getPr_code());
+		list.setPr_code(vo.getPr_code());
+		int unit = vo.getUsage_time();
+		pl_mapper.insertPL(list);
 		log.info(PRlist);
-		return false; //p_record_mapper.insertPR(PRlist) & pl_mapper.insertPL(list);
+		for(ProductProcessVO pp:PRlist) {
+			vo.setMachine_code(pp.getMachine_code());
+			vo.setUsage_time(unit * pp.getProcess_time());
+			log.info(vo);
+			p_record_mapper.insertPR(vo);
+		}
+		return true; 
 	}
 }

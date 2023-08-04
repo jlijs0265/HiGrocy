@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class ProductionListVO {
 
-	int PR_code;
+	int pr_code;
 	int item_code;
 	Date sdate;
 }

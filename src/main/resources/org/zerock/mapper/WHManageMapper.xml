@@ -29,14 +29,14 @@
 		keeping_date
 		)
 		values (
-		#{warehousing_record_code},
+		seq_warehousing_record_code.nextval,
 		#{item_code},
 		#{storage_code},
 		#{warehousing_type},
-		#{wr_date},
+		sysdate,
 		#{amount},
 		#{warehousing_type_code},
-		#{keeping_date}
+		sysdate+30
 		)
 	</insert>
 	

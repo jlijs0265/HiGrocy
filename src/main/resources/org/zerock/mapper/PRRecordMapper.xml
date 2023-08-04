@@ -28,8 +28,6 @@ FROM
 	  	
 	SELECT PR_code, item_code 
   	FROM production_list
-  	where sdate >= #{start}
-  	AND sdate <= #{end}
     )A
     LEFT JOIN
     pr_record B

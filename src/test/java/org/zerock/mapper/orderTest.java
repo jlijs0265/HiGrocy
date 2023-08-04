@@ -20,14 +20,14 @@ public class orderTest {
 	@Autowired
 	private orderMapper mapper;
 	
-	@Test
-	public void test() {
-		log.info(mapper.getlist());
-	}
-//
 //	@Test
-//	public void insertTest() {
-//		orderVO vo = new orderVO();
-//		vo.setItem_code(1);
+//	public void test() {
+//		log.info(mapper.getlist());
 //	}
+//
+	@Test
+	public void insertTest() {
+		orderVO vo = new orderVO();
+		vo.setItem_code(1);
+	}
 }

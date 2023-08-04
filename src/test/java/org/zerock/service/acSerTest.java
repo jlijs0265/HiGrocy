@@ -36,10 +36,10 @@ public class acSerTest {
 //	}	
 
 	
-//	@Test
-//	public void getListTest() {
-//		service.getList().forEach(account -> log.info(account));
-//	}
+	@Test
+	public void getListTest() {
+		service.getList().forEach(account -> log.info(account));
+	}
 	
 //	@Test
 //	public void get() {

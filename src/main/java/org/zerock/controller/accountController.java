@@ -28,13 +28,13 @@ public class accountController {
 	public String readAccount(Model model) {
 		log.info(Arrays.toString(service.getList().toArray()));
 		model.addAttribute("accList", service.getList());
-		return "/order/account";
+		return "/account/account";
 	}
 	
 	@PostMapping("/account/register")
 	public String registerAccount(accountVO vo) {
 		service.register(vo);
-		return "redirect:/account";
+		return "redirect:/account/account";
 		
 	}
 	

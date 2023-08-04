@@ -18,7 +18,7 @@
         },
         from: { color: '#aaa', width: 6 },
         to: { color: '#57c7d4', width: 6 }
-      });
+      });	
 
       bar.animate(.65);  // Number from 0.0 to 1.0
       bar.path.style.strokeLinecap = 'round';

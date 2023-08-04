@@ -20,12 +20,12 @@
   </head>
   <body>
     <div class="container-scroller">
-      <!-- partial:partials/_navbar.html -->
-      <%@ include file="partials/_navbar.html" %>
+      <!-- partial:partials/_navbar.jsp -->
+      <%@ include file="partials/_navbar.jsp" %>
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
-        <!-- partial:partials/_sidebar.html -->
-        <%@ include file="partials/_sidebar.html" %>
+        <!-- partial:partials/_sidebar.jsp -->
+        <%@ include file="partials/_sidebar.jsp" %>
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
@@ -349,8 +349,8 @@
             </div>
           </div>
           <!-- content-wrapper ends -->
-          <!-- partial:partials/_footer.html -->
-          <%@ include file="partials/_footer.html" %>
+          <!-- partial:partials/_footer.jsp -->
+          <%@ include file="partials/_footer.jsp" %>
           <!-- partial -->
         </div>
         <!-- main-panel ends -->

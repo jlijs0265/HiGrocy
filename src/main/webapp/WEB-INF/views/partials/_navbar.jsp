@@ -68,8 +68,7 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item preview-item">
             <div class="preview-thumbnail">
-              <img src="/resources/assets/images/faces/fa
-              ce2.jpg" alt="image" class="profile-pic">
+              <img src="/resources/assets/images/faces/face2.jpg" alt="image" class="profile-pic">
             </div>
             <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
               <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Cregh send you a message</h6>

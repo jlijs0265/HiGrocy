@@ -23,6 +23,8 @@
     
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
   </head>
   <body>
   <div>
@@ -128,6 +130,7 @@
 			       					<div class="card-body">
 			       						<h4 class="card-title" id="raw-title">생산품 등록</h4>
 			       						<form class="forms-sample p-2" action="/product" method="post" id="rawForm">
+			       							<input type="hidden" name="${_csrf.parameterName}", value="${_csrf.token}">
 					                      <div class="form-group">
 					                        <label>생산품 코드</label>
 					                        <input type="text" class="form-control" id="product_code" readonly="readonly" placeholder="생산품 코드">
@@ -199,6 +202,9 @@
     	document.getElementById('deleteBtn').style.display = 'none';
     	var raw_code_input = 0;
     	var raw_product = 0;
+    	
+    	var token = $("meta[name='_csrf']").attr("th:content");
+		var header = $("meta[name='_csrf_header']").attr("th:content");
     	
     	$('#registerBtn').on('click', function() {
     		$('#rawForm').submit();
@@ -273,6 +279,9 @@
     			data : JSON.stringify(product),
     			async : false,
     			contentType : "application/json; charset-utf-8",
+    			beforeSend : function(xhr) {
+			        xhr.setRequestHeader(header, token);
+			    },
     			success : function(result, status, xhr) {
     				console.log(raw_product);
     				raw_product.find('.pname').text(product.name);
@@ -284,7 +293,7 @@
     		
     		// 같은 name을 가진 태그들 선택
     		const codeElements = document.querySelectorAll('input[name="raw_material_code"]');
-    		const amountElements = document.querySelectorAll('input[name="amount"]');
+    		const amountElements = document.querySelectorAll('input[name="amount"]');	
     		
   			bomList = [];
     		
@@ -304,6 +313,9 @@
     			url : '/bom/' + product.product_code,
     			contentType : "application/json; charset-utf-8",
     			async : false,
+    			beforeSend : function(xhr) {
+			        xhr.setRequestHeader(header, token);
+			    },
     			success : function(result, status, xhr) {
     				console.log(result);
     			},
@@ -314,12 +326,17 @@
     		
     		var bomJson = JSON.stringify(bomList);
     		
+    		console.log(bomJson);
+    		
     		$.ajax({
     			type : 'post',
     			url : '/bom/'+ product.product_code,
     			data : {bomList : bomJson},
     			dataType : 'json',
     			async : false,
+    			beforeSend : function(xhr) {
+			        xhr.setRequestHeader(header, token);
+			    },
     			success : function(result, status, xhr) {
     				console.log(result);
     			},
@@ -338,6 +355,9 @@
     			type : 'DELETE',
     			url : '/product/' + $('#product_code').val(),
     			contentType : "application/json; charset-utf-8",
+    			beforeSend : function(xhr) {
+			        xhr.setRequestHeader(header, token);
+			    },
     			success : function(result, status, xhr) {
     				raw_product.remove();
     				$("#rawForm")[0].reset();

@@ -14,5 +14,6 @@ public interface PRRecordMapper {
 	public List<ProductionRequestListVO> getdiff(BetweenDateVO vo);
 	public List<ProductVO> getProductList();
 	public List<Integer> getRawCodeList(int product_code);
-
+	public boolean insertPrList(ProductionRequestListVO vo);
+	
 }

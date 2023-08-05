@@ -45,9 +45,13 @@
   		SELECT * FROM product
   </select>
   
-  <select id="getRawCodeList">
-  	select price, item_code from order_list
-    where order_list.item_code IN(select raw_materials_code from bom where bom.product_code = #{product_code})
-  </select>
+  <!-- <select id="getRawCodeList" resultType="">
+  	SELECT price, item_code FROM order_list
+    	WHERE order_list.item_code IN(select raw_materials_code from bom where bom.product_code = #{product_code})
+  </select> -->
+	
+	<insert id="insertPrList" parameterType="org.zerock.domain.ProductionRequestListVO">
+		INSERT FROM pr_list(pr_code, item_code, amount) VALUES (#{pr_code}, #{item_code}, #{amount})
+	</insert>
 	
 </mapper>

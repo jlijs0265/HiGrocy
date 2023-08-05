@@ -1,8 +1,10 @@
 package org.zerock.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.domain.BetweenDateVO;
 import org.zerock.domain.PRRecordVO;
 import org.zerock.domain.ProductVO;
@@ -24,9 +26,18 @@ public class PRRecordServiceImpl implements PRRecordService{
 		return null;
 	}
 
+	@Transactional
 	@Override
-	public boolean insert(PRRecordVO vo) {
-		return false;
+	public boolean insert(PRRecordVO vo, ArrayList<ProductionRequestListVO> prList) {
+		// 생산 이력을 등록함과 동시에 생산 목록을 등록해준다.
+		boolean result1 = mapper.insert(vo);
+		boolean result2 = false;
+		if(result1) {
+			for(ProductionRequestListVO pr : prList) {
+				result2 = mapper.insertPrList(pr);
+			}
+		}
+		return result2;
 	}
 
 	@Override
@@ -44,7 +55,6 @@ public class PRRecordServiceImpl implements PRRecordService{
 		
 		return null;
 	}
-	
 	
 	
 

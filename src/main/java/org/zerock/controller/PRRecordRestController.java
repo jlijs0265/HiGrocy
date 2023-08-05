@@ -7,7 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.zerock.domain.PRRecordVO;
 import org.zerock.domain.ProductVO;
 import org.zerock.service.PRRecordService;
 
@@ -33,6 +35,12 @@ public class PRRecordRestController {
 		log.info(code);
 		
 		return "okok";
+	}
+	
+	@PostMapping("/production/request")
+	public ResponseEntity<String> registerPRRecord(PRRecordVO vo) {
+		log.info("zzzzzzzzzz" + vo);
+		return new ResponseEntity<String>("zzzzz", HttpStatus.OK);
 	}
 	
 }

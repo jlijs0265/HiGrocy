@@ -25,4 +25,11 @@ public class WHController {
 		
 		return "wh/warehousing";
 	}
+	
+	@GetMapping("/wh/detail")
+	public String whDetail(Model model) {
+//		model.addAttribute("DetailList",/**/);
+		log.info("Welcom WHDetail!");
+		return "wh/detail";
+	}
 }

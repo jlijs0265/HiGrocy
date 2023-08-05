@@ -27,11 +27,11 @@
 	crossorigin="anonymous"></script>
 <div class="container-scroller">
 	<!-- partial:partials/_navbar.html -->
-	<%@ include file="/WEB-INF/views/partials/_navbar.html"%>
+	<%@ include file="/WEB-INF/views/partials/_navbar.jsp"%>
 	<!-- partial -->
 	<div class="container-fluid page-body-wrapper">
 		<!-- partial:partials/_sidebar.html -->
-		<%@ include file="/WEB-INF/views/partials/_sidebar.html"%>
+		<%@ include file="/WEB-INF/views/partials/_sidebar.jsp"%>
 		<!-- partial -->
 		<div class="main-panel">
 			<div class="content-wrapper">
@@ -118,7 +118,7 @@
 			</div>
 			<!-- content-wrapper ends -->
 			<!-- partial:partials/_footer.html -->
-			<%@ include file="/WEB-INF/views/partials/_footer.html"%>
+			<%@ include file="/WEB-INF/views/partials/_footer.jsp"%>
 			<!-- partial -->
 		</div>
 		<!-- main-panel ends -->

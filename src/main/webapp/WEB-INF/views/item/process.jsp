@@ -69,11 +69,11 @@
 	
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
-      <%@ include file="../partials/_navbar.html" %>
+      <%@ include file="../partials/_navbar.jsp" %>
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_sidebar.html -->
-        <%@ include file="../partials/_sidebar.html" %>          <!-- partial:partials/_footer.html -->
+        <%@ include file="../partials/_sidebar.jsp" %>          <!-- partial:partials/_footer.html -->
 				<!-- main-panel  -->
 		       <div class="main-panel">
 		       		
@@ -160,7 +160,7 @@
 		       		</div>
 		       
 		       
-          <%@ include file="../partials/_footer.html" %>
+          <%@ include file="../partials/_footer.jsp" %>
           
         </div>
         <!-- main-panel ends -->
@@ -178,7 +178,7 @@
 	<script src="/resources/assets/js/hoverable-collapse.js"></script>
 	<script src="/resources/assets/js/misc.js"></script>
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<!--     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script> -->
     <script type="text/javascript">
 
     	document.getElementById('updateBtn').style.display = 'none';

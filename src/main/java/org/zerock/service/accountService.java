@@ -6,13 +6,13 @@ import org.zerock.domain.accountVO;
 
 public interface accountService {
 	
-	public void register(accountVO account);
+	public boolean insert(accountVO vo);
 	
-	public accountVO get(int account_code);
+	public accountVO getListOnce(int account_code);
 	
-	public int modify(accountVO account);
+	public boolean update(accountVO vo);
 	
-	public int remove(int account_code);
+	public boolean delete(int account_code);
 	
 	public List<accountVO> getList();
 	

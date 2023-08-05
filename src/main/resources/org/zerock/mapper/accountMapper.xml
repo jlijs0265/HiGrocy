@@ -19,7 +19,7 @@
 	</select>
 	
 	
-	<select id="read" resultType="org.zerock.domain.accountVO">
+	<select id="getListOnce" resultType="org.zerock.domain.accountVO">
 		select * from account where account_code = #{account_code}
 	</select>
 	

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.domain.accountVO;
 import org.zerock.mapper.accountMapper;
 
@@ -14,32 +15,33 @@ import lombok.extern.log4j.Log4j;
 public class accountServiceImpl implements accountService {
 	
 	@Autowired
-	private accountMapper mapper;
+	private accountMapper ac_mapper;
 	
 	
 	@Override
-	public void register(accountVO account) {
-		log.info("register!!!!!");
-		mapper.insert(account);
+	@Transactional
+	public boolean insert(accountVO vo) {
+		log.info("insert service execute..."+vo);
+		return ac_mapper.insert(vo);
 	}
 
 	// 단일조회
 	@Override
-	public accountVO get(int account_code) {
+	public accountVO getListOnce(int account_code) {
 		log.info("get!!!" + account_code);
-		return mapper.read(account_code);
+		return ac_mapper.getListOnce(account_code);
 	}
 
 	@Override
-	public int modify(accountVO account) {
-		log.info("modify!!!" + account);
-		return mapper.update(account);
+	public boolean update(accountVO account) {
+		
+		return ac_mapper.update(account);
 	}
 
 	@Override
-	public int remove(int account_code) {
+	public boolean delete(int account_code) {
 		log.info("remove!!!" + account_code);
-		return mapper.delete(account_code);
+		return ac_mapper.delete(account_code);
 	}
 
 	// 전체조회
@@ -48,7 +50,7 @@ public class accountServiceImpl implements accountService {
 		
 		log.info("getlist!!!");
 		
-		return mapper.getList();
+		return ac_mapper.getList();
 	}
 	
 	

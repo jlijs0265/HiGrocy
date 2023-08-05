@@ -25,8 +25,7 @@
     <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
   </head>
   <body>
-  <div>
-	<!-- Modal -->
+  <!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-scrollable">
 	    <div class="modal-content">
@@ -35,26 +34,24 @@
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
-				<!-- 원자재 품목 가져오기 -->
+				<!-- 기계목록 가져오기 -->
 				<div class="table-responsive">
             	<table class="table table-bordered border-secondary rawTable">
                      <thead> 
                        <tr>
-                         <th>코드</th>
-                         <th> 자재분류 </th>
-                         <th> 자재명 </th>
-                         <th> 단위</th>
-                         <th>원산지</th>
+                         <th>기계코드</th>
+                         <th>기계종류 </th>
+                         <th>온실가스배출량</th>
+                         <th>에너지소모량</th>
                        </tr>
                      </thead>
                      <tbody class="rawbody">
-						<c:forEach items="${rawList}" var="rawMaterial">
-		              		<tr class="rawitem">
-			                   <td class="rcode"> <c:out value="${rawMaterial.raw_materials_code}" /></td>
-			                   <td class="rtype"> <c:out value="${rawMaterial.type}" /></td>
-			                   <td class="rname"><c:out value="${rawMaterial.name}" /></td>
-			                   <td class="runit"> <c:out value="${rawMaterial.unit}" /></td>
-			                   <td class="rorigin"><c:out value="${rawMaterial.origin}" /></td>
+						<c:forEach items="${m_Lists}" var="m_list">
+		              		<tr class="m_row">
+			                   <td class="machine_code"> <c:out value="${m_list.machine_code}" /></td>
+			                   <td class="type"> <c:out value="${m_list.type}" /></td>
+			                   <td class="gas_emissions"><c:out value="${m_list.gas_emissions}" /></td>
+			                   <td class="energy_usage"> <c:out value="${m_list.energy_usage}" /></td>
 		                 </tr>
 		              	</c:forEach>
               	</tbody>
@@ -82,7 +79,7 @@
 		       		
 		       		<div class="content-wrapper">
 		       			<div class="row h-100">
-		       				<!-- 원부자재 목록 조회 부분 -->
+		       				<!-- 생산품 목록 조회 부분 -->
 		       				<div class="col-md-6 grid-margin stretch-card">
 			       				<div class="card">
 			       					<div class="card-body list-body">
@@ -91,7 +88,7 @@
 					                    <form class="d-flex align-items-center" action="#">
 							              <div class="input-group">
 						                    <div class="p-3">검색</div>
-							                <input type="text" class="form-control bg-transparent border-1" placeholder="원부자재 검색">
+							                <input type="text" class="form-control bg-transparent border-1" placeholder="생산품명 검색">
 							                <div class="input-group-text">
 							                  <i class="input-group mdi mdi-magnify"></i>
 							                </div>
@@ -121,12 +118,12 @@
 					                  </div>
 			       				</div>
 			       			</div>
-			       			<!-- 원부자재 목록 조회 부분 끝-->
-			       			<!-- 원부자재 등록 부분 -->
+			       			<!-- 생산품 목록 조회 부분 끝-->
+			       			<!-- 생산품 등록 부분 -->
 			       			<div class="col-md-6 grid-margin stretch-card">
 			       				<div class="card">
 			       					<div class="card-body">
-			       						<h4 class="card-title" id="raw-title">생산품 등록</h4>
+			       						<h4 class="card-title" id="raw-title">생산 프로세스 등록</h4>
 			       						<form class="forms-sample p-2" action="/product" method="post" id="rawForm">
 					                      <div class="form-group">
 					                        <label>생산품 코드</label>
@@ -137,7 +134,7 @@
 					                        <input type="text" class="form-control" id="product_name" name="name" placeholder="생산품명">
 					                      </div>
 					                      <div class="form-group">
-					                        <label for="exampleInputUsername1">BOM 등록</label>
+					                        <label for="exampleInputUsername1">프로세스 등록</label>
 					                        <div class="d-flex">
 					                        	<input type="text" class="form-control bg-light" id="raw_material_name" readonly="readonly">
 						                        <button class="border-0 inputPlusBtn" type="button">
@@ -147,25 +144,13 @@
 					                      </div>
 					                      <!-- BOM 등록 작성해줄 input 태그가 계속 추가될 부분 -->
 					                      <div class="border border-secondary p-3" id="bomForm">
-					                      	<!-- <div class="form-group row">
-						                        <label class="col-sm-3 col-form-label">원자재코드</label>
-						                        <div class="col-sm-9">
-						                        	<input type="text" class="form-control" name="raw_material_code" id="" placeholder="원자재 코드">
-						                        </div>
-						                      </div>
-						                      <div class="form-group row">
-						                        <label class="col-sm-3 col-form-label">수량</label>
-						                        <div class="col-sm-9">
-						                        	<input type="text" class="form-control" name="amount" id="" placeholder="수량">
-						                        </div>
-						                      </div> -->
-					                      </div>
+					                     </div>
 					                      
 					                      
 					                    </form>
 					                      <button class="btn btn-gradient-primary mr-2" id="registerBtn">등록</button>
-					                      <button class="btn btn-gradient-success" id="updateBtn">수정</button>
-					                      <button class="btn btn-gradient-danger" id="deleteBtn">삭제</button>
+					                      <button class="btn btn-gradient-success mr-2" id="updateBtn">수정</button>
+					                      <button class="btn btn-gradient-danger mr-2" id="deleteBtn">삭제</button>
 			       					</div>
 			       					 
 			       				</div>
@@ -193,25 +178,127 @@
 	<script src="/resources/assets/js/hoverable-collapse.js"></script>
 	<script src="/resources/assets/js/misc.js"></script>
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<!--     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script> -->
     <script type="text/javascript">
+
     	document.getElementById('updateBtn').style.display = 'none';
     	document.getElementById('deleteBtn').style.display = 'none';
     	var raw_code_input = 0;
     	var raw_product = 0;
+    	var order = 1;
     	
+		//등록 버튼 눌렀을때
     	$('#registerBtn').on('click', function() {
-    		$('#rawForm').submit();
-    	});
+			var product_code = $('#product_code').val();
+			console.log(product_code);
+			var pm_list = [];
+			const codeElements = document.querySelectorAll('input[name="machine_code"]');
+			const orderElements = document.querySelectorAll('input[name="process_order"]');
+			const timeElements = document.querySelectorAll('input[name="process_time"]');
+			const ppcElements = document.querySelectorAll('input[name="product_process_code"]');
+
+  			bomList = [];
+    		
+    		for(var i = 0; i < codeElements.length; i++) {
+    			bom = {
+					product_code : product_code,
+					machine_code : codeElements[i].value,
+					process_order : orderElements[i].value,
+					process_time : timeElements[i].value,
+					product_process_code : ppcElements[i].value
+    			}
+    			bomList.push(bom);
+    		}
+			console.log(bomList);
+			$.ajax({
+				//요청 타입
+				type : 'post',
+				//요청 URL
+				url : 'process/register',
+				async : false,
+
+				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+				data : JSON.stringify(bomList),
+				contentType : "application/json; charset=utf-8",
+				success : function(result, status, xhr) {
+					$(location).attr('href','/process');
+				}
+			});
+		});
+
+
+		//업데이트 버튼 눌렀을때
+    	$('#updateBtn').on('click', function() {
+			var product_code = $('#product_code').val();
+			console.log(product_code);
+			var pm_list = [];
+			const codeElements = document.querySelectorAll('input[name="machine_code"]');
+			const orderElements = document.querySelectorAll('input[name="process_order"]');
+			const timeElements = document.querySelectorAll('input[name="process_time"]');
+			const ppcElements = document.querySelectorAll('input[name="product_process_code"]');
+
+  			bomList = [];
+    		
+    		for(var i = 0; i < codeElements.length; i++) {
+    			bom = {
+					product_code : product_code,
+					machine_code : codeElements[i].value,
+					process_order : orderElements[i].value,
+					process_time : timeElements[i].value,
+					product_process_code : ppcElements[i].value
+    			}
+    			bomList.push(bom);
+    		}
+			console.log(bomList);
+
+			$.ajax({
+				//요청 타입
+				type : 'delete',
+				//요청 URL
+				url : 'process/delete',
+				async : false,
+
+				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+				data : JSON.stringify(bomList),
+				contentType : "application/json; charset=utf-8",
+				success : function(result, status, xhr) {
+					$(location).attr('href','/process');
+				}
+			});
+	
+
+			$.ajax({
+				//요청 타입
+				type : 'post',
+				//요청 URL
+				url : 'process/register',
+				async : false,
+
+				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+				data : JSON.stringify(bomList),
+				contentType : "application/json; charset=utf-8",
+				success : function(result, status, xhr) {
+					$(location).attr('href','/process');
+				}
+			});
+		});
     	
+		//동적으로 생산프로세스 생성된것을 클릭했을때
     	$("#bomForm").on('click', ".raw_code" ,  function(e) {
     		raw_code_input = $(this);
     	})
     	
+		//+버튼을 눌렀을때 동적으로 생산프로세스를 추가
     	$('.inputPlusBtn').on('click', function() {
-    		$('#bomForm').append('<div class="form-group row"><label class="col-sm-3 col-form-label">원자재코드</label><div class="col-sm-9"><input type="text" class="form-control raw_code" readonly="readonly" placeholder="원자재 코드" name="raw_material_code" data-bs-toggle="modal" data-bs-target="#exampleModal"></div></div><div class="form-group row"><label class="col-sm-3 col-form-label">수량</label><div class="col-sm-9"><input type="text" class="form-control" name="amount" placeholder="수량"></div></div>');
+    		$('#bomForm').append('<div class="form-group row"><label class="col-sm-4 col-form-label">기계코드</label><div class="col-sm-8"><input type="text" class="form-control raw_code" readonly="readonly" value="" name="machine_code" data-bs-toggle="modal" data-bs-target="#exampleModal"></div></div>'+
+    				 				'<div class="form-group row"><label class="col-sm-4 col-form-label">순서</label><div class="col-sm-8"><input type="text" class="form-control" name="process_order" value="'+order+'" placeholder="순서"></div></div>'+
+    				 				'<div class="form-group row"><label class="col-sm-4 col-form-label">시간</label><div class="col-sm-8"><input type="text" class="form-control" name="process_time" value="" placeholder="시간">'+
+									'<input type="text" class="form-control" name="product_process_code"  style="display:none;" value=" ">');
+									    	
+    		order++;
     	});
     	
+    	//테이블 바깥을 눌렀을때 버튼활성화
     	$('.tableWarp').on('click', function() {
     		document.getElementById("updateBtn").style.display = "none";
         	document.getElementById("deleteBtn").style.display = "none";
@@ -229,125 +316,82 @@
     		document.getElementById('deleteBtn').style.display = '';
     		
     		/* 테이블의 내용을 옆의 Form 에 반영하기 */
-    		$('#product_code').val($(this).find('.pcode').text());
+			var product_code = $(this).find('.pcode').text();
+
+    		$('#product_code').val(product_code);
     		$('#product_name').val($(this).find('.pname').text());
     		$('#bomForm').empty();
-    		
-    		code = $(this).find('.pcode').text();
-    		$.ajax({
-    			type : 'GET',
-    			url : '/bom/' + code,
-    			contentType : "application/json; charset-utf-8",
-    			success : function(result, status, xhr) {
-    				for(var i = 0; i < result.length; i++) {
-    					$('#bomForm').append('<div class="form-group row"><label class="col-sm-3 col-form-label">원자재코드</label><div class="col-sm-9"><input type="text" class="form-control raw_code" readonly="readonly" value="'+ result[i].raw_materials_code + '" name="raw_material_code" data-bs-toggle="modal" data-bs-target="#exampleModal"></div></div><div class="form-group row"><label class="col-sm-3 col-form-label">수량</label><div class="col-sm-9"><input type="text" class="form-control" name="amount" value="'+ result[i].amount +'" placeholder="수량"></div></div>');
+		
+			$.ajax({
+			//요청 타입
+			type : 'GET',
+    		url : '/process/getList/' + product_code,
+    		contentType : "application/json; charset-utf-8",
+			success : function(result, status, xhr) {
+				for(var i = 0; i < result.length; i++) {
+					$('#bomForm').append('<div class="form-group row"><label class="col-sm-4 col-form-label">기계코드</label><div class="col-sm-8"><input type="text" class="form-control raw_code" readonly="readonly" value="'+result[i].machine_code+'" name="machine_code" data-bs-toggle="modal" data-bs-target="#exampleModal"></div></div>'+
+    				 				'<div class="form-group row"><label class="col-sm-4 col-form-label">순서</label><div class="col-sm-8"><input type="text" class="form-control" name="process_order" value="'+result[i].process_order+'" placeholder="순서"></div></div>'+
+    				 				'<div class="form-group row"><label class="col-sm-4 col-form-label">시간</label><div class="col-sm-8"><input type="text" class="form-control" name="process_time" value="'+result[i].process_time+'" placeholder="시간">'+
+    				 				'<input type="text" class="form-control" name="product_process_code"  style="display:none;" value="'+result[i].product_process_code+'">');
+					order = result[i].process_order
     				}
-    				
-    			},
-    			error : function(xhr, status, er) {
-    				console.log(er);
-    			}
-    		})
-    		
-    	});
-    	
+				order++;
+			}
+			});
+
+		});
+   	
     	$('#exampleModal').on('shown.bs.modal', function () {
     		  // Bind click event to elements inside the modal
-    		  $('.rawbody').on('click',  '.rawitem', function () {
-    			  raw_code_input.val($(this).find('.rcode').text());
+			$('.rawbody').on('click',  '.m_row', function () {
+    			  raw_code_input.val($(this).find('.machine_code').text());
     			  $('#exampleModal').modal('hide');
     		      
-    		  });
-    		});
-    	
-    	$('#updateBtn').on('click', function() {
-    		product = {
-    			product_code : $('#product_code').val(),
-    			name : $('#product_name').val(),
-    			item_code : $('#product_code').val(),
-    		}
-    		
-    		$.ajax({
-    			type : 'PUT',
-    			url : '/product',
-    			data : JSON.stringify(product),
-    			async : false,
-    			contentType : "application/json; charset-utf-8",
-    			success : function(result, status, xhr) {
-    				console.log(raw_product);
-    				raw_product.find('.pname').text(product.name);
-    			},
-    			error : function(xhr, status, er) {
-    				console.log(er);
-    			}
-    		});
-    		
-    		// 같은 name을 가진 태그들 선택
-    		const codeElements = document.querySelectorAll('input[name="raw_material_code"]');
-    		const amountElements = document.querySelectorAll('input[name="amount"]');
-    		
+			});
+		});
+
+    	$('#deleteBtn').on('click', function() {
+			var product_code = $('#product_code').val();
+			console.log(product_code);
+			var pm_list = [];
+			const codeElements = document.querySelectorAll('input[name="machine_code"]');
+			const orderElements = document.querySelectorAll('input[name="process_order"]');
+			const timeElements = document.querySelectorAll('input[name="process_time"]');
+			const ppcElements = document.querySelectorAll('input[name="product_process_code"]');
+
   			bomList = [];
     		
     		for(var i = 0; i < codeElements.length; i++) {
     			bom = {
-    					raw_materials_code : codeElements[i].value,
-    					amount : amountElements[i].value
+					product_code : product_code,
+					machine_code : codeElements[i].value,
+					process_order : orderElements[i].value,
+					process_time : timeElements[i].value,
+					product_process_code : ppcElements[i].value
     			}
     			bomList.push(bom);
     		}
-    		console.log(bomList);
-    		
-    		/* bom 삭제 */
-    		
-    		$.ajax({
-    			type : 'DELETE',
-    			url : '/bom/' + product.product_code,
-    			contentType : "application/json; charset-utf-8",
-    			async : false,
-    			success : function(result, status, xhr) {
-    				console.log(result);
-    			},
-    			error : function(xhr, status, er) {
-    				console.log(er);
-    			}
-    		});
-    		
-    		var bomJson = JSON.stringify(bomList);
-    		
-    		$.ajax({
-    			type : 'post',
-    			url : '/bom/'+ product.product_code,
-    			data : {bomList : bomJson},
-    			dataType : 'json',
-    			async : false,
-    			success : function(result, status, xhr) {
-    				console.log(result);
-    			},
-    			error : function(xhr, status, er) {
-    				console.log(er);
-    			}
-    		});
-    		
-    	});
+			console.log(bomList);
+
+			$.ajax({
+				//요청 타입
+				type : 'delete',
+				//요청 URL
+				url : 'process/delete',
+				async : false,
+
+				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+				data : JSON.stringify(bomList),
+				contentType : "application/json; charset=utf-8",
+				success : function(result, status, xhr) {
+					$(location).attr('href','/process');
+				}
+			});
+
+		});
+
+				
     	
-    	
-    	
-    	$('#deleteBtn').on('click', function() {
-    		
-    		$.ajax({
-    			type : 'DELETE',
-    			url : '/product/' + $('#product_code').val(),
-    			contentType : "application/json; charset-utf-8",
-    			success : function(result, status, xhr) {
-    				raw_product.remove();
-    				$("#rawForm")[0].reset();
-    			},
-    			error : function(xhr, status, er) {
-    				console.log(er);
-    			}
-    		});
-    		
-    	});
     </script>
   </body>
 </html>

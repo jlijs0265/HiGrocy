@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Purple Admin</title>
+<title>Hi Grocy</title>
 <!-- plugins:css -->
 <link rel="stylesheet"
 	href="/resources/assets/vendors/mdi/css/materialdesignicons.min.css">
@@ -48,45 +48,28 @@
 					<div class="card">
 						<div class="card-body">
 							<h4 class="card-title">Storage List</h4>
-							<table id="storageList"
+							<table id="DetailList"
 								class="table table-bordered table-responsive special">
 								<thead style="background-color: #A3B5E6;">
 									<tr id="thead">
-										<th>입출고 내역 코드</th>
 										<th>품목코드</th>
-										<th>창고코드</th>
-										<th>입출고 유형</th>
-										<th>입출고 날짜</th>
-										<th>재고 수량</th>
-										<th>입출고 유형별 코드</th>
-										<th>유통기한</th>
+										<th>품목명</th>
+										<th>재고수량</th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${WHList}" var="WHList">
-										<tr class="" id="WHListItem">
-											<td id="r_wh_code"><c:out
-													value="${WHList.warehousing_record_code}" /></td>
-											<td id="r_item_code"><c:out value="${WHList.item_code}" /></td>
-											<td id="r_storage_code"><c:out
-													value="${WHList.storage_code}" /></td>
-											<td id="r_wh_type"><c:out
-													value="${WHList.warehousing_type}" /></td>
-											<td id="r_wr_date"><c:out value="${WHList.wr_date}" /></td>
-											<td id="r_amount"><c:out value="${WHList.amount}" /></td>
-											<td id="r_wh_type_code"><c:out
-													value="${WHList.warehousing_type_code}" /></td>
-											<td id="r_keep_date"><c:out
-													value="${WHList.keeping_date}" /></td>
+								<!-- TODO 백단부터 연결하고 데이터 받아오면 다시 시작 -->
+									<c:forEach items="${DetailList}" var="DetailList">
+										<tr class="" id="DetailItem">
+											<td id="r_wh_code"><c:out value="${DetailList.item_code}" /></td>
+											<td id="r_item_code"><c:out value="${DetailList.name}" /></td>
+											<td id="r_item_name"><c:out value="${DetailList.amount}" /></td>
 										</tr>
 									</c:forEach>
 								</tbody>
 							</table>
-
-
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>
@@ -133,7 +116,7 @@
 
 		var memory = 0;
 		/* List Row Click event */
-		$(storageList).on("dblclick", "tbody > tr", function(e) {
+		$(DetailList).on("dblclick", "tbody > tr", function(e) {
 			e.stopPropagation();
 			var tr = $(this);
 			var td = tr.children();
@@ -155,9 +138,7 @@
 					tr.css("transform", "scale(1.03)");
 					tr.css("transition", "transform 0.3s ease");
 				}
-			
 		})
-
 	})//end window
 </script>
 </html>

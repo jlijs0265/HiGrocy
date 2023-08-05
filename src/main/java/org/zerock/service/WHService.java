@@ -2,6 +2,7 @@ package org.zerock.service;
 
 import java.util.List;
 
+import org.zerock.domain.WHDetailVO;
 import org.zerock.domain.WHListVO;
 
 public interface WHService {
@@ -19,4 +20,7 @@ public interface WHService {
 
 	// 전체 조회
 	public List<WHListVO> getList();
+	
+	//Detail 조회
+	public List<WHDetailVO> getDetailList();
 }

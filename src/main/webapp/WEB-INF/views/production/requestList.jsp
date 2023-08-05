@@ -26,6 +26,7 @@
 	integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
 	crossorigin="anonymous"></script>
 <div class="container-scroller">
+
 	<!-- partial:partials/_navbar.jsp -->
 	<%@ include file="/WEB-INF/views/partials/_navbar.jsp"%>
 	<!-- partial -->
@@ -87,6 +88,7 @@
 				
 			</div>
 			<!-- content-wrapper ends -->
+
 			<!-- partial:partials/_footer.jsp -->
 			<%@ include file="/WEB-INF/views/partials/_footer.jsp"%>
 			<!-- partial -->

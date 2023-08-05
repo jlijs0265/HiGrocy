@@ -17,6 +17,23 @@
     <link rel="stylesheet" href="/resources/assets/css/style.css">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="/resources/assets/images/favicon.ico" />
+    
+    <!-- plugins:js -->
+    <script src="/resources/assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="/resources/assets/vendors/chart.js/Chart.min.js"></script>
+    <script src="/resources/assets/js/jquery.cookie.js" type="text/javascript"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="/resources/assets/js/off-canvas.js"></script>
+    <script src="/resources/assets/js/hoverable-collapse.js"></script>
+    <script src="/resources/assets/js/misc.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="/resources/assets/js/dashboard.js"></script>
+    <script src="/resources/assets/js/todolist.js"></script>
+    <!-- End custom js for this page -->
   </head>
   <body>
     <div class="container-scroller">
@@ -358,21 +375,6 @@
       <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
-    <!-- plugins:js -->
-    <script src="/resources/assets/vendors/js/vendor.bundle.base.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <script src="/resources/assets/vendors/chart.js/Chart.min.js"></script>
-    <script src="/resources/assets/js/jquery.cookie.js" type="text/javascript"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="/resources/assets/js/off-canvas.js"></script>
-    <script src="/resources/assets/js/hoverable-collapse.js"></script>
-    <script src="/resources/assets/js/misc.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page -->
-    <script src="/resources/assets/js/dashboard.js"></script>
-    <script src="/resources/assets/js/todolist.js"></script>
-    <!-- End custom js for this page -->
+    
   </body>
 </html>

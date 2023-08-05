@@ -28,8 +28,8 @@ public class WHController {
 	
 	@GetMapping("/wh/detail")
 	public String whDetail(Model model) {
-//		model.addAttribute("DetailList",/**/);
-		log.info("Welcom WHDetail!");
+		model.addAttribute("DetailList",service.getDetailList());
+		log.info("Welcom WHDetail!" + model);
 		return "wh/detail";
 	}
 }

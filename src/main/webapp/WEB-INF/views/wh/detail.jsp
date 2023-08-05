@@ -61,11 +61,9 @@
 								<!-- TODO 백단부터 연결하고 데이터 받아오면 다시 시작 -->
 									<c:forEach items="${DetailList}" var="DetailList">
 										<tr class="" id="DetailItem">
-											<td id="r_wh_code">
-											<c:out value="${DetailList}" /></td>
-											<td id="r_item_code"><c:out value="${DetailList}" /></td>
-											<td id="r_item_name"><c:out value="${DetailList}" /></td>
-											<td id="r_item_amount"><c:out value="${DetailList}" /></td>
+											<td id="r_wh_code"><c:out value="${DetailList.item_code}" /></td>
+											<td id="r_item_code"><c:out value="${DetailList.name}" /></td>
+											<td id="r_item_name"><c:out value="${DetailList.amount}" /></td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -140,9 +138,7 @@
 					tr.css("transform", "scale(1.03)");
 					tr.css("transition", "transform 0.3s ease");
 				}
-			
 		})
-
 	})//end window
 </script>
 </html>

@@ -42,7 +42,7 @@
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="../storage/storage"> 창고 관리 </a></li>
           <li class="nav-item"> <a class="nav-link" href="../wh"> 재고자산 수불부 현황 조회 </a></li>
-          <li class="nav-item"> <a class="nav-link" href="../pages/samples/register.html"> 재고 현황 조회 </a></li>
+          <li class="nav-item"> <a class="nav-link" href="../wh/detail"> 재고 현황 조회 </a></li>
         </ul>
       </div>
     </li>

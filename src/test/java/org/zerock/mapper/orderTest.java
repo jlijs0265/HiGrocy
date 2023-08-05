@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.zerock.domain.orderVO;
+import org.zerock.domain.orderRecordVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -18,7 +18,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class orderTest {
 	@Autowired
-	private orderMapper mapper;
+	private orderRecordMapper mapper;
 	
 //	@Test
 //	public void test() {
@@ -27,6 +27,6 @@ public class orderTest {
 //
 	@Test
 	public void insertTest() {
-		orderVO vo = new orderVO();
+		orderRecordVO vo = new orderRecordVO();
 	}
 }

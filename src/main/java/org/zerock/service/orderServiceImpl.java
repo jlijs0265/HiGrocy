@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.ProductVO;
 import org.zerock.domain.accountVO;
-import org.zerock.domain.orderVO;
-import org.zerock.mapper.orderMapper;
+import org.zerock.domain.orderRecordVO;
+import org.zerock.mapper.orderRecordMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
@@ -15,16 +15,16 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 
 public class orderServiceImpl implements orderService {
-	private orderMapper mapper;
+	private orderRecordMapper mapper;
 
 	@Override
-	public List<orderVO> getList(){
+	public List<orderRecordVO> getList(){
 		return null;
 		
 	}
 
 	@Override
-	public boolean insert(orderVO vo) {
+	public boolean insert(orderRecordVO vo) {
 		return false;
 	}
 

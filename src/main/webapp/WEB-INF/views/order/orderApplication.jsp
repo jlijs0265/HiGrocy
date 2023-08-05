@@ -42,31 +42,134 @@
 		<div class="modal-dialog modal-dialog-scrollable">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h1 class="modal-title fs-5" id="exampleItemModal">품목 선택</h1>
+					<h1 class="modal-title fs-5" id="exampleModalLabel">Modal
+						title</h1>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<!-- 원자재 품목 가져오기 -->
-					<div class="table-responsive" id="modalWarp"></div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">Close</button>
+					<div class="table-responsive">
+						<table class="table table-bordered border-secondary rawTable">
+							<thead>
+								<tr>
+									<th>코드</th>
+									<th>자재분류</th>
+									<th>자재명</th>
+									<th>단위</th>
+									<th>원산지</th>
+								</tr>
+							</thead>
+							<tbody class="rawbody">
+								<c:forEach items="${rawList}" var="rawMaterial">
+									<tr class="rawitem">
+										<td class="rcode"><c:out
+												value="${rawMaterial.raw_materials_code}" /></td>
+										<td class="rtype"><c:out value="${rawMaterial.type}" /></td>
+										<td class="rname"><c:out value="${rawMaterial.name}" /></td>
+										<td class="runit"><c:out value="${rawMaterial.unit}" /></td>
+										<td class="rorigin"><c:out value="${rawMaterial.origin}" /></td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	
+
+	<div class="modal fade" id="accountModal" tabindex="-1"
+		aria-labelledby="exampleItemModal" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">Modal
+						title</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<!-- 거래처 가져오기 -->
+					<div class="col-md-6 stretch-card">
+
+						<div class="table-responsive">
+							<table class="table" id="AC_list_table">
+								<thead>
+									<tr>
+										<th>거래처코드</th>
+										<th>거래처명</th>
+										<th>거래처번호</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${accList}" var="AC">
+										<tr class="accRow">
+											<td class="acode"><c:out value="${AC.account_code}" /></td>
+											<td class="aname"><c:out value="${AC.name}" /></td>
+											<td class="aphone"><c:out value="${AC.phone_number}" /></td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="col-md-6 stretch-card">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="card-title" id="AC_list_detail_title">등록 페이지</h4>
+								<form class="forms" id="AC_list_detail">
+									<div class="form-group row">
+										<label for="input_account_code"
+											class="col-sm-4 col-form-label">거래처코드</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control"
+												id="input_account_code" placeholder="거래처코드">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="input_account_name"
+											class="col-sm-4 col-form-label">거래명</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control"
+												id="input_account_name" placeholder="거래명">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="input_account_phone_number"
+											class="col-sm-4 col-form-label">거래처번호</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control"
+												id="input_account_phone_numbe" placeholder="거래처번호">
+										</div>
+									</div>
+
+									<button type="button" id="accListReg"
+										class="btn-sm btn-gradient-primary mr-2">등록</button>
+									<button type="button" id="accListUp"
+										class="btn-sm btn-gradient-primary mr-2">수정</button>
+									<button type="button" id="accListDel"
+										class="btn-sm btn-gradient-primary mr-2">삭제</button>
+									<button type="button" id="select"
+										class="btn-sm btn-gradient-primary mr-2">입력</button>
+
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 	<div class="container-scroller">
 		<!-- partial:partials/_navbar.html -->
-		<%@ include file="../partials/_navbar.html"%>
+		<%@ include file="../partials/_navbar.jsp"%>
 		<!-- partial -->
 		<div class="container-fluid page-body-wrapper">
 			<!-- partial:partials/_sidebar.html -->
-			<%@ include file="../partials/_sidebar.html"%>
+			<%@ include file="../partials/_sidebar.jsp"%>
 			<!-- partial:partials/_footer.html -->
 			<!-- main-panel  -->
 			<div class="main-panel">
@@ -76,14 +179,13 @@
 					</div>
 					<div class="row h-100">
 						<!-- 원부자재 목록 조회 부분 -->
-						<div class="col-md-6 grid-margin stretch-card">
+						<div class="col-md-4 grid-margin stretch-card">
 							<div class="card">
-								<div class="card-body list-body">
+								<div class="card-body list-body" id="js_card">
 									<h4 class="card-title pb-3">품목 선택</h4>
-									<form class="forms-sample">
+									<form class="forms-sample" id="itemForm">
 										<div class="form-group">
-											<label for="exampleInputUsername1">품목코드</label> 
-											<input
+											<label for="exampleInputUsername1">품목코드</label> <input
 												type="text" class="form-control" id="itemCode"
 												placeholder="품목코드" readonly="readonly"
 												data-bs-toggle="modal" data-bs-target="#itemModal"
@@ -96,33 +198,31 @@
 										</div>
 
 										<div class="form-group">
-											<label for="exampleInputConfirmPassword1">수량</label> <input
-												type="text" class="form-control" id="amount"
-												placeholder="수량">
+											<label for="amount">수량</label> <input type="text"
+												class="form-control" id="amount" placeholder="수량">
 										</div>
 										<div class="form-group">
-											<label for="exampleInputUsername1">단가</label> <input
-												type="text" class="form-control" id="price" placeholder="단가"
+											<label for="price">단가</label> <input type="text"
+												class="form-control" id="price" placeholder="단가">
+										</div>
+										<div class="form-group">
+											<label for="sum">공급가액</label> <input type="text"
+												class="form-control" id="sum" placeholder="공급가액"
 												readonly="readonly">
 										</div>
 										<div class="form-group">
-											<label for="exampleInputUsername1">공급가액</label> <input
-												type="text" class="form-control" id="" placeholder="공급가액"
+											<label for="tax">부가세</label> <input type="text"
+												class="form-control" id="tax" placeholder="부가세"
 												readonly="readonly">
 										</div>
 										<div class="form-group">
-											<label for="exampleInputUsername1">부가세</label> <input
-												type="text" class="form-control" id="" placeholder="부가세"
-												readonly="readonly">
-										</div>
-										<div class="form-group">
-											<label for="exampleInputUsername1">합계금액</label> <input
-												type="text" class="form-control" id="" placeholder="합계금액"
+											<label for="total">합계금액</label> <input type="text"
+												class="form-control" id="total" placeholder="합계금액"
 												readonly="readonly">
 										</div>
 										<div class="position-relative">
-											<button type="submit"
-												class="btn btn-gradient-primary mr-2 position-absolute end-0">추가</button>
+											<button type="button"
+												class="btn btn-gradient-primary mr-2 position-absolute end-0" id="addBtn">추가</button>
 										</div>
 									</form>
 
@@ -133,33 +233,30 @@
 
 
 						<!-- 원부자재 등록 부분 -->
-						<div class="col-md-6 grid-margin stretch-card">
+						<div class="col-md-8 grid-margin stretch-card">
 							<div class="card">
 								<div class="card-body">
 									<h4 class="card-title" id="raw-title">발주요청서 작성</h4>
 									<div class="table-responsive pt-3">
 										<table class="table table-bordered ">
-											<thead>
-												<tr>
-													<th class="col-3 table-active">발주번호</th>
-													<th>발주번호</th>
-												</tr>
-											</thead>
-											<tbody>
 
+											<tbody>
+												<tr>
+													<td class="table-active">거래처코드</td>
+													<td><input id="accountCode" readonly="readonly"></input></td>
+												</tr>
 												<tr>
 													<td class="table-active">거래처</td>
-													<td><input data-bs-toggle="modal" data-bs-target="#itemModal"
-												data-bs-whatever="@item" id="accountCode"></input></td>
+													<td><input data-bs-toggle="modal"
+														data-bs-target="#accountModal" data-bs-whatever="@account"
+														id="accountname" readonly="readonly"></input></td>
 												</tr>
+												<!--TODO: 로그인했을시 로그인한 유저이름으로 수정
 												<tr>
 													<td class="table-active">사원</td>
-													<td>자동반영</td>
+													<td>로그인한 유저이름</td>
 												</tr>
-												<tr>
-													<td class="table-active">완료여부</td>
-													<td></td>
-												</tr>
+												-->
 											</tbody>
 										</table>
 									</div>
@@ -180,24 +277,16 @@
 														<th>합계금액</th>
 													</tr>
 												</thead>
-												<tbody>
-													<tr>
-														<td>1</td>
-														<td>Herman Beck</td>
-														<td>ㅁㅁ유카ㅑ캬캬캬캬캬캬캬캬캬캬캬캬캬캬</td>
-														<td>123412341234캬</td>
-														<td>124613473274</td>
-														<td>캬캬캬캬캬캬캬캬캬캬캬</td>
-														<td>ㅁㅁ</td>
-													</tr>
+												<tbody id="itemDataTbody">
+
 												</tbody>
 											</table>
 										</div>
 									</div>
 
 									<div class="position-relative pt-5">
-										<button type="submit"
-											class="btn btn-gradient-primary mr-2 position-absolute end-0">추가</button>
+										<button type="button"
+											class="btn btn-gradient-primary mr-2 position-absolute end-0" id="register">작성</button>
 									</div>
 								</div>
 
@@ -209,7 +298,7 @@
 				</div>
 
 
-				<%@ include file="../partials/_footer.html"%>
+				<%@ include file="../partials/_footer.jsp"%>
 
 			</div>
 			<!-- main-panel ends -->
@@ -223,108 +312,79 @@
 		crossorigin="anonymous"></script>
 
 	<script type="text/javascript">
-	
-	const accountModal = document.getElementById('itemModal');
-	itemModal.addEventListener('show.bs.modal', event => {
-	  // Button that triggered the modal
-	  const button = event.relatedTarget
-	  // Extract info from data-bs-* attributes
-	  const recipient = button.getAttribute('data-bs-whatever')
-	  // If necessary, you could initiate an AJAX request here
-	  // and then do the updating in a callback.
-	  
-	  // 품목 정보를 담을 변수
-	  var items = "";
-	  var storages = "";
-	  
-	  
-	  if(recipient == '@item') {
-		// 품목 정보를 가져올 ajax 통신
-		  $.ajax({
-			  type : 'get',
-			  url : '/item',
-			  contentType : "application/json; charset-utf-8",
-			  success : function(result, status, xhr) {
-				  console.log(result);
-				  // 태그에 붙일 텍스트 만들기
-				  items = '<table class="table table-bordered border-secondary rawTable"><thead> <tr><th>코드</th><th>품명</th></tr></thead><tbody class="rawbody">';
-				  for(var i = 0; i < result.length; i++) {
-					  items += '<tr class="rawitem" id="itemRaw"><td class="icode">'; 
-		              items += result[i].product_code; 
-		              items += '</td><td class="type">' ;
-		              items += result[i].name;
-		              items += '</td></tr>';
-				  }
-				  items += '</tbody></table>';
-				  $('#modalWarp').html(items);
-			  },
-			  error : function(xhr, status, er) {
-				  cosnsoel.log(er);
-			  }
-		  });
-		
-	  } else if(recipient == '@storage') {
-		// 창고 정보를 가져올 ajax 통신
-		  $.ajax({
-			  type : 'get',
-			  url : '/storage/list',
-			  contentType : "application/json; charset-utf-8",
-			  success : function(result, status, xhr) {
-				  console.log(result);
-				  // 태그에 붙일 텍스트 만들기
-				  storages = '<table class="table table-bordered border-secondary rawTable"><thead> <tr><th>창고코드</th><th>창고명</th><th>위치</th></tr></thead><tbody class="rawbody">';
-				  for(var i = 0; i < result.length; i++) {
-					  storages += '<tr class="rawitem" id="storageRaw"><td class="scode">'; 
-					  storages += result[i].storage_code; 
-					  storages += '</td><td class="sname">' ;
-					  storages += result[i].name;
-					  storages += '</td><td class="location">' ;
-					  storages += result[i].location;
-					  storages += '</td></tr>';
-				  }
-				  storages += '</tbody></table>';
-				  $('#modalWarp').html(storages);
-			  },
-			  error : function(xhr, status, er) {
-				  console.log(er);
-			  }
-		  });
-	  } else {
-		  console.log('error');
-	  }
-	  
-	  
-	 
-	});
-	
-	$('#modalWarp').on('click', '#itemRaw' ,function() {
-		console.log(this);
-		code = $(this).find('.icode').text();
-		$('#itemCode').val(code);
-		$('#itemName').val($(this).find('.type').text());
-		
-		$.ajax({
-			type : 'get',
-			url : '/itemAmount',
-			data : JSON.stringify({"item_code" : code}),
-			contentType : "application/json; charset-utf-8",
-			success : function(result, status, xhr) {
-				console.log(result);
-			},
-			error : function(xhr, status, er) {
-				console.log(er);
-			}
-		});
-		
-		$('#itemModal').modal('hide');
-	})
-	
-	$('#modalWarp').on('click', '#storageRaw' ,function() {
-		console.log(this);
-		$('#storageCode').text($(this).find('.scode').text());
-		$('#itemModal').modal('hide');
-	})
-	</script>
+		// 품목 정보를 담을 변수
+		var items = "";
+		var storages = "";
 
+		//품목 모달의 row 클릭시.
+		$('#itemModal').on('click', '.rawitem', function() {
+			console.log(this);
+			$('#itemCode').val($(this).find('.rcode').text());
+			$('#itemName').val($(this).find('.rname').text());
+			$('#itemModal').modal('hide');
+		})
+
+		//거래처 모달의 row 클릭시
+		$('#accountModal')
+				.on(
+						'click',
+						'.accRow',
+						function() {
+							console.log(this);
+							$('#input_account_code').val(
+									$(this).find('.acode').text());
+							$('#input_account_name').val(
+									$(this).find('.aname').text());
+							$('#input_account_phone_numbe').val(
+									$(this).find('.aphone').text());
+							$('#accountCode')
+									.val($(this).find('.acode').text());
+							$('#accountname')
+									.val($(this).find('.aname').text());
+
+						});
+		//모달창내에 선택버튼을 클릭하면
+		$('#select').on('click', function() {
+			$('#accountModal').modal('hide');
+		});
+
+		$('#addBtn').on('click', function(event) {
+			event.preventDefault();            // 추가 버튼 누르면 테이블에 데이터 추가됨
+            let trData = '<tr><td class="itemRawCode">'
+            + $('#itemCode').val()
+            +'</td><td class="itemRawName">'
+            + $('#itemName').val()
+            + '</td><td class="itemRawAmount">'
+            + $('#amount').val()
+            + '</td><td class="itemRawPrice">'
+            + $('#price').val()
+            + '</td><td class="itemSum">' 
+            + $('#sum').val()
+            + '</td><td class="itemTax">'
+            + $('#tax').val()
+            + '</td><td class="itemTotal">' 
+            + $('#total').val()
+            + '</td></tr>';
+
+            $('#itemDataTbody').append(trData);
+
+                        $('#itemForm')[0].reset();
+        });
+
+        $('#price').on('change', function() {
+
+            // 가격과 수량 가져오기
+            var price = Number($('#price').val());
+            var amount = Number($('#amount').val());
+			var sum = amount * price;
+			var tax = sum/10;
+			$('#sum').val(sum);
+			$('#tax').val(tax);
+			$('#total').val(sum+tax);
+
+           
+        });
+	
+	</script>
 </body>
 </html>

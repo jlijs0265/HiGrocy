@@ -3,7 +3,7 @@ package org.zerock.mapper;
 import java.util.List;
 
 import org.zerock.domain.accountVO;
-import org.zerock.domain.orderVO;
+import org.zerock.domain.orderRecordVO;
 
 public interface accountMapper {
 	

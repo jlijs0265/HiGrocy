@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.orderListMapper">
+
+	<select id="getList" resultType="org.zerock.domain.orderListVO">
+		SELECT * FROM order_list
+	</select>
+	
+	<select id="getListOnce" resultType="org.zerock.domain.orderListVO">
+  		SELECT * FROM order_list where order_code = #{order_code}
+  	</select>
+
+	<insert id="insertOR" parameterType="org.zerock.domain.orderListVO">
+		INSERT INTO order_list (order_code, item_code, account_code, price, amount)
+		VALUES(#{order_code}, #{item_code} ,#{account_code}, #{price} ,#{amount})
+	</insert>
+
+	<update id="updateOR" parameterType="org.zerock.domain.orderListVO">
+		update order_list set
+		item_code = #{item_code}, account_code = #{account_code}, price = #{price}, amount = #{amount}
+		where order_code = #{order_code} 
+	</update>
+	
+	<delete id="deleteOR" parameterType="int">
+		delete from order_list
+		where order_code = #{order_code}
+	</delete>
+
+
+</mapper>

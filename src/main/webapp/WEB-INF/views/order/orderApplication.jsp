@@ -381,9 +381,141 @@
 			$('#sum').val(sum);
 			$('#tax').val(tax);
 			$('#total').val(sum+tax);
-
-           
         });
+
+		//거래처 등록 버튼 눌렀을때
+	$("#accListReg").on("click", function() {
+		var accList = {
+			input_account_code : document.getElementById("input_account_code").value,
+			input_account_name : document.getElementById("input_account_name").value,
+			input_account_phone_numbe : document.getElementById("input_account_phone_numbe").value,
+		}
+
+		$.ajax({
+			//요청 타입
+			type : 'post',
+			//요청 URL
+			url : '/account/resister',
+			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+			data : JSON.stringify(accList),
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr) {
+				$("#AC_list_detail")[0].reset();
+				$('#accountModal').modal('hide');
+
+      },
+			error : function(xhr, status, er) {
+				if (er) {
+					error(er);
+				}
+			}
+		});
+	});
+
+		//거래처 수정 버튼 눌렀을때
+		$("#accListUp").on("click", function() {
+			var accList = {
+				input_account_code : document.getElementById("input_account_code").value,
+				input_account_name : document.getElementById("input_account_name").value,
+				input_account_phone_numbe : document.getElementById("input_account_phone_numbe").value,
+			}
+	
+			$.ajax({
+				//요청 타입
+				type : 'put',
+				//요청 URL
+				url : '/account/update',
+				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+				data : JSON.stringify(accList),
+				contentType : "application/json; charset=utf-8",
+				success : function(result, status, xhr) {
+					$("#AC_list_detail")[0].reset();
+					//새로고침이상하면 지울것
+					$('#accountModal').modal('hide');
+	
+		  },
+				error : function(xhr, status, er) {
+					if (er) {
+						error(er);
+					}
+				}
+			});
+		});
+
+		//거래처 삭제 버튼 눌렀을때
+		$("#accListUp").on("click", function() {
+			const input_account_code = document.getElementById("input_account_code").value
+			$.ajax({
+				//요청 타입
+				type : 'delete',
+				//요청 URL
+				url : '/account/delete',
+				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+				data : JSON.stringify(Number(input_account_code)),
+				contentType : "application/json; charset=utf-8",
+				success : function(result, status, xhr) {
+					$("#AC_list_detail")[0].reset();
+					//새로고침이상하면 지울것
+					$('#accountModal').modal('hide');
+	
+		  },
+				error : function(xhr, status, er) {
+					if (er) {
+						error(er);
+					}
+				}
+			});
+		});
+
+		//작성 버튼 눌렀을때
+	$("#register").on("click", function() {
+		const itmeRowElements = document.querySelectorAll('#itemDataTbody tr');
+		var orderRecord = {
+			order_code : 0,
+			account_code : document.getElementById("input_account_code").value,
+			order_date : '',
+			order_manager : '송희문 사원',
+		}
+
+		itemList = [];
+    		
+    	for(var i = 0; i < itmeRowElements.length; i++) {
+    		var orderList = {
+    			order_code : 0,
+				item_code : itmeRowElements[i].getElementsByClassName("itemRawCode"),
+				account_code : document.getElementById("input_account_code").value,
+				price : itmeRowElements[i].getElementsByClassName("itemRawPrice"),
+    			amount : itmeRowElements[i].getElementsByClassName("itemRawAmount")
+    			}
+    			itemList.push(orderList);
+    		}
+    		console.log(itemList);
+		var totalList = {
+			orderList : orderList,
+			orderRecord : orderRecord
+		}
+		console.log(totalList);
+
+		//$.ajax({
+			//요청 타입
+		//	type : 'post',
+			//요청 URL
+		//	url : '/order/resister',
+			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+		//	data : JSON.stringify(totalList),
+		//	contentType : "application/json; charset=utf-8",
+		//	success : function(result, status, xhr) {
+		//$(location).attr('href','/order');
+
+     // },
+		//	error : function(xhr, status, er) {
+		//		if (er) {
+		//			error(er);
+		//		}
+		//	}
+		//});
+	});
+
 	
 	</script>
 </body>

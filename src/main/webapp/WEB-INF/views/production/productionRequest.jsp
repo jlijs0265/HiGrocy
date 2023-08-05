@@ -135,7 +135,7 @@
 					                        </tr>
 					                        <tr>
 					                          <td class="table-active">사원</td>
-					                          <td><c:out value="${user}"></c:out></td>
+					                          <td id="employee"><c:out value="${user}"></c:out></td>
 					                        </tr>
 					                        <tr>
 					                          <td class="table-active">총 합계금액</td>
@@ -143,6 +143,8 @@
 					                        </tr>
 					                      </tbody>
 					                    </table>
+					                    
+					                    
 									</div>
 									
 									<div class="pt-5">
@@ -168,8 +170,9 @@
 									</div>
 									
 									<div class="position-relative pt-5">
-					                      	<button type="submit" class="btn btn-gradient-primary mr-2 position-absolute end-0">등록</button>
+					                      	<button type="button" class="btn btn-gradient-primary mr-2 position-absolute end-0" id="registerBtn">등록</button>
 				                      </div>
+				                      
 								</div>
 
 							</div>
@@ -231,7 +234,7 @@
 			              items += result[i].product_code; 
 			              items += '</td><td class="type">' ;
 			              items += result[i].name;
-			              items += '</td></tr>';
+			              items += '</td></tr>';	
 					  }
 					  items += '</tbody></table>';
 					  $('#modalWarp').html(items);
@@ -307,7 +310,7 @@
 		
 		$('.addBtn').on('click', function() {
 			// 추가 버튼 누르면 테이블에 데이터 추가됨
-			let trData = '<tr><td class="itemRawCode">'
+			let trData = '<tr class="prListTr"><td class="itemRawCode">'
 			+ $('#itemCode').val()
 			+'</td><td class="itemRawName">'
 			+ $('#itemName').val()
@@ -320,21 +323,80 @@
 			+ '</td><td class="itemRawVat">'
 			+ $('#vat').val()
 			+ '</td><td class="itemRawTotal">' 
-			/* + $('#total').val() */
-			+ $('#itemCode').val()
+			+ $('#total').val()
 			+ '</td></tr>';
 			
 			$('#itemDataTbody').append(trData);
 			
+			
+			
 			// 총 합계 금액 추가하기
 			var num1 = Number($('#totalPlus').text());
 			console.log(num1);
-			var num2 = Number($('#itemCode').val());
+			var num2 = Number($('#total').val());
 			console.log(num2);
 			console.log(num1 + num2);
 			$('#totalPlus').text(num1 + num2);
 			
 			$('#itemForm')[0].reset();
+		});
+		
+		$('#amount').on('change', function() {
+			
+			// 품목코드와 수량 가져오기
+			var itemCode = $('#itemCode').val();
+			var amount = $('#amount').val();
+			
+			// 단가 구하기
+			/* $.ajax({
+				
+			}); */
+			
+			$('#price').val(200);
+			$('#supplyValue').val(amount*200);
+			$('#vat').val( (amount*200) * 0.1 );
+			$('#total').val( Number($('#supplyValue').val())+ Number($('#vat').val()) );
+		});
+		
+		$('#registerBtn').on('click', function() {
+			
+			var prRecord = {
+					request_date : $('#today').text(),
+					request_manager : $('#employee').text()
+			}
+			
+			console.log(JSON.stringify(prRecord));
+			
+			$.ajax({
+				type : 'post',
+				url : '/production/request',
+				data : JSON.stringify(prRecord),
+				contentType : "application/json; charset-utf-8",
+				success : function(result, status, xhr) {
+					console.log(result);
+				},
+				error : function(xhr, status, er) {
+					console.log(er);
+				}
+			});
+			
+			
+			var prRecordList = [];
+			
+			// 같은 name을 가진 태그들 선택
+    		const codeElements = document.querySelectorAll('.itemRawCode');
+    		const amountElements = document.querySelectorAll('.itemRawAmount');
+			
+			for(var i = 0; i < codeElements.length; i++) {
+				var pr = {
+					pr_code : codeElements[i].childNodes[0].nodeValue,
+					amount : amountElements[i].childNodes[0].nodeValue
+				}
+				prRecordList.push(pr);
+			}
+			
+			console.log(prRecordList);
+			
 		});
 		
 	</script>

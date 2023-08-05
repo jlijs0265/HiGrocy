@@ -19,7 +19,6 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 @Controller
 @Log4j
-@RequestMapping("/account/*")
 
 public class accountController {
 

@@ -7,7 +7,7 @@
 	<insert id="insertOR" parameterType="org.zerock.domain.orderRecordVO">
 		INSERT INTO order_record (order_code, account_code, order_date,
 		order_manager, delivery_date)
-		VALUES(#{order_code}, #{account_code}, sysdate, #{order_manager}, sysdate)
+		VALUES(seq_order_record.nextval, #{account_code}, sysdate, #{order_manager}, sysdate+30)
 	</insert>
 	
 	<insert id="insertAccount" parameterType="org.zerock.domain.accountVO">

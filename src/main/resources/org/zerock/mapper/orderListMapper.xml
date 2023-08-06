@@ -12,7 +12,10 @@
   		SELECT * FROM order_list where order_code = #{order_code}
   	</select>
 
-	<insert id="insertOR" parameterType="org.zerock.domain.orderListVO">
+	<insert id="insertOL" parameterType="org.zerock.domain.orderListVO">
+		<selectKey resultType="int" keyProperty="order_code" order= "BEFORE">
+			        SELECT MAX(order_code) FROM order_record        
+		</selectKey>
 		INSERT INTO order_list (order_code, item_code, account_code, price, amount)
 		VALUES(#{order_code}, #{item_code} ,#{account_code}, #{price} ,#{amount})
 	</insert>

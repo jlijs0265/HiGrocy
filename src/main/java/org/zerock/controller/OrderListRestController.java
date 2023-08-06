@@ -20,6 +20,7 @@ public class OrderListRestController {
 
 	@PostMapping("/orderlist/betweendate")
 	public ResponseEntity<Object> orderlist(BetweenDateVO vo) {
+		log.info(vo);
 		return ResponseEntity.ok(service.selectDate(vo));
 	}
 }

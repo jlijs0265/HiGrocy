@@ -124,7 +124,7 @@
 						                          <th> 총 합계</th>
 						                        </tr>
 						                      </thead>
-						                      <tbody>
+						                      <tbody class = "or_num">
 						                      
 						                      </tbody>
 						                    </table>
@@ -150,7 +150,7 @@
 						                          <th> 원산지</th>
 						                        </tr>
 						                      </thead>
-						                      <tbody>
+						                      <tbody class = "item_tbody">
 						                      
 						                      </tbody>
 						                    </table>
@@ -193,7 +193,7 @@
 						                          <th> 원산지</th>
 						                        </tr>
 						                      </thead>
-						                      <tbody>
+						                      <tbody class = "item_tbody">
 						                      
 						                      </tbody>
 						                    </table>
@@ -219,7 +219,7 @@
 						                          <th> 총 합계</th>
 						                        </tr>
 						                      </thead>
-						                      <tbody>
+						                      <tbody class = "or_item">
 						                      
 						                      </tbody>
 						                    </table>
@@ -263,7 +263,7 @@
 						                         
 						                        </tr>
 						                      </thead>
-						                      <tbody>
+						                      <tbody class = "or_acc">
 						                      
 						                      </tbody>
 						                    </table>
@@ -290,7 +290,7 @@
 												  
 						                        </tr>
 						                      </thead>
-						                      <tbody>
+						                      <tbody class = "item_tbody">
 						                      
 						                      </tbody>
 						                    </table>
@@ -314,9 +314,34 @@
 
 		//날짜 조회버튼 눌렀을때
 		$('.content-wrapper').on('click','#select', function(){
-			alert("날짜 조회버튼 눌림");
-			//TODO: ajax 통신 붙이기
+			var BetweenDateVO = {
+			start : $("#start").val(),
+			end : $("#end").val()
+			}
+		console.log(BetweenDateVO);
 
+
+		$.ajax({
+			//요청 타입
+			type : 'POST',
+			//요청 URL
+			url : '/orderlist/betweendate',
+			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+			data : JSON.stringify(BetweenDateVO),
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr) {
+				console.log(result);
+				$("tbody.or_num").empty();
+				for(var i = 0; i < result.length; i++) {
+					$('tbody').append('<tr><td>'+result[i].pr_code+'</td><td>'+displayTime(result[i].request_date)+'</td><td>'+result[i].request_manager+'</td></tr>');
+					}
+				},
+			error : function(xhr, status, er) {
+				if (er) {
+					error(er);
+				}
+			}
+			});
 		});
 	</script>
 </body>

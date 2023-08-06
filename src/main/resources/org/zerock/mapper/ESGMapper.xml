@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.ESGMapper">
+
+	
+	<select id="getEcoDate" resultType="org.zerock.domain.DateEcoVO">
+		<![CDATA[
+  		select pm.machine_code,pm.type ,pm.gas_emissions*total green_gas_date, pm.energy_usage*total energy_date, ex.sdate, ex.total
+            from production_machine pm
+            join (
+                select pl.sdate, pr.machine_code, sum(pr.usage_time)/60 total
+                from production_list pl
+                join production_record pr on pl.pr_code = pr.pr_code
+                group by pl.sdate, pr.machine_code
+            ) ex on pm.machine_code = ex.machine_code
+            where TRUNC(#{date}) = TRUNC(SYSDATE)
+            order by green_gas_date desc
+  		]]>
+	</select>
+	
+</mapper>

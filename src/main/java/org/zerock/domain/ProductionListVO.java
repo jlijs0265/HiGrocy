@@ -5,8 +5,9 @@ import java.sql.Date;
 import lombok.Data;
 
 @Data
-public class BetweenDateVO {
-	Date start;
-	Date end;
+public class ProductionListVO {
 
+	int pr_code;
+	int item_code;
+	Date sdate;
 }

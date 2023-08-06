@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.domain.PMListVO;
 import org.zerock.domain.ProductionMachineVO;
 import org.zerock.mapper.PMListMapper;
@@ -32,6 +33,7 @@ public class PMListService {
 	}
 	
 	//생산기계 등록 - 기계코드가 기존 기계코드테이블에 존재하지 않으면 자동으로 false
+	@Transactional
 	public boolean insertPMList(PMListVO vo) {
 		try {
 		ProductionMachineVO test = m_mapper.getPM(vo.getMachine_code());

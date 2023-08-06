@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.accountMapper">
+
+	<insert id="insert" parameterType="org.zerock.domain.accountVO">
+
+		insert into account(account_code, name, phone_number)
+		values(seq_account.nextval,#{name},#{phone_number})
+		
+	</insert>
+	
+	
+	<select id="getList" resultType="org.zerock.domain.accountVO">
+		<![CDATA[
+			select * from account where account_code > 0
+		]]>
+	</select>
+	
+	
+	<select id="getListOnce" resultType="org.zerock.domain.accountVO">
+		select * from account where account_code = #{account_code}
+	</select>
+	
+	
+	<update id="update" parameterType="org.zerock.domain.accountVO">
+		update account set
+		name = #{name},
+		phone_number = #{phone_number}
+		where account_code = #{account_code}
+	</update>
+	
+
+	<delete id="delete" parameterType="int">
+		delete from account where account_code = #{account_code}
+	</delete>
+	
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.orderRecordMapper">
+
+	<insert id="insertOR" parameterType="org.zerock.domain.orderRecordVO">
+		INSERT INTO order_record (order_code, account_code, order_date,
+		order_manager, delivery_date)
+		VALUES(seq_order_record.nextval, #{account_code}, sysdate, #{order_manager}, sysdate+30)
+	</insert>
+	
+	<insert id="insertAccount" parameterType="org.zerock.domain.accountVO">
+		INSERT INTO account (account_code) VALUES(#{account_code)
+	</insert>
+	
+
+</mapper>

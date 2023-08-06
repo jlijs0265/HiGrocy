@@ -435,8 +435,7 @@
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
 				$("#m_list_detail")[0].reset();
-      $(location).attr('href','/pm');
-      //TODO: 생산기계목록에 수정해줘야함.
+      			$(location).attr('href','/pm');
 			},
 			error : function(xhr, status, er) {
 				if (er) {

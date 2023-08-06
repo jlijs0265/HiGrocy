@@ -365,21 +365,6 @@
 					request_manager : $('#employee').text()
 			}
 			
-			console.log(JSON.stringify(prRecord));
-			
-			$.ajax({
-				type : 'post',
-				url : '/production/request',
-				data : JSON.stringify(prRecord),
-				contentType : "application/json; charset-utf-8",
-				success : function(result, status, xhr) {
-					console.log(result);
-				},
-				error : function(xhr, status, er) {
-					console.log(er);
-				}
-			});
-			
 			
 			var prRecordList = [];
 			
@@ -389,13 +374,37 @@
 			
 			for(var i = 0; i < codeElements.length; i++) {
 				var pr = {
-					pr_code : codeElements[i].childNodes[0].nodeValue,
+					item_code : codeElements[i].childNodes[0].nodeValue,
 					amount : amountElements[i].childNodes[0].nodeValue
 				}
 				prRecordList.push(pr);
 			}
 			
 			console.log(prRecordList);
+			
+			var totalList = {
+					prRecord : JSON.stringify(prRecord),
+					prRecordList : JSON.stringify(prRecordList)
+			};
+			
+			var totalJson = JSON.stringify(totalList);
+			console.log(totalJson);
+			$.ajax({
+    			type : 'post',
+    			url : '/pr/register',
+    			data : {totalList : totalJson},
+    			dataType : 'json',
+    			async : false,
+    			success : function(result, status, xhr) {
+    				console.log(result);
+    			},
+    			error : function(xhr, status, er) {
+    				console.log(er);
+    			}
+    		});
+			
+			
+			
 			
 		});
 		

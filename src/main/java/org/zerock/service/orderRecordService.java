@@ -8,6 +8,8 @@ import org.zerock.domain.accountVO;
 import org.zerock.domain.orderRecordVO;
 import org.zerock.domain.orderRecordVO;
 
+
+@Service
 public interface orderRecordService {
 
 	public boolean insert(orderRecordVO vo);

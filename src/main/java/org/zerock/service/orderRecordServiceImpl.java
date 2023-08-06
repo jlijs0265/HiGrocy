@@ -3,6 +3,7 @@ package org.zerock.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.zerock.domain.BetweenDateVO;
 import org.zerock.domain.ProductVO;
 import org.zerock.domain.accountVO;
 import org.zerock.domain.orderRecordVO;
@@ -19,5 +20,10 @@ public class orderRecordServiceImpl implements orderRecordService {
 	@Override
 	public boolean insert(orderRecordVO vo) {
 		return mapper.insertOR(vo);
+	}
+
+	@Override
+	public List<orderRecordVO> selectDate(BetweenDateVO vo) {
+		return 	mapper.selectBetween(vo);
 	}
 }

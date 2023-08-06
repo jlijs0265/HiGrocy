@@ -13,7 +13,6 @@ import lombok.extern.log4j.Log4j;
 
 @Service
 @AllArgsConstructor
-
 public class orderRecordServiceImpl implements orderRecordService {
 	private orderRecordMapper mapper;
 

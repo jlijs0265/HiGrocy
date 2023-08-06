@@ -312,7 +312,7 @@
 			//TODO: ajax 통신 붙이기
 		});
 
-		//날짜 조회버튼 눌렀을때
+		//날짜 조회버튼 눌렀을때 TODO
 		$('.content-wrapper').on('click','#select', function(){
 			var BetweenDateVO = {
 			start : $("#start").val(),

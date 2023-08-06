@@ -22,7 +22,8 @@
       <div class="collapse" id="second_item">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="../pm">생산기계 등록</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
+          <li class="nav-item"> <a class="nav-link" href="../pr">생산 요청서</a></li>
+          <li class="nav-item"> <a class="nav-link" href="../production/requestList">생산 관리</a></li>
         </ul>
       </div>
     </li>
@@ -55,11 +56,9 @@
       </a>
       <div class="collapse" id="chart-basic">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="../pages/samples/blank-page.html"> Blank Page </a></li>
-          <li class="nav-item"> <a class="nav-link" href="../pages/samples/login.html"> Login </a></li>
-          <li class="nav-item"> <a class="nav-link" href="../pages/samples/register.html"> Register </a></li>
-          <li class="nav-item"> <a class="nav-link" href="../pages/samples/error-404.html"> 404 </a></li>
-          <li class="nav-item"> <a class="nav-link" href="../pages/samples/error-500.html"> 500 </a></li>
+          <li class="nav-item"> <a class="nav-link" href="../raw_material">원부자재 관리</a></li>
+          <li class="nav-item"> <a class="nav-link" href="../product"> 생산품 관리 </a></li>
+          <li class="nav-item"> <a class="nav-link" href="../process"> 생산품 프로세스 관리 </a></li>
         </ul>
       </div>
     </li>
@@ -72,11 +71,8 @@
       </a>
       <div class="collapse" id="fifth-item">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="../pages/samples/blank-page.html"> Blank Page </a></li>
-          <li class="nav-item"> <a class="nav-link" href="../pages/samples/login.html"> Login </a></li>
-          <li class="nav-item"> <a class="nav-link" href="../pages/samples/register.html"> Register </a></li>
-          <li class="nav-item"> <a class="nav-link" href="../pages/samples/error-404.html"> 404 </a></li>
-          <li class="nav-item"> <a class="nav-link" href="../pages/samples/error-500.html"> 500 </a></li>
+          <li class="nav-item"> <a class="nav-link" href="../order">발주신청서 작성</a></li>
+          <li class="nav-item"> <a class="nav-link" href="../orderlist">발주현황</a></li>
         </ul>
       </div>
     </li>

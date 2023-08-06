@@ -11,6 +11,7 @@ public class OrderListController {
 
 	@GetMapping("/orderlist")
 	public String orderlist() {
+		log.info("orderlist .. controller..");
 		return "/order/orderlist";
 	}
 }

@@ -15,12 +15,12 @@ import lombok.extern.log4j.Log4j;
 @RestController
 @Log4j
 public class OrderListRestController {
-	@Autowired
-	private orderRecordService service;
+//	@Autowired
+//	private orderRecordService service;
 
-	@PostMapping("/orderlist/betweendate")
-	public ResponseEntity<Object> orderlist(BetweenDateVO vo) {
-		log.info(vo);
-		return ResponseEntity.ok(service.selectDate(vo));
-	}
+//	@PostMapping("/orderlist/betweendate")
+//	public ResponseEntity<Object> orderlist(BetweenDateVO vo) {
+//		log.info(vo);
+//		return ResponseEntity.ok(service.selectDate(vo));
+//	}
 }

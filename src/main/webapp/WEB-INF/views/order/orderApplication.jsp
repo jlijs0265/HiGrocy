@@ -492,6 +492,7 @@
 						function() {
 							const itmeRowElements = document
 									.querySelectorAll('#itemDataTbody tr');
+							console.log(itmeRowElements);
 							var orderRecord = {
 								order_code : 0,
 								account_code : document
@@ -505,43 +506,41 @@
 							for (var i = 0; i < itmeRowElements.length; i++) {
 								var orderList = {
 									order_code : 0,
-									item_code : itmeRowElements[i]
-											.getElementsByClassName("itemRawCode"),
+									item_code : itmeRowElements[i].querySelectorAll(".itemRawCode")[0].childNodes[0].nodeValue,
 									account_code : document
-											.getElementById("input_account_code").value,
-									price : itmeRowElements[i]
-											.getElementsByClassName("itemRawPrice"),
-									amount : itmeRowElements[i]
-											.getElementsByClassName("itemRawAmount")
+										.getElementById("input_account_code").value,
+									price : itmeRowElements[i].querySelectorAll(".itemRawPrice")[0].childNodes[0].nodeValue,
+									amount : itmeRowElements[i].querySelectorAll(".itemRawAmount")[0].childNodes[0].nodeValue
 								}
 								itemList.push(orderList);
 							}
 							console.log(itemList);
 							var totalList = {
-								orderList : orderList,
+								orderList : itemList,
 								orderRecord : orderRecord
 							};
 
 							console.log(totalList);
 
-							//$.ajax({
+							
+							$.ajax({
 							//요청 타입
-							//	type : 'post',
+								type : 'post',
 							//요청 URL
-							//	url : '/order/resister',
+								url : '/order/orderlist/insert',
 							//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
-							//	data : JSON.stringify(totalList),
-							//	contentType : "application/json; charset=utf-8",
-							//	success : function(result, status, xhr) {
-							//$(location).attr('href','/order');
+								data : JSON.stringify(totalList),
+								contentType : "application/json; charset=utf-8",
+								success : function(result, status, xhr) {
+								$(location).attr('href','/orderlist');
 
-							// },
-							//	error : function(xhr, status, er) {
-							//		if (er) {
-							//			error(er);
-							//		}
-							//	}
-							//});
+							},
+								error : function(xhr, status, er) {
+									if (er) {
+										error(er);
+									}
+								}
+							});
 						});
 	</script>
 </body>

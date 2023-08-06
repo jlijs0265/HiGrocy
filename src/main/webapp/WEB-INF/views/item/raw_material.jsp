@@ -45,8 +45,8 @@
 					                    <form class="d-flex align-items-center" action="#">
 							              <div class="input-group">
 						                    <div class="p-3">검색</div>
-							                <input type="text" class="form-control bg-transparent border-1" placeholder="원부자재 검색">
-							                <div class="input-group-text">
+							                <input type="text" class="form-control bg-transparent border-1" placeholder="원부자재 검색" id="raw_search_input">
+							                <div class="input-group-text" id="raw_search_btn">
 							                  <i class="input-group mdi mdi-magnify"></i>
 							                </div>
 							              </div>
@@ -260,6 +260,18 @@
     			}
     		});
     	});
+    	
+    	$('#raw_search_btn').on('click', function() {
+    		var rawName = $('#raw_search_input').val();
+    		
+    		/* $.ajax({
+    			type : 'get',
+    			url : '/search/raw_material',
+    			data : JSON.stringify(rawName),
+    			
+    			
+    		}); */
+    	})
     	
     </script>
   </body>

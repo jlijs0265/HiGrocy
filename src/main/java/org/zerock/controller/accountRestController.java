@@ -27,7 +27,7 @@ public class accountRestController {
 	@PostMapping(value = "/account/resister", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> insertAccount(@RequestBody accountVO vo) {
 		log.info("Storage register..........");
-		log.info("vo�Դϴ� : " + vo);
+		log.info("vo입니다 : " + vo);
 		return ResponseEntity.ok(service.insert(vo));
 	}
 
@@ -35,7 +35,7 @@ public class accountRestController {
 	@PutMapping(value = "/account/update", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> updateAccount(@RequestBody accountVO vo) {
 		log.info("Storage update..........");
-		log.info("vo�Դϴ� : " + vo);
+		log.info("vo입니다 : " + vo);
 		return ResponseEntity.ok(service.update(vo));
 	}
 	

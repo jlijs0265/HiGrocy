@@ -25,7 +25,7 @@ public class accountServiceImpl implements accountService {
 		return ac_mapper.insert(vo);
 	}
 
-	// ´ÜÀÏÁ¶È¸
+	// ë‹¨ì¼ì¡°íšŒ
 	@Override
 	public accountVO getListOnce(int account_code) {
 		log.info("get!!!" + account_code);
@@ -44,7 +44,7 @@ public class accountServiceImpl implements accountService {
 		return ac_mapper.delete(account_code);
 	}
 
-	// ÀüÃ¼Á¶È¸
+	// ì „ì²´ì¡°íšŒ
 	@Override
 	public List<accountVO> getList() {
 		

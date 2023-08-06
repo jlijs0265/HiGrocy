@@ -120,11 +120,10 @@
 						                          <th> 발주일자</th>
 						                          <th> 거래처</th>
 						                          <th> 담당사원</th>
-												  <th> 공급가 합계</th>
-						                          <th> 총 합계</th>
+												  <th> 배송예정일</th>
 						                        </tr>
 						                      </thead>
-						                      <tbody class = "or_num">
+						                      <tbody class = "or_num" id="orderListTbody">
 						                      
 						                      </tbody>
 						                    </table>
@@ -174,8 +173,8 @@
 					                    <form class="d-flex align-items-center" action="#">
 							              <div class="input-group">
 						                    <div class="p-3">검색</div>
-							                <input type="text" class="form-control bg-transparent border-1" placeholder="품목 검색">
-							                <div class="input-group-text">
+							                <input type="text" class="form-control bg-transparent border-1" id="item_search_input" placeholder="품목 검색">
+							                <div class="input-group-text" id="item_search_btn">
 							                  <i class="input-group mdi mdi-magnify"></i>
 							                </div>
 							              </div>
@@ -307,9 +306,28 @@
 			}
 		})
 		//검색버튼 눌렀을때
-		$('.content-wrapper').on('click','.input-group-text', function(){
-			alert("검색버튼 눌림");
-			//TODO: ajax 통신 붙이기
+		$('.content-wrapper').on('click','#item_search_btn', function(){
+			//TODO: ajax 통신 붙이기 품목 검색 버튼 누름
+			console.log($('#item_search_input').val());
+			// 검색한 텍스트를 포함하는 품목을 가져오고 해당하는 품목을 가지는 발주 신청 내역을 가지고 오기
+			
+			// 품목 이름을 보내기
+			var itemName = $('#item_search_input').val();
+			/* $.ajax({
+				type : 'get',
+				url : '/orderlist/searchItem',
+				data : JSON.stringify(itemName),
+				contentType : "application/json; charset-utf-8",
+				success : function(result, status, xhr) {
+    				for(var i = 0; i < result.length; i++) {
+    					$('.item_tbody').append('<div class="form-group row"><label class="col-sm-3 col-form-label">원자재코드</label><div class="col-sm-9"><input type="text" class="form-control raw_code" readonly="readonly" value="'+ result[i].raw_materials_code + '" name="raw_material_code" data-bs-toggle="modal" data-bs-target="#exampleModal"></div></div><div class="form-group row"><label class="col-sm-3 col-form-label">수량</label><div class="col-sm-9"><input type="text" class="form-control" name="amount" value="'+ result[i].amount +'" placeholder="수량"></div></div>');
+    				}
+    				
+    			},
+    			error : function(xhr, status, er) {
+    				console.log(er);
+    			}
+			}); */
 		});
 
 		//날짜 조회버튼 눌렀을때 TODO
@@ -319,7 +337,15 @@
 			end : $("#end").val()
 			}
 		console.log(BetweenDateVO);
-
+		
+		//날짜 변경 함수
+		const displayTime = function(timeValue){
+			var dateObj = new Date(timeValue);
+			var yy = dateObj.getFullYear();
+			var mm = dateObj.getMonth() +1;
+			var dd = dateObj.getDate();
+			return [yy, '-', (mm > 9 ? '': '0')+mm, '-',(dd>9 ? '': '0')+dd].join('');
+		}
 
 		$.ajax({
 			//요청 타입
@@ -333,7 +359,7 @@
 				console.log(result);
 				$("tbody.or_num").empty();
 				for(var i = 0; i < result.length; i++) {
-					$('tbody').append('<tr><td>'+result[i].pr_code+'</td><td>'+displayTime(result[i].request_date)+'</td><td>'+result[i].request_manager+'</td></tr>');
+					$('#orderListTbody').append('<tr><td>'+result[i].order_code+'</td><td>'+displayTime(result[i].order_date)+'</td><td>'+result[i].account_code +'</td><td>'+result[i].order_manager +'</td><td>'+displayTime(result[i].delivery_date) + '</td></tr>');
 					}
 				},
 			error : function(xhr, status, er) {

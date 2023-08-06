@@ -14,13 +14,5 @@
 		INSERT INTO account (account_code) VALUES(#{account_code)
 	</insert>
 	
-	<select id="selectBetween" parameterType="org.zerock.domain.BetweenDateVO"
-	resultType="org.zerock.domain.orderRecordVO">
-	 <![CDATA[select * from order_record
-		 where order_date >= #{start}
-  		AND order_date <= #{end}
-	 ]]> 
-	
-	</select>
 
 </mapper>

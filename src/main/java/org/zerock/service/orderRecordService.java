@@ -12,6 +12,6 @@ import org.zerock.domain.orderRecordVO;
 public interface orderRecordService {
 
 	public boolean insert(orderRecordVO vo);
-	public List<orderRecordVO> selectDate(BetweenDateVO vo);
+	
 
 }

@@ -103,7 +103,7 @@ to {
 													<th>기계코드</th>
 													<th>기계타입</th>
 													<th>금일 온실가스 배출량(tCO2eq)</th>
-													<th>에너지 소비량(TOE)</th>
+													<th>에너지 소비량(KJ)</th>
 													<th>사용시간</th>
 												</tr>
 											</thead>

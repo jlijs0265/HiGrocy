@@ -1,6 +1,5 @@
 package org.zerock.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.springframework.http.HttpStatus;
@@ -17,10 +16,7 @@ import org.zerock.domain.BomVO;
 import org.zerock.domain.ProductVO;
 import org.zerock.service.ProductService;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonArray;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;

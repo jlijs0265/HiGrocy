@@ -45,7 +45,7 @@
 											<tr>
 												<th>기계코드</th>
 												<th>기계종류</th>
-												<th>온실가스 배출량(kcal/h)</th>
+												<th>온실가스 배출량(tCO2eq/h)</th>
 												<th>에너지소모량(kj/h)</th>
 											</tr>
 										</thead>

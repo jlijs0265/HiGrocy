@@ -7,7 +7,7 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-public class OrderListController {
+public class orderListController {
 
 	@GetMapping("/orderlist")
 	public String orderlist() {

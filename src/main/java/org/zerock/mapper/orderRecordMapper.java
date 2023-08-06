@@ -10,7 +10,6 @@ import org.zerock.domain.orderRecordVO;
 public interface orderRecordMapper {
 	
 	public boolean insertOR(orderRecordVO vo);
-	public boolean insertAccount(accountVO account);
 	public List<orderRecordVO> selectBetween(BetweenDateVO vo);
 
 

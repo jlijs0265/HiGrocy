@@ -11,7 +11,7 @@ import org.zerock.domain.ProductionRequestListVO;
 public interface PRRecordService {
 	
 	public List<PRRecordVO> getlist();
-	public boolean insert(PRRecordVO vo, ArrayList<ProductionRequestListVO> list);
+	public boolean register(PRRecordVO vo, List<ProductionRequestListVO> list);
 	public List<ProductionRequestListVO> getdiff(BetweenDateVO vo);
 	public List<ProductVO> getProductList();
 	public List<Integer> getRawCodeList(int product_code);

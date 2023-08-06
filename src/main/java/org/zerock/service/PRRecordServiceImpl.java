@@ -1,6 +1,5 @@
 package org.zerock.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -28,9 +27,10 @@ public class PRRecordServiceImpl implements PRRecordService{
 
 	@Transactional
 	@Override
-	public boolean insert(PRRecordVO vo, ArrayList<ProductionRequestListVO> prList) {
+	public boolean register(PRRecordVO vo, List<ProductionRequestListVO> prList) {
 		// 생산 이력을 등록함과 동시에 생산 목록을 등록해준다.
-		boolean result1 = mapper.insert(vo);
+		
+		boolean result1 = mapper.register(vo);
 		boolean result2 = false;
 		if(result1) {
 			for(ProductionRequestListVO pr : prList) {

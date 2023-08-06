@@ -21,11 +21,13 @@ public class orderRestController {
 	@Autowired
 	private orderListService ol_service;
 	
+	
 	@PostMapping("/order/insert")
 	public ResponseEntity<Object>insertOL(@RequestBody orderListVO vo){
 		log.info("order : ajax" + vo);
 		return ResponseEntity.ok(ol_service.insertOL(vo));
 	}
+	
 	
 
 }

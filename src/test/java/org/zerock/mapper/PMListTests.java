@@ -33,17 +33,17 @@ public class PMListTests {
 //		vo.setMachine_code(1);
 //		log.info(mapper.insertPM(vo));
 //	}
-//	
-	@Test
-	public void updatetest() {
-		PMListVO vo = new PMListVO();
-		vo.setMachine_code(1);
-		vo.setPm_list_code(2);
-		vo.setFactory_name("마라공장지점");
-		vo.setLocation("A-16");
-		vo.setName("반죽기");
-		log.info(mapper.updatePM(vo));
-	}
+////	
+//	@Test
+//	public void updatetest() {
+//		PMListVO vo = new PMListVO();
+//		vo.setMachine_code(1);
+//		vo.setPm_list_code(2);
+//		vo.setFactory_name("마라공장지점");
+//		vo.setLocation("A-16");
+//		vo.setName("반죽기");
+//		log.info(mapper.updatePM(vo));
+//	}
 	
 	
 	@Test

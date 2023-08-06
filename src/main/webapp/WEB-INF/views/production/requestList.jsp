@@ -61,7 +61,6 @@
 					<div class="col-md-12 grid-margin stretch-card">
 						<div class="card">
 							<div class="card-body" id = "pm_list_card_body">
-								<h4 class="card-title">생산기계목록</h4>
 								<div class="table-responsive">
 									<table class="table" id = "PM_list_table">
 										<thead>

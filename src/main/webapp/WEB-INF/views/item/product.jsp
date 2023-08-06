@@ -79,7 +79,7 @@
         <%@ include file="../partials/_sidebar.jsp" %>          <!-- partial:partials/_footer.html -->
 				<!-- main-panel  -->
 		       <div class="main-panel">
-		       		
+
 		       		<div class="content-wrapper">
 		       			<div class="row h-100">
 		       				<!-- 원부자재 목록 조회 부분 -->

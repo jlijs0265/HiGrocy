@@ -102,8 +102,8 @@ to {
 												<tr style="background-color: #A3B5E6;">
 													<th>기계코드</th>
 													<th>기계타입</th>
-													<th>금일 온실가스 배출량(kj/h)</th>
-													<th>에너지 소비량(kcal/h)</th>
+													<th>금일 온실가스 배출량(tCO2eq)</th>
+													<th>에너지 소비량(KJ)</th>
 													<th>사용시간</th>
 												</tr>
 											</thead>
@@ -128,6 +128,8 @@ to {
 			</div>
 		</div>
 	</div>
+	
+	
 	<div class="container-scroller">
 		<!-- partial:partials/_navbar.html -->
 		<%@ include file="partials/_navbar.jsp"%>
@@ -140,23 +142,32 @@ to {
 				<div class="content-wrapper" style="background-color: #DDE4F6;">
 					<div class="page-header"></div>
 
+
+
 					<!-- Card Layout No Chart -->
 					<div class="row p-4">
 						<!-- Left Component -->
 						<div class="col-md-6 justify-content-center align-items-center">
 							<div class="custom-card p-4 h-100">
 								<div
-									class="card bg-gradient-custom1 card-img-holder text-white h-100">
+									class="card  card-img-holder text-white h-100">
 									<div class="card-body">
-										<img src="../../resources/assets/images/dashboard/circle.svg"
-											class="card-img-absolute" alt="circle-image">
-										<h4 class="font-weight-normal mb-3">
-											Weekly Sales <i
-												class="mdi mdi-chart-line mdi-24px float-right"></i>
-										</h4>
-										<h2 class="mb-5">$ 15,0000</h2>
-										<h6 class="card-text">Increased by 60%</h6>
+									<div class="chartjs-size-monitor">
+										<div class="chartjs-size-monitor-expand">
+											<div class=""></div>
+										</div>
+										<div class="chartjs-size-monitor-shrink">
+											<div class=""></div>
+										</div>
 									</div>
+									<div class="clearfix">
+										<h4 class="card-title float-left">산업평균 에너지 소비량 비교</h4>
+									</div>
+									<canvas id="barChart2" class="mt-4 chartjs-render-monitor"
+										style="display: block; height: 200px; width: 500px;"
+										width="700" height="400"></canvas>
+								</div>c
+									
 								</div>
 							</div>
 						</div>
@@ -172,11 +183,10 @@ to {
 											<img src="../../resources/assets/images/dashboard/circle.svg"
 												class="card-img-absolute" alt="circle-image">
 											<h4 class="font-weight-normal mb-3">
-												Weekly Orders <i
-													class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+												금일 온실가스 배출량(tCO2eq/일) <i
+													class="mdi mdi-leaf mdi-24px float-right"></i>
 											</h4>
-											<h2 class="mb-5">45,6334</h2>
-											<h6 class="card-text">Decreased by 10%</h6>
+											<h2 class="mb-5" id="tdGreenGas"></h2>
 										</div>
 									</div>
 								</div>
@@ -188,11 +198,10 @@ to {
 											<img src="../../resources/assets/images/dashboard/circle.svg"
 												class="card-img-absolute" alt="circle-image">
 											<h4 class="font-weight-normal mb-3">
-												Visitors Online <i
-													class="mdi mdi-diamond mdi-24px float-right"></i>
+												금일 에너지 소모량(KJ/일) <i
+													class="mdi mdi-power mdi-24px float-right"></i>
 											</h4>
-											<h2 class="mb-5">95,5741</h2>
-											<h6 class="card-text">Increased by 5%</h6>
+											<h2 class="mb-5" id="tdEnergy"></h2>
 										</div>
 									</div>
 								</div>
@@ -217,27 +226,13 @@ to {
 										</div>
 									</div>
 									<div class="clearfix">
-										<h4 class="card-title float-left">Visit And Sales
-											Statistics</h4>
-										<div id="visit-sale-chart-legend"
-											class="rounded-legend legend-horizontal legend-top-right float-right">
-											<ul>
-												<li><span class="legend-dots"
-													style="background: linear-gradient(to right, rgba(218, 140, 255, 1), rgba(154, 85, 255, 1))"></span>CHN</li>
-												<li><span class="legend-dots"
-													style="background: linear-gradient(to right, rgba(255, 191, 150, 1), rgba(254, 112, 150, 1))"></span>USA</li>
-												<li><span class="legend-dots"
-													style="background: linear-gradient(to right, rgba(54, 215, 232, 1), rgba(177, 148, 250, 1))"></span>UK</li>
-											</ul>
-										</div>
+										<h4 class="card-title float-left">산업 평균 온실가스 배출량</h4>
 									</div>
 									<canvas id="barChart" class="mt-4 chartjs-render-monitor"
 										style="display: block; height: 200px; width: 500px;"
 										width="700" height="400"></canvas>
-									<canvas id="barChart2" class="mt-4 chartjs-render-monitor"
-										style="display: block; height: 200px; width: 500px;"
-										width="700" height="400"></canvas>
 								</div>
+								
 							</div>
 						</div>
 						<div class="col-md-5 grid-margin stretch-card">
@@ -351,6 +346,9 @@ $(function(){
 
 		
 	    console.log("GreenGasPercentagesTest "+GreenGasPercentages[0]);
+	    //KJ->TJ변환 1TJ=1000000KJ
+	    All_total_TJ=(All_total_TJ/1000000);
+// 	    All_total_TJ=(All_total_TJ/23.8846).toFixed(2);
 	    
 		/* ********************동적 태그 생성 부분********************** */
 		
@@ -371,13 +369,15 @@ $(function(){
 	document.getElementById("percent_1").textContent = ecoDataList[0].type + " : " + GreenGasPercentages[0] +"%";
 	document.getElementById("percent_2").textContent = ecoDataList[1].type + " : " + GreenGasPercentages[1]+"%";
 	document.getElementById("percent_3").textContent = ecoDataList[2].type + " : " + GreenGasPercentages[2]+"%";
+	document.getElementById("tdGreenGas").textContent = All_total_green_gas+"  (tCO2eq/일)";
+	document.getElementById("tdEnergy").textContent = All_total_TJ*1000000+"  (KJ/일)";
 	   
 	    console.log(Top3_total);
 	    console.log("GreenGasPercentages"+GreenGasPercentages[0]);
 	    console.log(GreenGasPercentages[1]);
 	    console.log(GreenGasPercentages[2]);
 
-		/* Chart Gradient Effect Edit */
+	    /* Chart Canvas Connetion */
 		var canvas = document.getElementById('energy-chart');
 		var context = canvas.getContext('2d');
 		
@@ -385,8 +385,9 @@ $(function(){
 		var context2 = canvas2.getContext('2d');
 		
 		var canvas3 = document.getElementById('barChart2');
-		var context3 = canvas2.getContext('2d');
+		var context3 = canvas3.getContext('2d');
 		
+		/* Chart Gradient Effect Edit */
 		var gradient = context.createLinearGradient(0, 0, canvas.width, 0);
 		gradient.addColorStop(0, 'rgba(54, 215, 232, 0.5)');
 		gradient.addColorStop(1, 'rgba(177, 148, 250, 0.5)');
@@ -499,21 +500,22 @@ $(function(){
 						});
 /****************농림 축산 식품부 MAFRA 산업평균 에너지 소비량 및 온실가스 배출량 산출****************/
 					  mafra2021_avg.TJ_avg = (mafra2021_avg.TJ_avg/keysArray.length);
+					  
 					  mafra2021_avg.GreenGasAvg=(mafra2021_avg.GreenGasAvg/keysArray.length);    
-
+					
 					  // 여기에서 데이터를 활용하여 필요한 작업을 수행할 수 있습니다.
 					  // 예를 들어, 차트 생성 등...
 					
 					  /* ********************BAR CHART********************** */
 					  
 					  
-					  
 					  var multiLineData = {
-							    labels: ["Red", "Blue"],
+							    labels: ["산업 평균 온실가스 배출량", "금일 대비 예상 온실가스 배출량"],
 							    datasets: [
 							        {
-							        	label: '산업 평균 에너지 소비량',
-							            data: [mafra2021_avg.TJ_avg, All_total_TJ],
+							        	label: '산업 평균 온실가스 배출량(tCO2eq)',
+// 							            data: [mafra2021_avg.TJ_avg, All_total_TJ],
+							            data: [mafra2021_avg.GreenGasAvg, All_total_green_gas*365],
 							            backgroundColor: [
 									    	  gradient,
 									          gradient2,
@@ -529,7 +531,10 @@ $(function(){
 							    scales: {
 							        yAxes: [{
 							            ticks: {
-							                beginAtZero: true
+							                beginAtZero: true,
+							                callback: function(value, index, values) {
+							                    return value + ' TJ'; // 단위를 추가하여 반환
+							                }
 							            }
 							        }]
 							    }, 
@@ -541,11 +546,11 @@ $(function(){
 							};
 
 							var multiLineData2 = {
-								    labels: ["Red", "Blue"],
+								    labels: ["산업 평균 에너지 소비량(TJ)","금일 대비 예상 에너지 소비량(TJ)"],
 								    datasets: [
-								    	{
-								        	label: '산업 평균 온실가스 배출량',
-								            data: [All_total_green_gas, mafra2021_avg.GreenGasAvg],
+								        {
+								        	label: '산업 평균 에너지 소비량(TJ)',
+								            data: [mafra2021_avg.TJ_avg,(All_total_TJ*365).toFixed(2)],
 								            backgroundColor: [
 										    	  gradient,
 										          gradient2,
@@ -562,6 +567,7 @@ $(function(){
 								        yAxes: [{
 								            ticks: {
 								                beginAtZero: true
+								                
 								            }
 								        }]
 								    }, 
@@ -571,6 +577,9 @@ $(function(){
 								        }
 								    }
 								};
+								
+								
+/* *************************BarChart Create******************************** */
 							var EnergyBarChart = new Chart(context2, {
 							    type: 'bar', // 바 차트 타입
 							    data: multiLineData,

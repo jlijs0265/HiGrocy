@@ -81,7 +81,7 @@
 
 	<div class="modal fade" id="accountModal" tabindex="-1"
 		aria-labelledby="exampleItemModal" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-scrollable">
+		<div class="modal-dialog modal-xl modal-dialog-scrollable">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h1 class="modal-title fs-5" id="exampleModalLabel">Modal
@@ -91,29 +91,33 @@
 				</div>
 				<div class="modal-body">
 					<!-- 거래처 가져오기 -->
-					<div class="col-md-6 stretch-card">
-
-						<div class="table-responsive">
-							<table class="table" id="AC_list_table">
-								<thead>
-									<tr>
-										<th>거래처코드</th>
-										<th>거래처명</th>
-										<th>거래처번호</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${accList}" var="AC">
-										<tr class="accRow">
-											<td class="acode"><c:out value="${AC.account_code}" /></td>
-											<td class="aname"><c:out value="${AC.name}" /></td>
-											<td class="aphone"><c:out value="${AC.phone_number}" /></td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
+					<div class="row">
+						<div class="col-md-6 stretch-card">
+							<div class="card">
+								<div class="card-body">
+									<div class="table-responsive">
+										<table class="table" id="AC_list_table">
+											<thead>
+												<tr>
+													<th>거래처코드</th>
+													<th>거래처명</th>
+													<th>거래처번호</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${accList}" var="AC">
+													<tr class="accRow">
+														<td class="acode"><c:out value="${AC.account_code}" /></td>
+														<td class="aname"><c:out value="${AC.name}" /></td>
+														<td class="aphone"><c:out value="${AC.phone_number}" /></td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
 					<div class="col-md-6 stretch-card">
 						<div class="card">
 							<div class="card-body">
@@ -160,6 +164,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 
 
@@ -222,7 +227,8 @@
 										</div>
 										<div class="position-relative">
 											<button type="button"
-												class="btn btn-gradient-primary mr-2 position-absolute end-0" id="addBtn">추가</button>
+												class="btn btn-gradient-primary mr-2 position-absolute end-0"
+												id="addBtn">추가</button>
 										</div>
 									</form>
 
@@ -286,7 +292,8 @@
 
 									<div class="position-relative pt-5">
 										<button type="button"
-											class="btn btn-gradient-primary mr-2 position-absolute end-0" id="register">작성</button>
+											class="btn btn-gradient-primary mr-2 position-absolute end-0"
+											id="register">작성</button>
 									</div>
 								</div>
 
@@ -348,175 +355,194 @@
 			$('#accountModal').modal('hide');
 		});
 
-		$('#addBtn').on('click', function(event) {
-			event.preventDefault();            // 추가 버튼 누르면 테이블에 데이터 추가됨
-            let trData = '<tr><td class="itemRawCode">'
-            + $('#itemCode').val()
-            +'</td><td class="itemRawName">'
-            + $('#itemName').val()
-            + '</td><td class="itemRawAmount">'
-            + $('#amount').val()
-            + '</td><td class="itemRawPrice">'
-            + $('#price').val()
-            + '</td><td class="itemSum">' 
-            + $('#sum').val()
-            + '</td><td class="itemTax">'
-            + $('#tax').val()
-            + '</td><td class="itemTotal">' 
-            + $('#total').val()
-            + '</td></tr>';
+		$('#addBtn').on(
+				'click',
+				function(event) {
+					event.preventDefault(); // 추가 버튼 누르면 테이블에 데이터 추가됨
+					let trData = '<tr><td class="itemRawCode">'
+							+ $('#itemCode').val()
+							+ '</td><td class="itemRawName">'
+							+ $('#itemName').val()
+							+ '</td><td class="itemRawAmount">'
+							+ $('#amount').val()
+							+ '</td><td class="itemRawPrice">'
+							+ $('#price').val() + '</td><td class="itemSum">'
+							+ $('#sum').val() + '</td><td class="itemTax">'
+							+ $('#tax').val() + '</td><td class="itemTotal">'
+							+ $('#total').val() + '</td></tr>';
 
-            $('#itemDataTbody').append(trData);
+					$('#itemDataTbody').append(trData);
 
-                        $('#itemForm')[0].reset();
-        });
+					$('#itemForm')[0].reset();
+				});
 
-        $('#price').on('change', function() {
+		$('#price').on('change', function() {
 
-            // 가격과 수량 가져오기
-            var price = Number($('#price').val());
-            var amount = Number($('#amount').val());
+			// 가격과 수량 가져오기
+			var price = Number($('#price').val());
+			var amount = Number($('#amount').val());
 			var sum = amount * price;
-			var tax = sum/10;
+			var tax = sum / 10;
 			$('#sum').val(sum);
 			$('#tax').val(tax);
-			$('#total').val(sum+tax);
-        });
+			$('#total').val(sum + tax);
+		});
 
 		//거래처 등록 버튼 눌렀을때
-	$("#accListReg").on("click", function() {
-		var accList = {
-			input_account_code : document.getElementById("input_account_code").value,
-			input_account_name : document.getElementById("input_account_name").value,
-			input_account_phone_numbe : document.getElementById("input_account_phone_numbe").value,
-		}
+		$("#accListReg")
+				.on(
+						"click",
+						function() {
+							var accList = {
+								name : document
+										.getElementById("input_account_name").value,
+								phone_number : document
+										.getElementById("input_account_phone_numbe").value,
+							}
 
-		$.ajax({
-			//요청 타입
-			type : 'post',
-			//요청 URL
-			url : '/account/resister',
-			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
-			data : JSON.stringify(accList),
-			contentType : "application/json; charset=utf-8",
-			success : function(result, status, xhr) {
-				$("#AC_list_detail")[0].reset();
-				$('#accountModal').modal('hide');
+							$
+									.ajax({
+										//요청 타입
+										type : 'post',
+										//요청 URL
+										url : '/account/resister',
+										//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+										data : JSON.stringify(accList),
+										contentType : "application/json; charset=utf-8",
+										success : function(result, status, xhr) {
+											$(location).attr('href','/order');
 
-      },
-			error : function(xhr, status, er) {
-				if (er) {
-					error(er);
-				}
-			}
-		});
-	});
+
+										},
+										error : function(xhr, status, er) {
+											if (er) {
+												error(er);
+											}
+										}
+									});
+						});
 
 		//거래처 수정 버튼 눌렀을때
-		$("#accListUp").on("click", function() {
-			var accList = {
-				input_account_code : document.getElementById("input_account_code").value,
-				input_account_name : document.getElementById("input_account_name").value,
-				input_account_phone_numbe : document.getElementById("input_account_phone_numbe").value,
-			}
-	
-			$.ajax({
-				//요청 타입
-				type : 'put',
-				//요청 URL
-				url : '/account/update',
-				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
-				data : JSON.stringify(accList),
-				contentType : "application/json; charset=utf-8",
-				success : function(result, status, xhr) {
-					$("#AC_list_detail")[0].reset();
-					//새로고침이상하면 지울것
-					$('#accountModal').modal('hide');
-	
-		  },
-				error : function(xhr, status, er) {
-					if (er) {
-						error(er);
-					}
-				}
-			});
-		});
+		$("#accListUp")
+				.on(
+						"click",
+						function() {
+							var accList = {
+								account_code : document
+										.getElementById("input_account_code").value,
+								name : document
+										.getElementById("input_account_name").value,
+								phone_number : document
+										.getElementById("input_account_phone_numbe").value,
+							}
+
+							$
+									.ajax({
+										//요청 타입
+										type : 'put',
+										//요청 URL
+										url : '/account/update',
+										//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+										data : JSON.stringify(accList),
+										contentType : "application/json; charset=utf-8",
+										success : function(result, status, xhr) {
+											$(location).attr('href','/order');
+
+
+										},
+										error : function(xhr, status, er) {
+											if (er) {
+												error(er);
+											}
+										}
+									});
+						});
 
 		//거래처 삭제 버튼 눌렀을때
-		$("#accListUp").on("click", function() {
-			const input_account_code = document.getElementById("input_account_code").value
-			$.ajax({
-				//요청 타입
-				type : 'delete',
-				//요청 URL
-				url : '/account/delete',
-				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
-				data : JSON.stringify(Number(input_account_code)),
-				contentType : "application/json; charset=utf-8",
-				success : function(result, status, xhr) {
-					$("#AC_list_detail")[0].reset();
-					//새로고침이상하면 지울것
-					$('#accountModal').modal('hide');
-	
-		  },
-				error : function(xhr, status, er) {
-					if (er) {
-						error(er);
-					}
-				}
-			});
-		});
+		$("#accListDel").on(
+				"click",
+				function() {
+					const input_account_code = document
+							.getElementById("input_account_code").value
+					$.ajax({
+						//요청 타입
+						type : 'delete',
+						//요청 URL
+						url : '/account/delete',
+						//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+						data : JSON.stringify(Number(input_account_code)),
+						contentType : "application/json; charset=utf-8",
+						success : function(result, status, xhr) {
+							$(location).attr('href','/order');
+
+
+						},
+						error : function(xhr, status, er) {
+							if (er) {
+								error(er);
+							}
+						}
+					});
+				});
 
 		//작성 버튼 눌렀을때
-	$("#register").on("click", function() {
-		const itmeRowElements = document.querySelectorAll('#itemDataTbody tr');
-		var orderRecord = {
-			order_code : 0,
-			account_code : document.getElementById("input_account_code").value,
-			order_date : '',
-			order_manager : '송희문 사원',
-		}
+		$("#register")
+				.on(
+						"click",
+						function() {
+							const itmeRowElements = document
+									.querySelectorAll('#itemDataTbody tr');
+							var orderRecord = {
+								order_code : 0,
+								account_code : document
+										.getElementById("input_account_code").value,
+								order_date : '',
+								order_manager : '송희문 사원',
+							}
 
-		itemList = [];
-    		
-    	for(var i = 0; i < itmeRowElements.length; i++) {
-    		var orderList = {
-    			order_code : 0,
-				item_code : itmeRowElements[i].getElementsByClassName("itemRawCode"),
-				account_code : document.getElementById("input_account_code").value,
-				price : itmeRowElements[i].getElementsByClassName("itemRawPrice"),
-    			amount : itmeRowElements[i].getElementsByClassName("itemRawAmount")
-    			}
-    			itemList.push(orderList);
-    		}
-    		console.log(itemList);
-		var totalList = {
-			orderList : orderList,
-			orderRecord : orderRecord
-		}
-		console.log(totalList);
+							itemList = [];
 
-		//$.ajax({
-			//요청 타입
-		//	type : 'post',
-			//요청 URL
-		//	url : '/order/resister',
-			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
-		//	data : JSON.stringify(totalList),
-		//	contentType : "application/json; charset=utf-8",
-		//	success : function(result, status, xhr) {
-		//$(location).attr('href','/order');
+							for (var i = 0; i < itmeRowElements.length; i++) {
+								var orderList = {
+									order_code : 0,
+									item_code : itmeRowElements[i]
+											.getElementsByClassName("itemRawCode"),
+									account_code : document
+											.getElementById("input_account_code").value,
+									price : itmeRowElements[i]
+											.getElementsByClassName("itemRawPrice"),
+									amount : itmeRowElements[i]
+											.getElementsByClassName("itemRawAmount")
+								}
+								itemList.push(orderList);
+							}
+							console.log(itemList);
+							var totalList = {
+								orderList : orderList,
+								orderRecord : orderRecord
+							};
 
-     // },
-		//	error : function(xhr, status, er) {
-		//		if (er) {
-		//			error(er);
-		//		}
-		//	}
-		//});
-	});
+							console.log(totalList);
 
-	
+							//$.ajax({
+							//요청 타입
+							//	type : 'post',
+							//요청 URL
+							//	url : '/order/resister',
+							//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+							//	data : JSON.stringify(totalList),
+							//	contentType : "application/json; charset=utf-8",
+							//	success : function(result, status, xhr) {
+							//$(location).attr('href','/order');
+
+							// },
+							//	error : function(xhr, status, er) {
+							//		if (er) {
+							//			error(er);
+							//		}
+							//	}
+							//});
+						});
 	</script>
 </body>
 </html>

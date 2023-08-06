@@ -9,10 +9,12 @@
   </select>
 
 <!--TODO:pr_record_code 나중에 맞게 수정해야됨  -->
-	<insert id="insert" parameterType="org.zerock.domain.PRRecordVO">
+	<insert id="register" parameterType="org.zerock.domain.PRRecordVO">
 		insert into pr_record (pr_record_code ,request_date ,request_manager)
-		VALUES(#{pr_record_code}, sysdate, #{request_manager})
+		VALUES(seq_pr_record.nextval, sysdate, #{request_manager})
 	</insert>
+	
+	<select id=""></select>
 	
   <select id="getdiff" parameterType="org.zerock.domain.BetweenDateVO" resultType="org.zerock.domain.ProductionRequestListVO">
 	<![CDATA[SELECT A.PR_CODE, A.item_CODE, B.request_date, b.request_manager, c.amount
@@ -51,7 +53,7 @@
   </select> -->
 	
 	<insert id="insertPrList" parameterType="org.zerock.domain.ProductionRequestListVO">
-		INSERT FROM pr_list(pr_code, item_code, amount) VALUES (#{pr_code}, #{item_code}, #{amount})
+		INSERT INTO pr_list(pr_code, item_code, amount) VALUES ((SELECT max(pr_record_code) FROM pr_record), #{item_code}, #{amount})
 	</insert>
 	
 </mapper>

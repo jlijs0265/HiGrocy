@@ -10,7 +10,7 @@ import org.zerock.domain.ProductionRequestListVO;
 public interface PRRecordMapper {
 	
 	public List<PRRecordVO> getlist();
-	public boolean insert(PRRecordVO vo);
+	public boolean register(PRRecordVO vo);
 	public List<ProductionRequestListVO> getdiff(BetweenDateVO vo);
 	public List<ProductVO> getProductList();
 	public List<Integer> getRawCodeList(int product_code);

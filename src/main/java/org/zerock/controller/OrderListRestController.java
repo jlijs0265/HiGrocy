@@ -25,4 +25,10 @@ public class OrderListRestController {
 		return ResponseEntity.ok(service.selectDate(vo));
 //		return ResponseEntity.ok("aaa");
 	}
+	@PostMapping("/orderlist/items")
+	public ResponseEntity<Object> orderitemlist(@RequestBody int order_code) {
+		log.warn(order_code);
+		return ResponseEntity.ok(service.selectItem(order_code));
+//		return ResponseEntity.ok("aaa");
+	}
 }

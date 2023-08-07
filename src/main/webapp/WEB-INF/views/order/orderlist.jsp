@@ -162,6 +162,7 @@
 		       			<!-- 원부자재 등록 부분 끝-->
 		       			</div>`;
 				$('.content-wrapper').empty().append(html);
+
 				//품목별 버튼이 눌렸을때
 			}else if ($(this).attr('id') == 'item_code') {
 				console.log('품목별 버튼 눌림');
@@ -304,7 +305,36 @@
 				$('.content-wrapper').empty().append(html);
 				
 			}
-		})
+		});
+
+		//출력된 발주이력목록 한행 클릭시
+
+		$('.content-wrapper').on('click', '#orderListTbody tr',function(){
+			console.log(this.querySelectorAll("td")[0].childNodes[0].nodeValue);	
+			var order_code = this.querySelectorAll("td")[0].childNodes[0].nodeValue;
+			$.ajax({
+			//요청 타입
+			type : 'POST',
+			//요청 URL
+			url : '/orderlist/items',
+			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+			data : JSON.stringify(order_code),
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr) {
+				console.log(result);
+				// $("tbody.or_num").empty();
+				// for(var i = 0; i < result.length; i++) {
+				// 	$('#orderListTbody').append('<tr><td>'+result[i].order_code+'</td><td>'+displayTime(result[i].order_date)+'</td><td>'+result[i].account_code +'</td><td>'+result[i].order_manager +'</td><td>'+displayTime(result[i].delivery_date) + '</td></tr>');
+				// 	}
+				},
+			error : function(xhr, status, er) {
+				if (er) {
+					error(er);
+				}
+			}
+			});
+		});
+
 		//검색버튼 눌렀을때
 		$('.content-wrapper').on('click','#item_search_btn', function(){
 			//TODO: ajax 통신 붙이기 품목 검색 버튼 누름

@@ -8,6 +8,8 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
 <title>Purple Admin</title>
 <!-- plugins:css -->
 <link rel="stylesheet"
@@ -146,15 +148,15 @@
 						                      <thead> 
 						                        <tr>
 													<th class="">품목 코드</th>
-						                          <th> 자재분류</th>
 						                          <th> 품명</th>
-						                          <th> 재생가능여부</th>
 						                          <th> 단위</th>
 						                          <th> 기준수량</th>
-						                          <th> 원산지</th>
+												  <th> 발주요청수량</th>
+						                          <th> 입고수량</th>
+						                          <th> 입고처리</th>
 						                        </tr>
 						                      </thead>
-						                      <tbody class = "item_tbody">
+						                      <tbody class = "item_tbody" id = "itemListTbody">
 						                      
 						                      </tbody>
 						                    </table>
@@ -313,10 +315,10 @@
 		});
 
 		//출력된 발주이력목록 한행 클릭시
-
+		var order_code = -1;
 		$('.content-wrapper').on('click', '#orderListTbody tr',function(){
 			console.log(this.querySelectorAll("td")[0].childNodes[0].nodeValue);	
-			var order_code = this.querySelectorAll("td")[0].childNodes[0].nodeValue;
+			order_code = this.querySelectorAll("td")[0].childNodes[0].nodeValue;
 			$.ajax({
 			//요청 타입
 			type : 'POST',
@@ -324,13 +326,16 @@
 			url : '/orderlist/items',
 			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
 			data : JSON.stringify(order_code),
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(header, token);
+		    },
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
 				console.log(result);
-				// $("tbody.or_num").empty();
-				// for(var i = 0; i < result.length; i++) {
-				// 	$('#orderListTbody').append('<tr><td>'+result[i].order_code+'</td><td>'+displayTime(result[i].order_date)+'</td><td>'+result[i].account_code +'</td><td>'+result[i].order_manager +'</td><td>'+displayTime(result[i].delivery_date) + '</td></tr>');
-				// 	}
+				$("tbody.item_tbody").empty();
+				for(var i = 0; i < result.length; i++) {
+					$('#itemListTbody').append('<tr><td>'+result[i].item.item_code+'</td><td>'+result[i].item.name +'</td><td>'+result[i].item.unit + '</td><td>'+result[i].item.standard_quantity + '</td><td>'+result[i].amount + '</td><td><input type = "number" id = "input_amount" min = "1" max = "10000"></td><td><button type="button" id="input_select" class="btn-sm btn-gradient-primary mr-2">입고</button></td></tr>');
+					}
 				},
 			error : function(xhr, status, er) {
 				if (er) {
@@ -338,6 +343,33 @@
 				}
 			}
 			});
+		});
+		//입고버튼 눌렀을때
+		$('.content-wrapper').on('click','#input_select', function(){
+			var WHListVO = {
+					item_code : this.parentElement.parentElement.querySelectorAll("td")[0].childNodes[0].nodeValue,
+					storage_code : 1,
+					warehousing_type : '입고',
+					amount : $(this.parentElement.parentElement.querySelectorAll("input")[0]).val(),
+					warehousing_type_code : "O-"+order_code
+			}
+			console.log(JSON.stringify(WHListVO));
+			$.ajax({
+					type : 'post',
+					url : '/insert/wh',
+					data : JSON.stringify(WHListVO),
+					contentType : "application/json; charset=utf-8",
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader(header, token);
+					},
+					success : function(result, status, xhr) {
+						console.log(result);
+					},
+					error : function(xhr, status, er) {
+						console.log(er);
+					}
+			});
+			console.log(this.parentElement.innerHTML = '<td>입고됨</td>');
 		});
 
 		//검색버튼 눌렀을때

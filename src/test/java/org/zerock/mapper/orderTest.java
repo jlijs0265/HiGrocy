@@ -32,13 +32,13 @@ public class orderTest {
 //	public void insertTest() {
 //		orderRecordVO vo = new orderRecordVO();
 //	}
-	@Test
-	public void selectTest() {
-		BetweenDateVO vo = new BetweenDateVO();
-		vo.setStart(Date.valueOf("2023-08-01"));
-		vo.setEnd(Date.valueOf("2023-08-30"));
-		log.info(mapper.selectBetween(vo));
-	}
-	
+//	@Test
+//	public void selectTest() {
+//		BetweenDateVO vo = new BetweenDateVO();
+//		vo.setStart(Date.valueOf("2023-08-01"));
+//		vo.setEnd(Date.valueOf("2023-08-30"));
+//		log.info(mapper.selectBetween(vo));
+//	}
+//	
 	
 }

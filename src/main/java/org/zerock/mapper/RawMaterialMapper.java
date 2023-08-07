@@ -10,6 +10,7 @@ public interface RawMaterialMapper {
 	
 	public boolean registerItem(ItemVO item);
 	public ArrayList<RawMaterialVO> getlist();
+	public RawMaterialVO selectOnce(int item_code);
 	public boolean registerRawMaterial(RawMaterialVO vo);
 	public boolean updateRawMaterial(RawMaterialVO vo);
 	public boolean deleteRawMaterial(int raw_materials_code);

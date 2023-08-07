@@ -33,6 +33,9 @@
 	<select id="searchRawMaterial" parameterType="String" resultType="org.zerock.domain.RawMaterialVO">
 			SELECT * FROM raw_materials WHERE name like '%'||#{name}||'%' 
 	</select>
+	<select id="selectOnce" parameterType="int" resultType="org.zerock.domain.RawMaterialVO">
+			SELECT * FROM raw_materials WHERE raw_materials_code = #{item_code} 
+	</select>
 	
 	
 </mapper>

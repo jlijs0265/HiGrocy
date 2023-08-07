@@ -1,5 +1,6 @@
 package org.zerock.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -38,9 +39,10 @@ public class RawMatetialRestController {
 	}
 	
 	@GetMapping("/search/raw_material")
-	public ResponseEntity<List<RawMaterialVO>> searchRawMaterial(@RequestBody String rawName) {
-		log.info(rawName);
-		return ResponseEntity.ok(null);
+	public ResponseEntity<ArrayList<RawMaterialVO>> searchRawMaterial(String name) {
+		// 서비스 
+		ArrayList<RawMaterialVO> rawList = service.searchRawMaterial(name);
+		return new ResponseEntity<ArrayList<RawMaterialVO>>(rawList, HttpStatus.OK);
 	}
 
 }

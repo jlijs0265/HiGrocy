@@ -1,7 +1,6 @@
 package org.zerock.mapper;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.zerock.domain.ItemVO;
 import org.zerock.domain.RawMaterialVO;
@@ -15,4 +14,5 @@ public interface RawMaterialMapper {
 	public boolean updateRawMaterial(RawMaterialVO vo);
 	public boolean deleteRawMaterial(int raw_materials_code);
 	public ArrayList<RawMaterialVO> searchRawMaterial(String name);
+	public ArrayList<RawMaterialVO> searchRawCode(int raw_materials_code);
 }

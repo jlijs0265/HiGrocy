@@ -44,29 +44,23 @@
 			       				<div class="card">
 			       					<div class="card-body list-body">
 					                    <h4 class="card-title">원부자재 목록</h4>
-					                    
-					                    <form class="d-flex align-items-center" action="#">
+					                    <form class="d-flex align-items-center" onSubmit="return false;">
 					                    	<input type="hidden" name="${_csrf.parameterName}", value="${_csrf.token}">
-							              <div class="input-group">
-						                    <div class="p-3">검색</div>
-						                    
-						                    <!-- <div class="input-group-prepend">
-					                          <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
-					                          <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 46px, 0px);">
-					                            <a class="dropdown-item" href="#">Action</a>
-					                            <a class="dropdown-item" href="#">Another action</a>
-					                            <a class="dropdown-item" href="#">Something else here</a>
-					                            <div role="separator" class="dropdown-divider"></div>
-					                            <a class="dropdown-item" href="#">Separated link</a>
-					                          </div>
-					                        </div> -->
-						                    
-							                <input type="text" class="form-control bg-transparent border-1" placeholder="원부자재명 검색" id="raw_search_input">
-							                <div class="input-group-text" id="raw_search_btn">
-							                  <i class="input-group mdi mdi-magnify"></i>
-							                </div>
-							              </div>
-							            </form>
+												<select class="form-select" aria-label="Default select example" id="searchSelect">
+												  <option value="N" selected>품명</option>
+												  <option value="C">코드</option>
+												</select>
+												
+											<!-- <div class="p-3">검색</div> -->
+											<div class="input-group">
+												<input type="text"
+													class="form-control bg-transparent border-1"
+													placeholder="검색" id="raw_search_input" onkeyup="enterkey();">
+												<!-- <div class="input-group-text" id="raw_search_btn">
+													<i class="input-group mdi mdi-magnify"></i>
+												</div> -->
+											</div>
+									</form>
 							            <div class="table-responsive">
 							            	<table class="table table-bordered">
 						                      <thead> 
@@ -178,6 +172,92 @@
   
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script type="text/javascript">
+    
+    	function enterkey() {
+	        if (window.event.keyCode == 13) {
+	             // 엔터키가 눌렸을 때 실행하는 반응
+	             var select = $('#searchSelect').val();
+	             if(select == 'N') {
+	            	 var rawName = $('#raw_search_input').val();
+	         		
+	         		$.ajax({
+	         			type : 'get',
+	         			url : '/search/raw_material',
+	         			data : {"name" : rawName},
+	         			contentType : "application/json; charset-utf-8",
+	         			success : function(result, status, xhr) {
+	         				console.log(result);
+	         				$('#rawTbody').empty();
+	         				for(var i = 0; i < result.length; i++) {
+	         					var appendRaw = '<tr class="rawitem"><td id="rcode">'
+	         						+ result[i].raw_materials_code
+	         						+ '</td><td id="rtype">'
+	         						+ result[i].type
+	         						+ '</td><td id="rname">' 
+	         						+ result[i].name
+	         						+ '</td><td id="rrenewability">'
+	         						+ result[i].renewability
+	         						+ '</td><td id="runit">'
+	         						+ result[i].unit
+	         						+'</td><td id="rstandard">'
+	         						+ result[i].standard_quantity
+	         						+ '</td><td id="rorigin">'
+	         						+ result[i].origin
+	         						+'</td></tr>';
+	     						console.log(appendRaw);
+	     						
+	         					$('#rawTbody').append(appendRaw);
+	         				}
+	         				
+	         			},
+	         			error : function(xhr, status, er) {
+	         				console.log(er);
+	         			}
+	         			
+	         		});
+	             } else if(select == 'C') {
+	            	 	var code = $('#raw_search_input').val();
+		         		
+		         		$.ajax({
+		         			type : 'get',
+		         			url : '/search/raw_material/code',
+		         			data : {"code" : code},
+		         			contentType : "application/json; charset-utf-8",
+		         			success : function(result, status, xhr) {
+		         				console.log(result);
+		         				$('#rawTbody').empty();
+		         				for(var i = 0; i < result.length; i++) {
+		         					var appendRaw = '<tr class="rawitem"><td id="rcode">'
+		         						+ result[i].raw_materials_code
+		         						+ '</td><td id="rtype">'
+		         						+ result[i].type
+		         						+ '</td><td id="rname">' 
+		         						+ result[i].name
+		         						+ '</td><td id="rrenewability">'
+		         						+ result[i].renewability
+		         						+ '</td><td id="runit">'
+		         						+ result[i].unit
+		         						+'</td><td id="rstandard">'
+		         						+ result[i].standard_quantity
+		         						+ '</td><td id="rorigin">'
+		         						+ result[i].origin
+		         						+'</td></tr>';
+		     						console.log(appendRaw);
+		     						
+		         					$('#rawTbody').append(appendRaw);
+		         				}
+		         				
+		         			},
+		         			error : function(xhr, status, er) {
+		         				console.log(er);
+		         			}
+		         			
+		         		});
+	             }
+	             
+	        }
+		}
+    
     	document.getElementById("updateBtn").style.display = "none";
     	document.getElementById("deleteBtn").style.display = "none";
     	var item = 0;
@@ -302,47 +382,9 @@
     	});
     	
     	$('#raw_search_btn').on('click', function() {
-    		var rawName = $('#raw_search_input').val();
     		
-    		
-    		$.ajax({
-    			type : 'get',
-    			url : '/search/raw_material',
-    			data : {"name" : rawName},
-    			contentType : "application/json; charset-utf-8",
-    			success : function(result, status, xhr) {
-    				console.log(result);
-    				$('#rawTbody').empty();
-    				for(var i = 0; i < result.length; i++) {
-    					var appendRaw = '<tr class="rawitem"><td id="rcode">'
-    						+ result[i].raw_materials_code
-    						+ '</td><td id="rtype">'
-    						+ result[i].type
-    						+ '</td><td id="rname">' 
-    						+ result[i].name
-    						+ '</td><td id="rrenewability">'
-    						+ result[i].renewability
-    						+ '</td><td id="runit">'
-    						+ result[i].unit
-    						+'</td><td id="rstandard">'
-    						+ result[i].standard_quantity
-    						+ '</td><td id="rorigin">'
-    						+ result[i].origin
-    						+'</td></tr>';
-						console.log(appendRaw);
-						
-    					$('#rawTbody').append(appendRaw);
-    				}
-    				
-    			},
-    			error : function(xhr, status, er) {
-    				console.log(er);
-    			}
-    			
-    		});
     		
     	});
-    	
     	
     	
     </script>

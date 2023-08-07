@@ -44,5 +44,12 @@ public class RawMatetialRestController {
 		ArrayList<RawMaterialVO> rawList = service.searchRawMaterial(name);
 		return new ResponseEntity<ArrayList<RawMaterialVO>>(rawList, HttpStatus.OK);
 	}
+	
+	@GetMapping("/search/raw_material/code")
+	public ResponseEntity<ArrayList<RawMaterialVO>> searchRawCode(int code) {
+		// 서비스 
+		ArrayList<RawMaterialVO> rawList = service.searchRawCode(code);
+		return new ResponseEntity<ArrayList<RawMaterialVO>>(rawList, HttpStatus.OK);
+	}
 
 }

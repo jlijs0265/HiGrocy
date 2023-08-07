@@ -1,19 +1,9 @@
 package org.zerock.mapper;
 
-import static org.junit.Assert.*;
-
-import java.sql.SQLException;
-import java.util.Arrays;
-
-import javax.sql.DataSource;
-
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.zerock.domain.ItemVO;
-import org.zerock.domain.RawMaterialVO;
 
 import lombok.extern.log4j.Log4j;
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -65,9 +55,18 @@ public class RawMaterialTests {
 //		log.info(mapper.updateRawMaterial(vo));
 //	}
 	
-	@Test
-	public void getRawMaterialList() {
-		log.info(Arrays.toString(mapper.getlist().toArray()));
-	}
+//	@Test
+//	public void getRawMaterialList() {
+//		log.info(Arrays.toString(mapper.getlist().toArray()));
+//	}
+	
+//	@Test
+//	public void getRawMaterialList() {
+//		Criteria cri = new Criteria();
+//		cri.setKeyword("A");
+//		cri.setType("NC");
+//		List<RawMaterialVO> list = mapper.getList(cri);
+//		list.forEach(raw -> log.info(list));
+//	}
 	
 }

@@ -22,10 +22,13 @@
     <link rel="shortcut icon" href="/resources/assets/images/favicon.ico" />
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
   </head>
   <body>
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
+
       <%@ include file="../partials/_navbar.jsp" %>
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
@@ -43,10 +46,23 @@
 					                    <h4 class="card-title">원부자재 목록</h4>
 					                    
 					                    <form class="d-flex align-items-center" action="#">
+					                    	<input type="hidden" name="${_csrf.parameterName}", value="${_csrf.token}">
 							              <div class="input-group">
 						                    <div class="p-3">검색</div>
-							                <input type="text" class="form-control bg-transparent border-1" placeholder="원부자재 검색">
-							                <div class="input-group-text">
+						                    
+						                    <!-- <div class="input-group-prepend">
+					                          <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
+					                          <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 46px, 0px);">
+					                            <a class="dropdown-item" href="#">Action</a>
+					                            <a class="dropdown-item" href="#">Another action</a>
+					                            <a class="dropdown-item" href="#">Something else here</a>
+					                            <div role="separator" class="dropdown-divider"></div>
+					                            <a class="dropdown-item" href="#">Separated link</a>
+					                          </div>
+					                        </div> -->
+						                    
+							                <input type="text" class="form-control bg-transparent border-1" placeholder="원부자재명 검색" id="raw_search_input">
+							                <div class="input-group-text" id="raw_search_btn">
 							                  <i class="input-group mdi mdi-magnify"></i>
 							                </div>
 							              </div>
@@ -64,7 +80,7 @@
 						                          <th>원산지</th>
 						                        </tr>
 						                      </thead>
-						                      <tbody>
+						                      <tbody id="rawTbody" >
 						                      	<c:forEach items="${rawList}" var="rawMaterial">
 						                      		<tr class="rawitem">
 							                          <td id="rcode"> <c:out value="${rawMaterial.raw_materials_code}" /></td>
@@ -93,6 +109,7 @@
 			       						<h4 class="card-title" id="raw-title">등록 페이지</h4>
 			       						
 			       						<form class="forms-sample p-2" action="/raw_material/insert" method="post" id="rawForm">
+			       						<input type="hidden" name="${_csrf.parameterName}", value="${_csrf.token}">
 					                      <div class="form-group">
 					                        <label for="exampleInputUsername1">원부자재 코드</label>
 					                        <input type="text" class="form-control" id="raw_material_code" readonly="readonly" placeholder="원부자재 코드">
@@ -140,7 +157,7 @@
 		       			</div>
 		       		</div>
 		       
-		       
+
           <%@ include file="../partials/_footer.jsp" %>
           
         </div>
@@ -149,11 +166,28 @@
       <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
+    <!-- js 추가 -->
+    <script src="/resources/assets/vendors/chart.js/Chart.min.js"></script>
+	<script src="/resources/assets/js/jquery.cookie.js"
+	    type="text/javascript"></script>
+	<!-- End plugin js for this page -->
+	<!-- inject:js -->
+	<script src="/resources/assets/js/off-canvas.js"></script>
+	<script src="/resources/assets/js/hoverable-collapse.js"></script>
+	<script src="/resources/assets/js/misc.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script type="text/javascript">
     	document.getElementById("updateBtn").style.display = "none";
     	document.getElementById("deleteBtn").style.display = "none";
     	var item = 0;
     	
+    	var token = $("meta[name='_csrf']").attr("th:content");
+		var header = $("meta[name='_csrf_header']").attr("th:content");
+    	
+    	console.log(token);
+    	console.log(header);
+		
     	/* 여백 누르면 등록 페이지 띄우기 */
     	$('.list-body').on('click', function() {
     		document.getElementById("updateBtn").style.display = "none";
@@ -226,6 +260,9 @@
 				url : '/raw_material',
 				data : JSON.stringify(raw),
 				contentType : "application/json; charset-utf-8",
+				beforeSend : function(xhr) {
+			        xhr.setRequestHeader(header, token);
+			    },
 				success : function(result, status, xhr) {
 					$("#rawForm")[0].reset();
 					console.log(result);
@@ -251,6 +288,9 @@
     			type : 'DELETE',
     			url : '/raw_material/' + data,
     			contentType : "application/json; charset-utf-8",
+    			beforeSend : function(xhr) {
+    		        xhr.setRequestHeader(header, token);
+    		    },
     			success : function(result, status, xhr) {
     				console.log(result);
     				item.remove();
@@ -260,6 +300,50 @@
     			}
     		});
     	});
+    	
+    	$('#raw_search_btn').on('click', function() {
+    		var rawName = $('#raw_search_input').val();
+    		
+    		
+    		$.ajax({
+    			type : 'get',
+    			url : '/search/raw_material',
+    			data : {"name" : rawName},
+    			contentType : "application/json; charset-utf-8",
+    			success : function(result, status, xhr) {
+    				console.log(result);
+    				$('#rawTbody').empty();
+    				for(var i = 0; i < result.length; i++) {
+    					var appendRaw = '<tr class="rawitem"><td id="rcode">'
+    						+ result[i].raw_materials_code
+    						+ '</td><td id="rtype">'
+    						+ result[i].type
+    						+ '</td><td id="rname">' 
+    						+ result[i].name
+    						+ '</td><td id="rrenewability">'
+    						+ result[i].renewability
+    						+ '</td><td id="runit">'
+    						+ result[i].unit
+    						+'</td><td id="rstandard">'
+    						+ result[i].standard_quantity
+    						+ '</td><td id="rorigin">'
+    						+ result[i].origin
+    						+'</td></tr>';
+						console.log(appendRaw);
+						
+    					$('#rawTbody').append(appendRaw);
+    				}
+    				
+    			},
+    			error : function(xhr, status, er) {
+    				console.log(er);
+    			}
+    			
+    		});
+    		
+    	});
+    	
+    	
     	
     </script>
   </body>

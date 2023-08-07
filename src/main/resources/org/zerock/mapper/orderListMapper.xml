@@ -38,6 +38,11 @@
 		  		AND order_date <= #{end}
 			 ]]> 
 	</select>
+		<select id="selectItem" resultType="org.zerock.domain.orderListVO">
+			 <![CDATA[select * from order_list
+				 where order_code = #{order_code}
+			 ]]> 
+	</select>
 	
 
 </mapper>

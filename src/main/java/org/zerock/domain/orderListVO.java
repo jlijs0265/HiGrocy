@@ -9,4 +9,5 @@ public class orderListVO {
 	private int account_code;
 	private int price;
 	private int amount;
+	private RawMaterialVO item;
 }

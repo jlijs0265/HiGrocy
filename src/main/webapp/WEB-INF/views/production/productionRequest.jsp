@@ -27,6 +27,8 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"
 	integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
 	crossorigin="anonymous"></script>
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
 </head>
 <body>
 	<!-- Modal -->
@@ -199,6 +201,8 @@
 		var year = today.getFullYear();
 		var month = ('0' + (today.getMonth() + 1)).slice(-2);
 		var day = ('0' + today.getDate()).slice(-2);
+    	var token = $("meta[name='_csrf']").attr("th:content");
+		var header = $("meta[name='_csrf_header']").attr("th:content");
 		
 		var dateString = year + '-' + month  + '-' + day;
 		$('#today').text(dateString);
@@ -291,6 +295,9 @@
 				data : code,
 				dataType : 'text',
 				contentType : "application/json; charset-utf-8",
+				beforeSend : function(xhr) {
+			        xhr.setRequestHeader(header, token);
+			    },
 				success : function(result, status, xhr) {
 					console.log(result);
     			},
@@ -395,6 +402,9 @@
     			data : {totalList : totalJson},
     			dataType : 'json',
     			async : false,
+    			beforeSend : function(xhr) {
+			        xhr.setRequestHeader(header, token);
+			    },
     			success : function(result, status, xhr) {
     				console.log(result);
     				location.href = '/production/requestList';

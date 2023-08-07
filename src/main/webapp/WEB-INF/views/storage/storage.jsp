@@ -31,6 +31,8 @@
 	white-space: normal;
 }
 </style>
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
 </head>
 <body>
 	<div class="container-scroller">
@@ -141,7 +143,7 @@
 <script src="/resources/assets/vendors/chart.js/Chart.min.js"></script>
 <script src="/resources/assets/js/jquery.cookie.js"
 	type="text/javascript"></script>
-<!-- End plugin js for this page -->
+<!-- End plugin js for this page -->											
 <!-- inject:js -->
 <script src="/resources/assets/js/off-canvas.js"></script>
 <script src="/resources/assets/js/hoverable-collapse.js"></script>
@@ -154,6 +156,9 @@
 
 
 <script>
+
+	var token = $("meta[name='_csrf']").attr("th:content");
+	var header = $("meta[name='_csrf_header']").attr("th:content");
 	$(function() {
 		console.log("Custom Script Start!!");
 
@@ -220,6 +225,9 @@
 				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
 				data : JSON.stringify(data),
 				contentType : "application/json; charset=utf-8",
+				beforeSend : function(xhr) {
+			        xhr.setRequestHeader(header, token);
+			    },
 				success : function(result, status, xhr) {
 					$(".forms-storage")[0].reset();
 					if (callback) {
@@ -267,6 +275,9 @@
 				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
 				data : JSON.stringify(data),
 				contentType : "application/json; charset=utf-8",
+				beforeSend : function(xhr) {
+			        xhr.setRequestHeader(header, token);
+			    },
 				success : function(result, status, xhr) {
 					$(".forms-storage")[0].reset();
 					var regform = $(".regForm");
@@ -299,6 +310,9 @@
 		        data : storage_code,
 		        // 요청의 Content-Type 무시
 		        contentType: "application/json; charset=utf-8",
+		        beforeSend : function(xhr) {
+			        xhr.setRequestHeader(header, token);
+			    },
 		        success: function(result, status, xhr) {
 		            $(".forms-storage")[0].reset();
 		            var regform = $(".regForm");

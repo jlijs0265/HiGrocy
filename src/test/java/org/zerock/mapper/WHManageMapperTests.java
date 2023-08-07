@@ -65,5 +65,10 @@ public class WHManageMapperTests {
 //	public void getListWH() {
 //		log.info("getListMapper Tests..."+ mapper.getList());
 //	}
+//		@Test
+//		public void getDetailList() {
+//			log.info("getDetailList mapper Tests..." + mapper.getDetailList());
+//			
+//		}
 
 }

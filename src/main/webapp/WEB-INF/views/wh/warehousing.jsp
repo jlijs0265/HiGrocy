@@ -22,26 +22,15 @@
 <link rel="stylesheet" href="/resources/assets/css/style.css">
 <!-- End layout styles -->
 <link rel="shortcut icon" href="/resources/assets/images/favicon.ico" />
-
-<!-- jquery -->
-<script src="https://code.jquery.com/jquery-3.7.0.js"
-	integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
-	crossorigin="anonymous"></script>
 <style type="text/css">
 .table-responsive {
 	overflow-x: auto;
-}
-
-body {
-	font-family: 'Noto Serif', serif;
 }
 
 .table th, .table td .special {
 	white-space: normal;
 }
 </style>
-
-
 </head>
 <body>
 
@@ -62,7 +51,7 @@ body {
 							<table id="storageList"
 								class="table table-bordered table-responsive special">
 								<thead style="background-color: #A3B5E6;">
-									<tr>
+									<tr id="thead">
 										<th>입출고 내역 코드</th>
 										<th>품목코드</th>
 										<th>창고코드</th>
@@ -117,7 +106,10 @@ body {
 	<%@ include file="../partials/_footer.jsp"%>
 	<!-- partial -->
 </body>
-
+<!-- plugins:js -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"
+	integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+	crossorigin="anonymous"></script>
 <script src="/resources/assets/vendors/js/vendor.bundle.base.js"></script>
 <!-- endinject -->
 <!-- Plugin js for this page -->
@@ -135,16 +127,13 @@ body {
 <script src="/resources/assets/js/todolist.js"></script>
 <!-- End custom js for this page -->
 
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-	crossorigin="anonymous"></script>
+
 <script>
 	$(function() {
 
 		var memory = 0;
 		/* List Row Click event */
-		$(storageList).on("dblclick", "tr", function(e) {
+		$(storageList).on("dblclick", "tbody > tr", function(e) {
 			e.stopPropagation();
 			var tr = $(this);
 			var td = tr.children();
@@ -154,18 +143,19 @@ body {
 				var text = $(this).text(); // 현재 항목의 텍스트 가져오기
 				console.log("인덱스 " + index + ": " + text);
 			})
-
-			if (tr.hasClass("selected")) {
-				tr.removeClass("selected");
-				tr.css("background-color", "white");
-				tr.css("transform", "scale(1.00)");
-				tr.css("transition", "transform 0.3s ease");
-			} else {
-				tr.addClass("selected");
-				tr.css("background-color", "#E5E5E5");
-				tr.css("transform", "scale(1.03)");
-				tr.css("transition", "transform 0.3s ease");
-			}
+			//선택된 행이 이미 선택되어 있다면
+				if (tr.hasClass("selected")) {
+					tr.removeClass("selected");
+					tr.css("background-color", "white");
+					tr.css("transform", "scale(1.00)");
+					tr.css("transition", "transform 0.3s ease");
+				} else {
+					tr.addClass("selected");
+					tr.css("background-color", "#E5E5E5");
+					tr.css("transform", "scale(1.03)");
+					tr.css("transition", "transform 0.3s ease");
+				}
+			
 		})
 
 	})//end window

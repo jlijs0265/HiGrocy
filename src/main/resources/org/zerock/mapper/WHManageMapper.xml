@@ -29,14 +29,14 @@
 		keeping_date
 		)
 		values (
-		#{warehousing_record_code},
+		seq_warehousing_record_code.nextval,
 		#{item_code},
 		#{storage_code},
 		#{warehousing_type},
-		#{wr_date},
+		sysdate,
 		#{amount},
 		#{warehousing_type_code},
-		#{keeping_date}
+		sysdate+30
 		)
 	</insert>
 	
@@ -58,7 +58,28 @@
 		delete from warehousing_record where warehousing_record_code=#{code}
 	</delete>
 	
-	
+	<select id="getDetailList" resultType="org.zerock.domain.WHDetailVO">
+		<![CDATA[
+  		SELECT ALLY.ITEM_CODE, ALLY.NAME,
+    	SUM(CASE WHEN ALLY.WAREHOUSING_TYPE ='입고' THEN ALLY.AMOUNT ELSE 0 END) -
+    	SUM(CASE WHEN ALLY.WAREHOUSING_TYPE = '출고' THEN ALLY.AMOUNT ELSE 0 END) AS amount
+		FROM  (
+        SELECT wh.item_code, wh.amount, ALL_ITEM.NAME, WH.WAREHOUSING_TYPE 
+        FROM WAREHOUSING_RECORD WH 
+        JOIN (SELECT i.item_code,r.name 
+                FROM ITEM I 
+                JOIN raw_materials R
+                ON i.item_code = r.item_code
+                UNION
+                SELECT I.ITEM_CODE, P.NAME 
+                FROM ITEM I 
+                JOIN PRODUCT P
+                ON I.ITEM_CODE = P.ITEM_CODE
+    		) ALL_ITEM ON WH.ITEM_CODE = ALL_ITEM.ITEM_CODE
+		) ALLY
+		GROUP BY ALLY.ITEM_CODE, ALLY.NAME
+  		]]>
+	</select>
 	
 	
 </mapper>

@@ -1,6 +1,5 @@
 package org.zerock.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.springframework.http.HttpStatus;
@@ -17,10 +16,7 @@ import org.zerock.domain.BomVO;
 import org.zerock.domain.ProductVO;
 import org.zerock.service.ProductService;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonArray;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -59,21 +55,20 @@ public class ProductRestController {
 	public ResponseEntity<String> registerBom(@PathVariable int product_code , @RequestParam String bomList) {
 		log.info("bom insert~~~~~~~~");
 		log.info(bomList);
-		
+		boolean result = false;
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			BomVO[] bomArray = objectMapper.readValue(bomList, BomVO[].class);
 			for (BomVO item : bomArray) {
 				item.setProduct_code(product_code);
-				boolean result = service.updateBom(item);
+				result = service.updateBom(item);
 //				log.info(item);
-				return result == true ? new ResponseEntity<String>("success", HttpStatus.OK) : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR); 
 	        }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return result == true ? new ResponseEntity<String>("success", HttpStatus.OK) : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@DeleteMapping("/product/{product_code}")

@@ -3,6 +3,7 @@ package org.zerock.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.zerock.domain.WHDetailVO;
 import org.zerock.domain.WHListVO;
 import org.zerock.mapper.WHManageMapper;
 
@@ -16,6 +17,7 @@ import lombok.extern.log4j.Log4j;
 public class WHServiceImpl implements WHService {
 
 	private WHManageMapper mapper;
+	
 	
 	@Override
 	public int register(WHListVO vo) {
@@ -45,6 +47,12 @@ public class WHServiceImpl implements WHService {
 	public List<WHListVO> getList() {
 		// TODO Auto-generated method stub
 		return mapper.getList();
+	}
+
+	@Override
+	public List<WHDetailVO> getDetailList() {
+		// TODO Auto-generated method stub
+		return mapper.getDetailList();
 	}
 
 }

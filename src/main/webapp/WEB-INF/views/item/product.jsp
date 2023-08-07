@@ -65,7 +65,6 @@
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
 	      </div>
 	    </div>
 	  </div>
@@ -74,23 +73,24 @@
 	
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
-      <%@ include file="/WEB-INF/views/partials/_navbar.jsp"%>
+      <%@ include file="../partials/_navbar.jsp" %>
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_sidebar.html -->
-        <%@ include file="/WEB-INF/views/partials/_sidebar.jsp" %>          <!-- partial:partials/_footer.html -->
+        <%@ include file="../partials/_sidebar.jsp" %>          <!-- partial:partials/_footer.html -->
 				<!-- main-panel  -->
 		       <div class="main-panel">
-		       		
+
 		       		<div class="content-wrapper">
 		       			<div class="row h-100">
 		       				<!-- 원부자재 목록 조회 부분 -->
-		       				<div class="col-md-6 grid-margin stretch-card">
+		       				<div class="col-md-4 grid-margin stretch-card">
 			       				<div class="card">
 			       					<div class="card-body list-body">
 					                    <h4 class="card-title">생산품 목록</h4>
 					                    
 					                    <form class="d-flex align-items-center" action="#">
+					                    	
 							              <div class="input-group">
 						                    <div class="p-3">검색</div>
 							                <input type="text" class="form-control bg-transparent border-1" placeholder="원부자재 검색">
@@ -125,7 +125,7 @@
 			       			</div>
 			       			<!-- 원부자재 목록 조회 부분 끝-->
 			       			<!-- 원부자재 등록 부분 -->
-			       			<div class="col-md-6 grid-margin stretch-card">
+			       			<div class="col-md-8 grid-margin stretch-card">
 			       				<div class="card">
 			       					<div class="card-body">
 			       						<h4 class="card-title" id="raw-title">생산품 등록</h4>
@@ -178,7 +178,7 @@
 		       		</div>
 		       
 		       
-          <%@ include file="/WEB-INF/views/partials/_footer.jsp" %>
+          <%@ include file="../partials/_footer.jsp" %>
           
         </div>
         <!-- main-panel ends -->
@@ -215,7 +215,7 @@
     	})
     	
     	$('.inputPlusBtn').on('click', function() {
-    		$('#bomForm').append('<div class="form-group row"><label class="col-sm-3 col-form-label">원자재코드</label><div class="col-sm-9"><input type="text" class="form-control raw_code" readonly="readonly" placeholder="원자재 코드" name="raw_material_code" data-bs-toggle="modal" data-bs-target="#exampleModal"></div></div><div class="form-group row"><label class="col-sm-3 col-form-label">수량</label><div class="col-sm-9"><input type="text" class="form-control" name="amount" placeholder="수량"></div></div>');
+    		$('#bomForm').append('<div class="warpBomForm"><div class="form-group row"><label class="col-sm-3 col-form-label">원자재코드</label><div class="col-sm-9"><input type="text" class="form-control raw_code" readonly="readonly" placeholder="원자재 코드" name="raw_material_code" data-bs-toggle="modal" data-bs-target="#exampleModal"></div></div><div class="form-group row"><label class="col-sm-3 col-form-label">수량</label><div class="col-sm-9"><input type="text" class="form-control" name="amount" placeholder="수량"></div></div><div class="d-flex justify-content-end pb-2"><button type="button" class="btn btn-gradient-danger inputDeleteBtn">삭제</button></div></div>');
     	});
     	
     	$('.tableWarp').on('click', function() {
@@ -368,6 +368,11 @@
     		});
     		
     	});
+    	
+    	$('#bomForm').on('click', '.inputDeleteBtn', function() {
+    		$(this).closest('.warpBomForm').remove();
+    	})
+    	
     </script>
   </body>
 </html>

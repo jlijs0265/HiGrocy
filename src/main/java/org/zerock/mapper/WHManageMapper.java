@@ -2,6 +2,7 @@ package org.zerock.mapper;
 
 import java.util.List;
 
+import org.zerock.domain.WHDetailVO;
 import org.zerock.domain.WHListVO;
 
 public interface WHManageMapper {
@@ -19,4 +20,7 @@ public interface WHManageMapper {
 
 	// 전체 조회
 	public List<WHListVO> getList();
+	
+	//품목 재고 조회
+	public List<WHDetailVO> getDetailList();
 }

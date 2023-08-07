@@ -22,7 +22,15 @@
 <link rel="stylesheet" href="/resources/assets/css/style.css">
 <!-- End layout styles -->
 <link rel="shortcut icon" href="/resources/assets/images/favicon.ico" />
+<style type="text/css">
+.table-responsive {
+	overflow-x: auto;
+}
 
+.table th, .table td .special {
+	white-space: normal;
+}
+</style>
 </head>
 <body>
 	<div class="container-scroller">
@@ -58,7 +66,7 @@
 												<th>담당자</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody class="tbody">
 											<c:forEach items="${storageList}" var="storageList">
                                                       <tr class="" id="storageItem">
                                                       <td id="rcode"><c:out value="${storageList.storage_code}" /></td>
@@ -155,7 +163,7 @@
 		var storageList = $("#storageList");
 		var memory = 0;
 		/* List Row Click event */
-		$(storageList).on("click","tr",function(e){
+		$(storageList).on("dblclick","tbody > tr",function(e){
 			e.stopPropagation();
 			var tr = $(this);
 			var td = tr.children();
@@ -179,7 +187,18 @@
 			var editform = $(".editForm");
 			regform.css("display", "none");
 			/* Table Row Background-Color Change */
-			tr.css("background-color","#E5E5E5");
+			//선택된 행이 이미 선택되어 있다면
+				if (tr.hasClass("selected")) {
+					tr.removeClass("selected");
+					tr.css("background-color", "white");
+					tr.css("transform", "scale(1.00)");
+					tr.css("transition", "transform 0.3s ease");
+				} else {
+					tr.addClass("selected");
+					tr.css("background-color", "#E5E5E5");
+					tr.css("transform", "scale(1.03)");
+					tr.css("transition", "transform 0.3s ease");
+				}
 			editform.css("display", "inline-block");
 		})
 			
@@ -205,6 +224,15 @@
 					if (callback) {
 						callback(result);
 					}
+					let box = $("<tr id=" + storageItem + ">" +
+				               "<td id='rcode'>" + data.storage_code + "</td>" +
+				               "<td id='rname'>" + data.name + "</td>" +
+				               "<td id='rlocation'>" + data.location + "</td>" +
+				               "<td id='rmanager'>" + data.manager + "</td>" +
+				             "</tr>");
+
+				$(".tbody").append(box);
+				
 				},
 				error : function(xhr, status, er) {
 					if (er) {
@@ -212,6 +240,8 @@
 					}
 				}
 			});
+	        $(location).attr('href','/storage/storage');
+
 			
 			console.log(data);
 		})//end storageRegBtn Function
@@ -252,6 +282,7 @@
 					}
 				}
 			});
+			$(location).attr('href','/storage/storage');
 			console.log(data);
 		})//end storageEditBtn Function
 		
@@ -282,6 +313,7 @@
 		            }
 		        }
 		    });
+		    $(location).attr('href','/storage/storage');
 		});
 
 	})//end window

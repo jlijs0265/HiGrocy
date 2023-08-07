@@ -55,7 +55,9 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 		return mapper.deleteRawMaterial(code);
 	}
 	
-	
-	 
+	 @Override
+	public ArrayList<RawMaterialVO> searchRawMaterial(String name) {
+		return mapper.searchRawMaterial(name);
+	}
 
 }

@@ -9,11 +9,17 @@
 	<bean id="bcryPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 
 	<security:http>
-	
+		
+		
 		<security:intercept-url pattern="/" access="hasRole('ROLE_USER')"/>
-		<security:intercept-url pattern="/product" access="hasRole('ROLE_USER')"/>
-		<security:intercept-url pattern="/pm" access="hasRole('ROLE_USER')"/>
-		<security:intercept-url pattern="/raw_material" access="hasRole('ROLE_USER')"/>
+		<security:intercept-url pattern="/product/**" access="hasRole('ROLE_USER')"/>
+		<security:intercept-url pattern="/pm/**" access="hasRole('ROLE_USER')"/>
+		<security:intercept-url pattern="/raw_material/**" access="hasRole('ROLE_USER')"/>
+		 <security:intercept-url pattern="/process/**" access="hasRole('ROLE_USER')"/>
+		 <security:intercept-url pattern="/order/**" access="hasRole('ROLE_USER')"/>
+		<security:intercept-url pattern="/orderlist/**" access="hasRole('ROLE_USER')"/>
+		 <security:intercept-url pattern="/pr/**" access="hasRole('ROLE_USER')"/>
+		 <security:intercept-url pattern="/production/requestList/**" access="hasRole('ROLE_USER')"/>
 		 
 		
 		<!-- <security:form-login/> -->

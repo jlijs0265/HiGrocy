@@ -32,6 +32,8 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"
 	integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
 	crossorigin="anonymous"></script>
+	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
 </head>
 
 <body>
@@ -123,6 +125,7 @@
 							<div class="card-body">
 								<h4 class="card-title" id="AC_list_detail_title">등록 페이지</h4>
 								<form class="forms" id="AC_list_detail">
+									<input type="hidden" name="${_csrf.parameterName}", value="${_csrf.token}">
 									<div class="form-group row">
 										<label for="input_account_code"
 											class="col-sm-4 col-form-label">거래처코드</label>
@@ -322,7 +325,8 @@
 		// 품목 정보를 담을 변수
 		var items = "";
 		var storages = "";
-
+    	var token = $("meta[name='_csrf']").attr("th:content");
+		var header = $("meta[name='_csrf_header']").attr("th:content");
 		//품목 모달의 row 클릭시.
 		$('#itemModal').on('click', '.rawitem', function() {
 			console.log(this);
@@ -409,6 +413,9 @@
 										//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
 										data : JSON.stringify(accList),
 										contentType : "application/json; charset=utf-8",
+										beforeSend : function(xhr) {
+									        xhr.setRequestHeader(header, token);
+									    },
 										success : function(result, status, xhr) {
 											$(location).attr('href','/order');
 
@@ -445,6 +452,9 @@
 										//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
 										data : JSON.stringify(accList),
 										contentType : "application/json; charset=utf-8",
+										beforeSend : function(xhr) {
+									        xhr.setRequestHeader(header, token);
+									    },
 										success : function(result, status, xhr) {
 											$(location).attr('href','/order');
 
@@ -472,6 +482,9 @@
 						//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
 						data : JSON.stringify(Number(input_account_code)),
 						contentType : "application/json; charset=utf-8",
+						beforeSend : function(xhr) {
+					        xhr.setRequestHeader(header, token);
+					    },
 						success : function(result, status, xhr) {
 							$(location).attr('href','/order');
 
@@ -531,6 +544,9 @@
 							//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
 								data : JSON.stringify(totalList),
 								contentType : "application/json; charset=utf-8",
+								beforeSend : function(xhr) {
+							        xhr.setRequestHeader(header, token);
+							    },
 								success : function(result, status, xhr) {
 								$(location).attr('href','/orderlist');
 

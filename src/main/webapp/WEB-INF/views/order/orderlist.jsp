@@ -28,6 +28,8 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"
 	integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
 	crossorigin="anonymous"></script>
+	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
 </head>
 <body>
 	<div class="container-scroller">
@@ -80,6 +82,9 @@
 	<script>
 		const trigger = document.querySelectorAll('#trigger p');
 		console.log(trigger);
+    	var token = $("meta[name='_csrf']").attr("th:content");
+		var header = $("meta[name='_csrf_header']").attr("th:content");
+		
 		//발주번호별, 품목별, 거래처별 눌렀을때 이벤트
 		$('#trigger div').on('click', function(){
 			//전체 폰트 굵기 초기화
@@ -355,6 +360,9 @@
 			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
 			data : JSON.stringify(BetweenDateVO),
 			contentType : "application/json; charset=utf-8",
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(header, token);
+		    },
 			success : function(result, status, xhr) {
 				console.log(result);
 				$("tbody.or_num").empty();

@@ -13,4 +13,5 @@ public interface RawMaterialMapper {
 	public boolean registerRawMaterial(RawMaterialVO vo);
 	public boolean updateRawMaterial(RawMaterialVO vo);
 	public boolean deleteRawMaterial(int raw_materials_code);
+	public ArrayList<RawMaterialVO> searchRawMaterial(String name);
 }

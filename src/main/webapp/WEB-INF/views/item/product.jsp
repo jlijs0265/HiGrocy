@@ -88,6 +88,7 @@
 					                    <h4 class="card-title">생산품 목록</h4>
 					                    
 					                    <form class="d-flex align-items-center" action="#">
+					                    	
 							              <div class="input-group">
 						                    <div class="p-3">검색</div>
 							                <input type="text" class="form-control bg-transparent border-1" placeholder="원부자재 검색">
@@ -208,7 +209,7 @@
     	})
     	
     	$('.inputPlusBtn').on('click', function() {
-    		$('#bomForm').append('<div class="form-group row"><label class="col-sm-3 col-form-label">원자재코드</label><div class="col-sm-9"><input type="text" class="form-control raw_code" readonly="readonly" placeholder="원자재 코드" name="raw_material_code" data-bs-toggle="modal" data-bs-target="#exampleModal"></div></div><div class="form-group row"><label class="col-sm-3 col-form-label">수량</label><div class="col-sm-9"><input type="text" class="form-control" name="amount" placeholder="수량"></div></div>');
+    		$('#bomForm').append('<div class="warpBomForm"><div class="form-group row"><label class="col-sm-3 col-form-label">원자재코드</label><div class="col-sm-9"><input type="text" class="form-control raw_code" readonly="readonly" placeholder="원자재 코드" name="raw_material_code" data-bs-toggle="modal" data-bs-target="#exampleModal"></div></div><div class="form-group row"><label class="col-sm-3 col-form-label">수량</label><div class="col-sm-9"><input type="text" class="form-control" name="amount" placeholder="수량"></div></div><div class="d-flex justify-content-end pb-2"><button type="button" class="btn btn-gradient-danger inputDeleteBtn">삭제</button></div></div>');
     	});
     	
     	$('.tableWarp').on('click', function() {
@@ -347,6 +348,11 @@
     		});
     		
     	});
+    	
+    	$('#bomForm').on('click', '.inputDeleteBtn', function() {
+    		$(this).closest('.warpBomForm').remove();
+    	})
+    	
     </script>
   </body>
 </html>

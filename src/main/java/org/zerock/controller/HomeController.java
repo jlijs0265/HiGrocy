@@ -28,7 +28,7 @@ public class HomeController {
 	
 	@GetMapping("/*")
 	public String main(Model model) {
-
+		log.info("Today = "+Date.valueOf(LocalDate.now()));
 		model.addAttribute("ECODate_List", service.getEcoDate(Date.valueOf(LocalDate.now())));
 		return "home";
 	}

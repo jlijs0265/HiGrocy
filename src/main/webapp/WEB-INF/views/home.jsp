@@ -317,17 +317,7 @@ $(function(){
 		var Top3_total = 0; //top3 온실가스 배출량
 		var All_total_green_gas=0; //금일 온실가스 배출량 총합
 		var All_total_TJ=0;//금일 에너지 소비량 총합
-		
-		// JavaScript에서 데이터 활용 예시
-	    for (var i = 0; i <3; i++) {
-	        var ecoData = ecoDataList[i];
-	        console.log("기계코드:", ecoData.machine_code);
-	        console.log("금일 온실가스 배출량:", ecoData.green_gas_date);
-	        console.log("에너지 소비량:", ecoData.energy_date);
-	        console.log("사용시간:", ecoData.total);
-	        console.log("------------");
-	        Top3_total+=parseInt(ecoData.green_gas_date);
-	    }
+				
 	    for (var i = 0; i <ecoDataList.length; i++) {
 	        var ecoData = ecoDataList[i];
 	        console.log("기계코드:", ecoData.machine_code);
@@ -335,8 +325,27 @@ $(function(){
 	        console.log("에너지 소비량:", ecoData.energy_date);
 	        console.log("사용시간:", ecoData.total);
 	        console.log("------------");
+	        if(i<3){
+	        	Top3_total+=parseInt(ecoData.green_gas_date);
+	        }
+	        
 	        All_total_green_gas+=parseInt(ecoData.green_gas_date);
 	        All_total_TJ+=parseInt(ecoData.energy_date);
+	    }
+	    if (ecoDataList.length < 3) {
+	        var missingDataCount = 3 - ecoDataList.length;
+	        for (var i = 0; i < missingDataCount; i++) {
+	            var missingIndex = 2 - i;
+	            if (ecoDataList[missingIndex] === undefined) {
+	                ecoDataList[missingIndex] = {
+	                    machine_code: "0",
+	                    type: "N/A",
+	                    green_gas_date: "0",
+	                    energy_date: "0",
+	                    total: "0"
+	                };
+	            }
+	        }
 	    }
 	    const GreenGasPercentages = [
 	          ((parseInt(ecoDataList[0].green_gas_date) / Top3_total) * 100).toFixed(1),
@@ -401,6 +410,7 @@ $(function(){
 		gradient3.addColorStop(1, 'rgba(254, 112, 150, 1)');
 		
 		
+	
 	var doughnutPieData = {
 		    datasets: [{
 		      data: [

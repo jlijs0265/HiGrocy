@@ -58,7 +58,6 @@
 									</tr>
 								</thead>
 								<tbody>
-								<!-- TODO 백단부터 연결하고 데이터 받아오면 다시 시작 -->
 									<c:forEach items="${DetailList}" var="DetailList">
 										<tr class="" id="DetailItem">
 											<td id="r_wh_code"><c:out value="${DetailList.item_code}" /></td>

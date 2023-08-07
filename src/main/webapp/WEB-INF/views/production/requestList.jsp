@@ -25,6 +25,10 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"
 	integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
 	crossorigin="anonymous"></script>
+	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+<body>
 <div class="container-scroller">
 
 	<!-- partial:partials/_navbar.jsp -->
@@ -110,7 +114,8 @@
 <script src="/resources/assets/js/misc.js"></script>
 <!-- endinject -->
 <script>
-
+	var token = $("meta[name='_csrf']").attr("th:content");
+	var header = $("meta[name='_csrf_header']").attr("th:content");
 	//조회 버튼 눌렀을때
 	//
 	$("#select").on("click", function() {
@@ -129,6 +134,9 @@
 			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
 			data : JSON.stringify(BetweenDateVO),
 			contentType : "application/json; charset=utf-8",
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(header, token);
+		    },
 			success : function(result, status, xhr) {
 				$("tbody").empty();
 				for(var i = 0; i < result.length; i++) {
@@ -159,6 +167,9 @@
     			url : '/production/requestList/register',
     			data : JSON.stringify(product_recode),
 				contentType : "application/json; charset=utf-8",
+				beforeSend : function(xhr) {
+			        xhr.setRequestHeader(header, token);
+			    },
     			success : function(result, status, xhr) {
     				console.log(result);
     			},

@@ -23,6 +23,8 @@
     
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
   </head>
   <body>
   <!-- Modal -->
@@ -125,6 +127,7 @@
 			       					<div class="card-body">
 			       						<h4 class="card-title" id="raw-title">생산 프로세스 등록</h4>
 			       						<form class="forms-sample p-2" action="/product" method="post" id="rawForm">
+			       							<input type="hidden" name="${_csrf.parameterName}", value="${_csrf.token}">
 					                      <div class="form-group">
 					                        <label>생산품 코드</label>
 					                        <input type="text" class="form-control" id="product_code" readonly="readonly" placeholder="생산품 코드">
@@ -186,7 +189,9 @@
     	var raw_code_input = 0;
     	var raw_product = 0;
     	var order = 1;
-    	
+    	var token = $("meta[name='_csrf']").attr("th:content");
+		var header = $("meta[name='_csrf_header']").attr("th:content");
+		
 		//등록 버튼 눌렀을때
     	$('#registerBtn').on('click', function() {
 			var product_code = $('#product_code').val();
@@ -220,6 +225,9 @@
 				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
 				data : JSON.stringify(bomList),
 				contentType : "application/json; charset=utf-8",
+				beforeSend : function(xhr) {
+			        xhr.setRequestHeader(header, token);
+			    },
 				success : function(result, status, xhr) {
 					$(location).attr('href','/process');
 				}
@@ -261,6 +269,9 @@
 				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
 				data : JSON.stringify(bomList),
 				contentType : "application/json; charset=utf-8",
+				beforeSend : function(xhr) {
+			        xhr.setRequestHeader(header, token);
+			    },
 				success : function(result, status, xhr) {
 					$(location).attr('href','/process');
 				}
@@ -277,6 +288,9 @@
 				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
 				data : JSON.stringify(bomList),
 				contentType : "application/json; charset=utf-8",
+				beforeSend : function(xhr) {
+			        xhr.setRequestHeader(header, token);
+			    },
 				success : function(result, status, xhr) {
 					$(location).attr('href','/process');
 				}
@@ -383,6 +397,9 @@
 				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
 				data : JSON.stringify(bomList),
 				contentType : "application/json; charset=utf-8",
+				beforeSend : function(xhr) {
+			        xhr.setRequestHeader(header, token);
+			    },
 				success : function(result, status, xhr) {
 					$(location).attr('href','/process');
 				}

@@ -25,7 +25,10 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"
 	integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
 	crossorigin="anonymous"></script>
-<div>
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+<body>
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-xl modal-dialog-scrollable">
 		  <div class="modal-content">
@@ -161,6 +164,7 @@
 							<div class="card-body">
 								<h4 class="card-title" id = "PM_list_detail_title">등록 페이지</h4>
 								<form class="forms" id="pm_list_detail">
+									<input type="hidden" name="${_csrf.parameterName}", value="${_csrf.token}">
 									<div class="form-group row">
 										<label for="input_machine_code"
 											class="col-sm-4 col-form-label">기계코드</label>
@@ -237,7 +241,12 @@
   $("#MDel").hide();
   $('#MUp').hide();
   $('#MSel').hide();
+	var token = $("meta[name='_csrf']").attr("th:content");
+	var header = $("meta[name='_csrf_header']").attr("th:content");
+  
 	let m_code_v = -1;
+	var token = $("meta[name='_csrf']").attr("th:content");
+	var header = $("meta[name='_csrf_header']").attr("th:content");
 	//생산기계목록 등록 버튼 눌렀을때
 	//
 	$("#pmListReg").on("click", function() {
@@ -257,6 +266,9 @@
 			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
 			data : JSON.stringify(pm_list),
 			contentType : "application/json; charset=utf-8",
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(header, token);
+		    },
 			success : function(result, status, xhr) {
 				$("#pm_list_detail")[0].reset();
         $(location).attr('href','/pm');
@@ -286,6 +298,9 @@
 			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
 			data : JSON.stringify(m_list),
 			contentType : "application/json; charset=utf-8",
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(header, token);
+		    },
 			success : function(result, status, xhr) {
 				$("#pm_list_detail")[0].reset();
 				$('#exampleModal').modal('hide');
@@ -390,6 +405,9 @@
 			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
 			data : JSON.stringify(pm_list),
 			contentType : "application/json; charset=utf-8",
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(header, token);
+		    },
 			success : function(result, status, xhr) {
 				$("#pm_list_detail")[0].reset();
         $(location).attr('href','/pm');
@@ -418,6 +436,9 @@
 			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
 			data : JSON.stringify(m_list),
 			contentType : "application/json; charset=utf-8",
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(header, token);
+		    },
 			success : function(result, status, xhr) {
 				$("#m_list_detail")[0].reset();
       			$(location).attr('href','/pm');
@@ -440,6 +461,9 @@
 			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
 			data : pm_list_code_v,
 			contentType : "application/json; charset=utf-8",
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(header, token);
+		    },
 			success : function(result, status, xhr) {
 				$("#pm_list_detail")[0].reset();
         $(location).attr('href','/pm');
@@ -462,6 +486,9 @@
 			//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
 			data : m_code_v,
 			contentType : "application/json; charset=utf-8",
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(header, token);
+		    },
 			success : function(result, status, xhr) {
 				$("#m_list_detail")[0].reset();
       $(location).attr('href','/pm');

@@ -29,4 +29,10 @@
 		where raw_materials_code = #{raw_materials_code}
 	</delete>
 
+
+	<select id="searchRawMaterial" parameterType="String" resultType="org.zerock.domain.RawMaterialVO">
+			SELECT * FROM raw_materials WHERE name like '%'||#{name}||'%' 
+	</select>
+	
+	
 </mapper>

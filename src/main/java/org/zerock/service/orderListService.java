@@ -10,5 +10,6 @@ public interface orderListService {
 
 	public boolean insertOL(orderListVO vo);
 	public List<orderRecordVO> selectDate(BetweenDateVO vo);
+	public List<orderListVO> selectItem(int order_code);
 	
 }

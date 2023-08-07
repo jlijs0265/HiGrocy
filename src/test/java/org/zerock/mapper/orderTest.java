@@ -20,13 +20,16 @@ import lombok.extern.log4j.Log4j;
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
 public class orderTest {
+//	@Autowired
+//	private orderRecordMapper mapper;
 	@Autowired
-	private orderRecordMapper mapper;
+	private orderListMapper mapper;
 	
-//	@Test
-//	public void test() {
-//		log.info(mapper.getlist());
-//	}
+	@Test
+	public void test() {
+		log.info(mapper.selectItem(1));
+	}
+
 //
 //	@Test
 //	public void insertTest() {

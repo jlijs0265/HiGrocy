@@ -22,10 +22,13 @@
     <link rel="shortcut icon" href="/resources/assets/images/favicon.ico" />
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
   </head>
   <body>
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
+
       <%@ include file="../partials/_navbar.jsp" %>
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
@@ -43,6 +46,7 @@
 					                    <h4 class="card-title">원부자재 목록</h4>
 					                    
 					                    <form class="d-flex align-items-center" action="#">
+					                    	<input type="hidden" name="${_csrf.parameterName}", value="${_csrf.token}">
 							              <div class="input-group">
 						                    <div class="p-3">검색</div>
 						                    
@@ -105,6 +109,7 @@
 			       						<h4 class="card-title" id="raw-title">등록 페이지</h4>
 			       						
 			       						<form class="forms-sample p-2" action="/raw_material/insert" method="post" id="rawForm">
+			       						<input type="hidden" name="${_csrf.parameterName}", value="${_csrf.token}">
 					                      <div class="form-group">
 					                        <label for="exampleInputUsername1">원부자재 코드</label>
 					                        <input type="text" class="form-control" id="raw_material_code" readonly="readonly" placeholder="원부자재 코드">
@@ -152,7 +157,7 @@
 		       			</div>
 		       		</div>
 		       
-		       
+
           <%@ include file="../partials/_footer.jsp" %>
           
         </div>
@@ -170,14 +175,19 @@
 	<script src="/resources/assets/js/off-canvas.js"></script>
 	<script src="/resources/assets/js/hoverable-collapse.js"></script>
 	<script src="/resources/assets/js/misc.js"></script>
-    
+  
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    
     <script type="text/javascript">
     	document.getElementById("updateBtn").style.display = "none";
     	document.getElementById("deleteBtn").style.display = "none";
     	var item = 0;
     	
+    	var token = $("meta[name='_csrf']").attr("th:content");
+		var header = $("meta[name='_csrf_header']").attr("th:content");
+    	
+    	console.log(token);
+    	console.log(header);
+		
     	/* 여백 누르면 등록 페이지 띄우기 */
     	$('.list-body').on('click', function() {
     		document.getElementById("updateBtn").style.display = "none";
@@ -250,6 +260,9 @@
 				url : '/raw_material',
 				data : JSON.stringify(raw),
 				contentType : "application/json; charset-utf-8",
+				beforeSend : function(xhr) {
+			        xhr.setRequestHeader(header, token);
+			    },
 				success : function(result, status, xhr) {
 					$("#rawForm")[0].reset();
 					console.log(result);
@@ -275,6 +288,9 @@
     			type : 'DELETE',
     			url : '/raw_material/' + data,
     			contentType : "application/json; charset-utf-8",
+    			beforeSend : function(xhr) {
+    		        xhr.setRequestHeader(header, token);
+    		    },
     			success : function(result, status, xhr) {
     				console.log(result);
     				item.remove();

@@ -12,6 +12,6 @@ public interface RawMaterialService {
 	boolean registerRawMaterial(RawMaterialVO vo);
 	boolean updateRawMaterial(RawMaterialVO vo);
 	boolean deleteRawMaterial(int code);
-	
+	ArrayList<RawMaterialVO> searchRawMaterial(String name);
 
 }

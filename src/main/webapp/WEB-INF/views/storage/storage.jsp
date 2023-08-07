@@ -52,9 +52,9 @@
 								<div class="card-body">
 									<div class="input-group">
 										<input type="text" class="form-control"
-											placeholder="Storage Search">
+											placeholder="Storage Search" id="">
 										<div class="input-group-append">
-											<button class="btn btn-sm btn-gradient-primary" type="button">Search</button>
+											<button class="btn btn-sm btn-gradient-primary" type="button" id="storageSerchBtn">Search</button>
 										</div>
 									</div>
 
@@ -166,6 +166,7 @@
 		var storageEditBtn = $("#storageEdit");
 		var storageDelBtn = $("#storageDel");
 		var storageList = $("#storageList");
+		var storageSearchBtn =$("storageSerchBtn");
 		var memory = 0;
 		/* List Row Click event */
 		$(storageList).on("dblclick","tbody > tr",function(e){
@@ -300,7 +301,7 @@
 		
 		$(storageDelBtn).on("click", function() {
 		    var storage_code = document.getElementById("storageCode").value;
-
+		    
 		    $.ajax({
 		        // 요청 타입
 		        type: 'DELETE',
@@ -329,6 +330,32 @@
 		    });
 		    $(location).attr('href','/storage/storage');
 		});
+		
+		$(storageSerchBtn).on("click",function(){
+			var search_Code = document.getElementById("search_Code").value;
+			
+			$.ajax({
+				//요청 타입
+				type : 'post',
+				//요청 URL
+				url : 'search/storage',
+				//JSON으로 변환 reply는 전송하는 값 result는 받아오는 값
+				data : search_Code,
+				contentType : "application/json; charset=utf-8",
+				success : function(result, status, xhr) {
+					$(".forms-storage")[0].reset();
+					if (callback) {
+						callback(result);
+					}
+				},
+				error : function(xhr, status, er) {
+					if (er) {
+						error(er);
+					}
+				}
+			});
+	        $(location).attr('href','/storage/storage');
+		})
 
 	})//end window
 </script>

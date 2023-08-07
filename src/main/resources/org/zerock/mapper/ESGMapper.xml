@@ -15,7 +15,7 @@
                 join production_record pr on pl.pr_code = pr.pr_code
                 group by pl.sdate, pr.machine_code
             ) ex on pm.machine_code = ex.machine_code
-            where TRUNC(#{date}) = TRUNC(SYSDATE)
+            where TRUNC(#{date}) = TRUNC(ex.sdate)
             order by green_gas_date desc
   		]]>
 	</select>

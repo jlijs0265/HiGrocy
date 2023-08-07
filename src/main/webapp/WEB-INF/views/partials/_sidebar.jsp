@@ -51,7 +51,7 @@
     <li class="nav-item">
       <a class="nav-link"data-bs-toggle="collapse" href="#chart-basic" aria-expanded="false" aria-controls="chart-basic">
         <span class="menu-title">품목관리</span>
-        <i class="mdi mdi-chart-bar menu-icon"></i>
+        <i class="mdi mdi-package-variant-closed menu-icon"></i>
         
       </a>
       <div class="collapse" id="chart-basic">
@@ -66,7 +66,7 @@
     <li class="nav-item">
       <a class="nav-link"data-bs-toggle="collapse" href="#fifth-item" aria-expanded="false" aria-controls="fifth-item">
         <span class="menu-title">발주관리</span>
-        <i class="mdi mdi-chart-bar menu-icon"></i>
+        <i class="mdi mdi-file-document menu-icon"></i>
         
       </a>
       <div class="collapse" id="fifth-item">

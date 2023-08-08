@@ -10,7 +10,7 @@
   		select pm.machine_code,pm.type ,pm.gas_emissions*total green_gas_date, pm.energy_usage*total energy_date, ex.sdate, ex.total
             from production_machine pm
             join (
-                select pl.sdate, pr.machine_code, sum(pr.usage_time)/60 total
+                select pl.sdate, pr.machine_code, TRUNC(sum(pr.usage_time)/60) total
                 from production_list pl
                 join production_record pr on pl.pr_code = pr.pr_code
                 group by pl.sdate, pr.machine_code

@@ -246,7 +246,7 @@
     			contentType : "application/json; charset-utf-8",
     			success : function(result, status, xhr) {
     				for(var i = 0; i < result.length; i++) {
-    					$('#bomForm').append('<div class="form-group row"><label class="col-sm-3 col-form-label">원자재코드</label><div class="col-sm-9"><input type="text" class="form-control raw_code" readonly="readonly" value="'+ result[i].raw_materials_code + '" name="raw_material_code" data-bs-toggle="modal" data-bs-target="#exampleModal"></div></div><div class="form-group row"><label class="col-sm-3 col-form-label">수량</label><div class="col-sm-9"><input type="text" class="form-control" name="amount" value="'+ result[i].amount +'" placeholder="수량"></div></div>');
+    					$('#bomForm').append('<div class="warpBomForm"><div class="form-group row"><label class="col-sm-3 col-form-label">원자재코드</label><div class="col-sm-9"><input type="text" class="form-control raw_code" readonly="readonly" value="'+ result[i].raw_materials_code + '" name="raw_material_code" data-bs-toggle="modal" data-bs-target="#exampleModal"></div></div><div class="form-group row"><label class="col-sm-3 col-form-label">수량</label><div class="col-sm-9"><input type="text" class="form-control" name="amount" value="'+ result[i].amount +'" placeholder="수량"></div></div><div class="d-flex justify-content-end pb-2"><button type="button" class="btn btn-gradient-danger inputDeleteBtn">삭제</button></div></div>');
     				}
     				
     			},

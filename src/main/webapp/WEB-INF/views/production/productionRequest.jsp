@@ -137,7 +137,7 @@
 					                        </tr>
 					                        <tr>
 					                          <td class="table-active">사원</td>
-					                          <td id="employee"><c:out value="${user}"></c:out></td>
+					                          <td id="employee"><sec:authentication property="principal.employee.empname"/></td>
 					                        </tr>
 					                        <tr>
 					                          <td class="table-active">총 합계금액</td>

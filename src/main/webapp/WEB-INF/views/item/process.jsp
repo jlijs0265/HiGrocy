@@ -25,151 +25,126 @@
     <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
     <meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
 	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
-  </head>
-  <body>
+</head>
+<body>
   <!-- Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-scrollable">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable">
 	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
+		    <div class="modal-header">
+	        	<h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+	        	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      	</div>
+	      	<div class="modal-body">
 				<!-- 기계목록 가져오기 -->
 				<div class="table-responsive">
-            	<table class="table table-bordered border-secondary rawTable">
-                     <thead> 
-                       <tr>
-                         <th>기계코드</th>
-                         <th>기계종류 </th>
-                         <th>온실가스배출량</th>
-                         <th>에너지소모량</th>
-                       </tr>
-                     </thead>
-                     <tbody class="rawbody">
+            		<table class="table table-bordered border-secondary rawTable">
+                    	<thead> 
+                      	<tr>
+                        <th>기계코드</th>
+                        <th>기계종류 </th>
+                        <th>온실가스배출량</th>
+                        <th>에너지소모량</th>
+                       	</tr>
+                    	</thead>
+                    	<tbody class="rawbody">
 						<c:forEach items="${m_Lists}" var="m_list">
 		              		<tr class="m_row">
 			                   <td class="machine_code"> <c:out value="${m_list.machine_code}" /></td>
 			                   <td class="type"> <c:out value="${m_list.type}" /></td>
 			                   <td class="gas_emissions"><c:out value="${m_list.gas_emissions}" /></td>
 			                   <td class="energy_usage"> <c:out value="${m_list.energy_usage}" /></td>
-		                 </tr>
+		                 	</tr>
 		              	</c:forEach>
-              	</tbody>
-                  </table>
-			</div>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
-	      </div>
+              			</tbody>
+                	</table>
+				</div>
+	      	</div>
 	    </div>
-	  </div>
 	</div>
-  
-	
-    <div class="container-scroller">
-      <!-- partial:partials/_navbar.html -->
-      <%@ include file="../partials/_navbar.jsp" %>
-      <!-- partial -->
-      <div class="container-fluid page-body-wrapper">
-        <!-- partial:partials/_sidebar.html -->
-        <%@ include file="../partials/_sidebar.jsp" %>          <!-- partial:partials/_footer.html -->
-				<!-- main-panel  -->
-		       <div class="main-panel">
-		       		
-		       		<div class="content-wrapper">
-		       			<div class="row h-100">
-		       				<!-- 생산품 목록 조회 부분 -->
-		       				<div class="col-md-6 grid-margin stretch-card">
-			       				<div class="card">
-			       					<div class="card-body list-body">
-					                    <h4 class="card-title">생산품 목록</h4>
-					                    
-					                    <form class="d-flex align-items-center" action="#">
-							              <div class="input-group">
-						                    <div class="p-3">검색</div>
-							                <input type="text" class="form-control bg-transparent border-1" placeholder="생산품명 검색">
-							                <div class="input-group-text">
-							                  <i class="input-group mdi mdi-magnify"></i>
-							                </div>
-							              </div>
-							            </form>
-							            <div class="table-responsive h-100 tableWarp">
-							            	<table class="table table-bordered">
-						                      <thead> 
-						                        <tr>
-						                          <th class="">생산품 코드</th>
-						                          <th> 생산품명</th>
-						                        </tr>
-						                      </thead>
-						                      <tbody>
-						                      
-						                      <c:forEach items="${productList}" var="product">
-						                      	<tr class="rawProduct">
-								                      	<td class="pcode"><c:out value="${product.product_code}" /></td>
-								                      	<td class="pname"><c:out value="${product.name}"></c:out></td>
-							                      </tr>
-						                      </c:forEach>
-						                      
-						                      </tbody>
-						                    </table>
-							            </div>
-					                    	
-					                  </div>
-			       				</div>
-			       			</div>
-			       			<!-- 생산품 목록 조회 부분 끝-->
-			       			<!-- 생산품 등록 부분 -->
-			       			<div class="col-md-6 grid-margin stretch-card">
-			       				<div class="card">
-			       					<div class="card-body">
-			       						<h4 class="card-title" id="raw-title">생산 프로세스 등록</h4>
-			       						<form class="forms-sample p-2" action="/product" method="post" id="rawForm">
-			       							<input type="hidden" name="${_csrf.parameterName}", value="${_csrf.token}">
-					                      <div class="form-group">
-					                        <label>생산품 코드</label>
-					                        <input type="text" class="form-control" id="product_code" readonly="readonly" placeholder="생산품 코드">
-					                      </div>
-					                      <div class="form-group">
-					                        <label for="exampleSelectGender">생산품명</label>
-					                        <input type="text" class="form-control" id="product_name" name="name" placeholder="생산품명">
-					                      </div>
-					                      <div class="form-group">
-					                        <label for="exampleInputUsername1">프로세스 등록</label>
-					                        <div class="d-flex">
-					                        	<input type="text" class="form-control bg-light" id="raw_material_name" readonly="readonly">
-						                        <button class="border-0 inputPlusBtn" type="button">
-						                        	<i class="input-group mdi mdi-plus"></i>
-						                        </button>
-					                        </div>
-					                      </div>
-					                      <!-- BOM 등록 작성해줄 input 태그가 계속 추가될 부분 -->
-					                      <div class="border border-secondary p-3" id="bomForm">
-					                     </div>
-					                      
-					                      
-					                    </form>
-					                      <button class="btn btn-gradient-primary mr-2" id="registerBtn">등록</button>
-					                      <button class="btn btn-gradient-success mr-2" id="updateBtn">수정</button>
-					                      <button class="btn btn-gradient-danger mr-2" id="deleteBtn">삭제</button>
-			       					</div>
-			       					 
-			       				</div>
-			       			</div>
-		       			<!-- 원부자재 등록 부분 끝-->
-		       			</div>
-		       		</div>
-		       
-		       
-          <%@ include file="../partials/_footer.jsp" %>
-          
-        </div>
+</div>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <%@ include file="../partials/_navbar.jsp" %>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_sidebar.html -->
+    <%@ include file="../partials/_sidebar.jsp" %>
+		<!-- main-panel  -->
+	    <div class="main-panel">		
+		    <div class="content-wrapper">
+		    	<div class="row h-100">
+		       	<!-- 생산품 목록 조회 부분 -->
+					<div class="col-md-6 grid-margin stretch-card">
+						<div class="card">
+							<div class="card-body list-body">
+								<h4 class="card-title">생산품 목록</h4>
+								<div class="table-responsive h-100 tableWarp">
+									<table class="table table-bordered">
+										<thead> 
+										<tr>
+										<th class="">생산품 코드</th>
+										<th> 생산품명</th>
+										</tr>
+										</thead>
+										<tbody>
+										<c:forEach items="${productList}" var="product">
+											<tr class="rawProduct">
+												<td class="pcode"><c:out value="${product.product_code}" /></td>
+												<td class="pname"><c:out value="${product.name}"></c:out></td>
+											</tr>
+										</c:forEach>
+												
+										</tbody>
+									</table>
+								</div>          	
+							</div>
+						</div>
+					</div>
+								<!-- 생산품 목록 조회 부분 끝-->
+								<!-- 생산품 등록 부분 -->
+					<div class="col-md-6 grid-margin stretch-card">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="card-title" id="raw-title">생산 프로세스 등록</h4>
+								<form class="forms-sample p-2" action="/product" method="post" id="rawForm">
+									<input type="hidden" name="${_csrf.parameterName}", value="${_csrf.token}">
+									<div class="form-group">
+									<label>생산품 코드</label>
+									<input type="text" class="form-control" id="product_code" readonly="readonly" placeholder="생산품 코드">
+									</div>
+									<div class="form-group">
+									<label for="exampleSelectGender">생산품명</label>
+									<input type="text" class="form-control" id="product_name" name="name" placeholder="생산품명">
+									</div>
+									<div class="form-group">
+									<label for="exampleInputUsername1">프로세스 등록</label>
+									<div class="d-flex">
+										<input type="text" class="form-control bg-light" id="raw_material_name" readonly="readonly">
+										<button class="border-0 inputPlusBtn" type="button">
+											<i class="input-group mdi mdi-plus"></i>
+										</button>
+									</div>
+									</div>
+									<!-- BOM 등록 작성해줄 input 태그가 계속 추가될 부분 -->
+									<div class="border border-secondary p-3" id="bomForm">
+									</div>
+								</form>
+									<button class="btn btn-gradient-primary mr-2" id="registerBtn">등록</button>
+									<button class="btn btn-gradient-success mr-2" id="updateBtn">수정</button>
+									<button class="btn btn-gradient-danger mr-2" id="deleteBtn">삭제</button>
+							</div>
+						</div>
+					</div>
+			<!-- 원부자재 등록 부분 끝-->
+				</div>
+			</div>  
+		<%@ include file="../partials/_footer.jsp" %>
+    	</div>
         <!-- main-panel ends -->
-      </div>
+	</div>
       <!-- page-body-wrapper ends -->
-    </div>
+</div>
     <!-- container-scroller -->
     <!-- js 추가 -->
     <script src="/resources/assets/vendors/chart.js/Chart.min.js"></script>
@@ -181,14 +156,14 @@
 	<script src="/resources/assets/js/hoverable-collapse.js"></script>
 	<script src="/resources/assets/js/misc.js"></script>
     
-<!--     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script type="text/javascript">
 
     	document.getElementById('updateBtn').style.display = 'none';
     	document.getElementById('deleteBtn').style.display = 'none';
     	var raw_code_input = 0;
     	var raw_product = 0;
-    	var order = 1;
+    	var order = 0;
     	var token = $("meta[name='_csrf']").attr("th:content");
 		var header = $("meta[name='_csrf_header']").attr("th:content");
 		

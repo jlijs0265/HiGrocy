@@ -59,5 +59,10 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	public ArrayList<RawMaterialVO> searchRawMaterial(String name) {
 		return mapper.searchRawMaterial(name);
 	}
+	 
+	 @Override
+	public ArrayList<RawMaterialVO> searchRawCode(int raw_materials_code) {
+		return mapper.searchRawCode(raw_materials_code);
+	}
 
 }

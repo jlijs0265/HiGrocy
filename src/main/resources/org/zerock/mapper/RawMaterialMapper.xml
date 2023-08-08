@@ -3,10 +3,12 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.zerock.mapper.RawMaterialMapper">
-
+	
+	
 	<insert id="registerItem" parameterType="org.zerock.domain.ItemVO">
 		INSERT INTO item (item_code, type) VALUES (seq_item.nextval, #{type})
 	</insert>
+
 
   <select id="getlist" resultType="org.zerock.domain.RawMaterialVO">
   	SELECT * FROM raw_materials
@@ -37,5 +39,8 @@
 			SELECT * FROM raw_materials WHERE raw_materials_code = #{item_code} 
 	</select>
 	
+	<select id="searchRawCode" parameterType="int" resultType="org.zerock.domain.RawMaterialVO">
+			SELECT * FROM raw_materials WHERE raw_materials_code like '%'||#{raw_materials_code}||'%' 
+	</select>
 	
 </mapper>

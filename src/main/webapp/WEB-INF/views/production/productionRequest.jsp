@@ -36,7 +36,7 @@
 	  <div class="modal-dialog modal-dialog-scrollable">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" id="exampleItemModal">품목 선택</h1>
+	        <h1 class="modal-title fs-5" id="exampleItemModal modal-title">품목 선택</h1>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
@@ -250,6 +250,7 @@
 			
 		  } else if(recipient == '@storage') {
 			// 창고 정보를 가져올 ajax 통신
+			$('.modal-title').text("창고 선택");
 			  $.ajax({
 				  type : 'get',
 				  url : '/storage/list',
@@ -355,14 +356,28 @@
 			var amount = $('#amount').val();
 			
 			// 단가 구하기
-			/* $.ajax({
-				
-			}); */
+			$.ajax({
+				type : 'get',
+				url : '/pr/price',
+				data : {item_code : itemCode},
+				contentType : "application/json; charset-utf-8",
+				beforeSend : function(xhr) {
+			        xhr.setRequestHeader(header, token);
+			    },
+				success : function(result, status, xhr) {
+					console.log(result);
+					$('#price').val(result);
+					$('#supplyValue').val(amount*result);
+					$('#vat').val( (amount*result) * 0.1 );
+					$('#total').val( Number($('#supplyValue').val())+ Number($('#vat').val()) );
+    			},
+    			error : function(xhr, status, er) {
+    				console.log(er);
+    				priceValue = er;
+    			}
+			});
 			
-			$('#price').val(200);
-			$('#supplyValue').val(amount*200);
-			$('#vat').val( (amount*200) * 0.1 );
-			$('#total').val( Number($('#supplyValue').val())+ Number($('#vat').val()) );
+			
 		});
 		
 		$('#registerBtn').on('click', function() {

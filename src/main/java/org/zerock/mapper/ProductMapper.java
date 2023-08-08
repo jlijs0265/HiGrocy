@@ -17,5 +17,6 @@ public interface ProductMapper {
 	boolean updateProduct(ProductVO vo);
 	boolean deleteBom(int product_code);
 	boolean deleteProduct(int product_code);
+	ArrayList<ProductVO> searchProduct(String name);
 
 }

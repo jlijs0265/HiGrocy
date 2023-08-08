@@ -15,5 +15,6 @@ public interface PRRecordService {
 	public List<ProductionRequestListVO> getdiff(BetweenDateVO vo);
 	public List<ProductVO> getProductList();
 	public List<Integer> getRawCodeList(int product_code);
+	public int[] getPrice(int item_code);
 	
 }

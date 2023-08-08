@@ -15,5 +15,5 @@ public interface PRRecordMapper {
 	public List<ProductVO> getProductList();
 	public List<Integer> getRawCodeList(int product_code);
 	public boolean insertPrList(ProductionRequestListVO vo);
-	
+	public int[] getPrice(int product_code);
 }

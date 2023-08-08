@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <html>
@@ -44,7 +43,7 @@
 			       				<div class="card">
 			       					<div class="card-body list-body">
 					                    <h4 class="card-title">원부자재 목록</h4>
-					                    <form class="d-flex align-items-center" onSubmit="return false;">
+					                    <form class="d-flex flex-row" onSubmit="return false;">
 					                    	<input type="hidden" name="${_csrf.parameterName}", value="${_csrf.token}">
 												<select class="form-select" aria-label="Default select example" id="searchSelect">
 												  <option value="N" selected>품명</option>
@@ -364,21 +363,25 @@
     	$('#deleteBtn').on('click', function() {
     		data = $("#raw_material_code").val();
     		console.log(data);
-    		$.ajax({
-    			type : 'DELETE',
-    			url : '/raw_material/' + data,
-    			contentType : "application/json; charset-utf-8",
-    			beforeSend : function(xhr) {
-    		        xhr.setRequestHeader(header, token);
-    		    },
-    			success : function(result, status, xhr) {
-    				console.log(result);
-    				item.remove();
-    			},
-    			error : function(xhr, status, er) {
-    				console.log(er);
-    			}
-    		});
+    		 if(confirm('정말 삭제하시겠습니까?')) {
+    			 
+    			 $.ajax({
+    	    			type : 'DELETE',
+    	    			url : '/raw_material/' + data,
+    	    			contentType : "application/json; charset-utf-8",
+    	    			beforeSend : function(xhr) {
+    	    		        xhr.setRequestHeader(header, token);
+    	    		    },
+    	    			success : function(result, status, xhr) {
+    	    				console.log(result);
+    	    				item.remove();
+    	    			},
+    	    			error : function(xhr, status, er) {
+    	    				console.log(er);
+    	    			}
+    	    		});
+    		 }//확인 누르면 true, 취소 누르면 false
+    		
     	});
     	
     	$('#raw_search_btn').on('click', function() {

@@ -41,5 +41,9 @@
 	<delete id="deleteProduct" parameterType="int">
 		DELETE FROM product WHERE product_code = #{product_code}
 	</delete>
+	
+	<select id="searchProduct" resultType="org.zerock.domain.ProductVO">
+		SELECT * FROM product WHERE name like '%'||#{name}||'%'
+	</select>
 
 </mapper>

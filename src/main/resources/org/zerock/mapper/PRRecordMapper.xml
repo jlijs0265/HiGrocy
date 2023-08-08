@@ -56,4 +56,13 @@
 		INSERT INTO pr_list(pr_code, item_code, amount) VALUES ((SELECT max(pr_record_code) FROM pr_record), #{item_code}, #{amount})
 	</insert>
 	
+	<select id="getPrice" parameterType="org.zerock.domain.ProductVO" resultType="int">
+		<![CDATA[
+		SELECT AVG(price) AS "price"
+		    FROM order_list
+		    WHERE item_code IN (SELECT bom.raw_materials_code FROM bom WHERE bom.product_code = #{product_code})
+		    GROUP BY  item_code
+		    ]]>
+	</select>
+	
 </mapper>

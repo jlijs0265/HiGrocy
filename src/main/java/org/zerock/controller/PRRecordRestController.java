@@ -77,4 +77,14 @@ public class PRRecordRestController {
 		return new ResponseEntity<String>(totalList, HttpStatus.OK);
 	}
 	
+	@GetMapping("pr/price")
+	public ResponseEntity<Integer> getPrice(int item_code) {
+		int[] result = service.getPrice(item_code);
+		int total = 0;
+		for(int i = 0; i < result.length; i++) {
+			total += result[i];
+		}
+		return new ResponseEntity<Integer>(total, HttpStatus.OK);
+	}
+	
 }

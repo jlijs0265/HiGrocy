@@ -16,5 +16,6 @@ public interface ProductService {
 	boolean deleteBom(int product_code);
 	boolean updateBom(BomVO vo);
 	boolean deleteProduct(int product_code);
+	ArrayList<ProductVO> searchProduct(String name);
 	
 }

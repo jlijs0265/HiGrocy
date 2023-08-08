@@ -52,8 +52,12 @@ public class PRRecordServiceImpl implements PRRecordService{
 	
 	@Override
 	public List<Integer> getRawCodeList(int product_code) {
-		
 		return null;
+	}
+	
+	@Override
+	public int[] getPrice(int item_code) {
+		return mapper.getPrice(item_code);
 	}
 	
 	

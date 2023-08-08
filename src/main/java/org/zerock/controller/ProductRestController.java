@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.zerock.domain.BomVO;
 import org.zerock.domain.ProductVO;
+import org.zerock.domain.RawMaterialVO;
 import org.zerock.service.ProductService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -77,5 +78,12 @@ public class ProductRestController {
 		return result == true ? new ResponseEntity<String>("success", HttpStatus.OK) : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	
+	@GetMapping("/product/search")
+	public ResponseEntity<ArrayList<ProductVO>> searchProduct(String name) {
+		// 서비스 
+		ArrayList<ProductVO> productList = service.searchProduct(name);
+		return new ResponseEntity<ArrayList<ProductVO>>(productList, HttpStatus.OK);
+	}
 
 }

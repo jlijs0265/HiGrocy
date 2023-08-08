@@ -27,13 +27,12 @@
 	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
   </head>
   <body>
-  <div>
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-scrollable">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+	        <h1 class="modal-title fs-5" id="exampleModalLabel">원자재 목록</h1>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
@@ -83,18 +82,18 @@
 
 		       		<div class="content-wrapper">
 		       			<div class="row h-100">
-		       				<!-- 원부자재 목록 조회 부분 -->
+		       				<!-- 생산품 목록 조회 부분 -->
 		       				<div class="col-md-4 grid-margin stretch-card">
 			       				<div class="card">
 			       					<div class="card-body list-body">
 					                    <h4 class="card-title">생산품 목록</h4>
 					                    
-					                    <form class="d-flex align-items-center" action="#">
+					                    <form class="d-flex align-items-center" onSubmit="return false;">
 					                    	
 							              <div class="input-group">
 						                    <div class="p-3">검색</div>
-							                <input type="text" class="form-control bg-transparent border-1" placeholder="원부자재 검색">
-							                <div class="input-group-text">
+							                <input type="text" class="form-control bg-transparent border-1" id="pro_input" placeholder="생산품 검색">
+							                <div class="input-group-text" id="pro_search_input">
 							                  <i class="input-group mdi mdi-magnify"></i>
 							                </div>
 							              </div>
@@ -107,7 +106,7 @@
 						                          <th> 생산품명</th>
 						                        </tr>
 						                      </thead>
-						                      <tbody>
+						                      <tbody id="rawTbody">
 						                      
 						                      <c:forEach items="${productList}" var="product">
 						                      	<tr class="rawProduct">
@@ -371,7 +370,39 @@
     	
     	$('#bomForm').on('click', '.inputDeleteBtn', function() {
     		$(this).closest('.warpBomForm').remove();
-    	})
+    	});
+    	
+    	$('#pro_search_input').on('click', function() {
+    		var pname = $('#pro_input').val();
+    		console.log(pname);
+    		$.ajax({
+     			type : 'get',
+     			url : '/product/search',
+     			data : {"name" : pname},
+     			contentType : "application/json; charset-utf-8",
+     			success : function(result, status, xhr) {
+     				console.log(result);
+     				$('#rawTbody').empty();
+     				for(var i = 0; i < result.length; i++) {
+     					var appendRaw = '<tr class="rawProduct"><td id="pcode">'
+     						+ result[i].product_code
+     						+ '</td><td id="pname">'
+     						+ result[i].name
+     						+'</td></tr>';
+ 						console.log(appendRaw);
+ 						
+     					$('#rawTbody').append(appendRaw);
+     					$('#pro_input').val("");
+     				}
+     				
+     			},
+     			error : function(xhr, status, er) {
+     				console.log(er);
+     			}
+     			
+     		});
+    		
+    	});
     	
     </script>
   </body>

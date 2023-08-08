@@ -81,5 +81,10 @@ public class ProductServiceImpl implements ProductService{
 	public boolean deleteProduct(int product_code) {
 		return mapper.deleteProduct(product_code);
 	}
+	
+	@Override
+	public ArrayList<ProductVO> searchProduct(String name) {
+		return mapper.searchProduct(name);
+	}
 
 }

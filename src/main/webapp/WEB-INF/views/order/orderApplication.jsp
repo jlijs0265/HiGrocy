@@ -260,12 +260,10 @@
 														data-bs-target="#accountModal" data-bs-whatever="@account"
 														id="accountname" readonly="readonly"></input></td>
 												</tr>
-												<!--TODO: 로그인했을시 로그인한 유저이름으로 수정
 												<tr>
 													<td class="table-active">사원</td>
-													<td>로그인한 유저이름</td>
-												</tr>
-												-->
+													<td id="employee"><sec:authentication property="principal.employee.empname"/></td>
+												  </tr>
 											</tbody>
 										</table>
 									</div>
@@ -511,7 +509,7 @@
 								account_code : document
 										.getElementById("input_account_code").value,
 								order_date : '',
-								order_manager : '송희문 사원',
+								order_manager : $('#employee').text(),
 							}
 
 							itemList = [];
